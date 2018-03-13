@@ -84,7 +84,7 @@ const deepFindDirty = (obj, path, placeholder) => {
 
 const showMissingOrDefault = (key, children) => {
   const renderInnerTextForMissingKeys = TranslatorContext.context.renderInnerTextForMissingKeys;
-  if (renderInnerTextForMissingKeys && children && typeof children === 'string') {
+  if (renderInnerTextForMissingKeys && children && ['string', 'object'].includes(typeof children)) {
     return children;
   }
   return `${TranslatorContext.context.missingTranslationMsg}[${key}]`;
