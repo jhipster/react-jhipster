@@ -9,7 +9,7 @@ export const getBasePath = (): string => window.location.href.split('#')[0];
  * Parse the header link element and return all links inside.
  * @param header header of link
  */
-export const parse = (header: string): any => {
+export const parseHeaderForLinks = (header: string): any => {
   if (header.length === 0) {
     throw new Error('input must not be of zero length');
   }
@@ -49,7 +49,7 @@ export const parse = (header: string): any => {
  * @param incomingData
  * @param links
  */
-export const loadMoreData = (currentData: any, incomingData: any, links: any): any => {
+export const loadMoreDataWhenScrolled = (currentData: any, incomingData: any, links: any): any => {
   let data = null;
   if (links.first === links.last) {
     data = incomingData;
