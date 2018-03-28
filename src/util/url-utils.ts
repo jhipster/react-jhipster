@@ -7,7 +7,7 @@ export const getBasePath = (): string => window.location.href.split('#')[0];
  * Parse the header link element and return all links inside.
  * @param header header of link
  */
-export const parse = (header: string): any => {
+export const parseHeaderForLinks = (header: string): any => {
   if (header.length === 0) {
     throw new Error('input must not be of zero length');
   }
