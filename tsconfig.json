@@ -9,6 +9,7 @@
     "sourceMap": true,
     "moduleResolution": "node",
     "noUnusedLocals": true,
+    "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
     "typeRoots": [
       "node_modules/@types"

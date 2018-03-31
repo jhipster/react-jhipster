@@ -17,7 +17,7 @@ function root(args) {
 
 module.exports = {
   devtool: 'inline-source-map',
-
+  mode: 'production',
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     modules: ['node_modules']

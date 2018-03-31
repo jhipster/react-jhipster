@@ -19,7 +19,7 @@ describe('private-route component', () => {
     expect(renderedRoute.props().path).to.equal('/');
     // tslint:disable-next-line:no-unused-expression
     expect(renderedRoute.props().render).to.not.be.undefined;
-    const renderFn = renderedRoute.props().render;
+    const renderFn: Function = renderedRoute.props().render;
     const comp = shallow(
       renderFn({
         location: '/'
@@ -33,7 +33,7 @@ describe('private-route component', () => {
     const route = shallow(<PrivateRouteComponent component={TestComp} isAuthenticated={false} path="/" />);
     const renderedRoute = route.find(Route);
     expect(renderedRoute.length).to.equal(1);
-    const renderFn = renderedRoute.props().render;
+    const renderFn: Function = renderedRoute.props().render;
     // as rendering redirect outside router will throw error
     expect(() =>
       shallow(

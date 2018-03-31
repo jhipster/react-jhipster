@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 
 export interface IPrivateRouteProps {
-  component: React.ComponentClass<any> | React.StatelessComponent<any>;
+  component: any;
   isAuthenticated: boolean;
   [key: string]: any;
 }
