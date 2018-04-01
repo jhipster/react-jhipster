@@ -16,6 +16,5 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-export * from './private-route';
 export * from './pagination/pagination';
 export * from './pagination/pagination-utils';
