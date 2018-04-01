@@ -1,10 +1,11 @@
-export interface IPayload {
+export interface IPayload<T> {
   type: string;
-  payload: Promise<any>;
+  payload: Promise<T>;
   meta?: any;
 }
-export type IPayloadResult = ((dispatch: any) => IPayload | Promise<IPayload>);
-export type ICrudGetAction = (id: string | number) => IPayload | ((dispatch: any) => IPayload);
-export type ICrudGetAllAction = (page?: number, size?: number, sort?: string) => IPayload | ((dispatch: any) => IPayload);
-export type ICrudDeleteAction = (id?: string | number) => IPayload | IPayloadResult;
-export type ICrudPutAction = (data?: any) => IPayload | IPayloadResult;
+export type IPayloadResult<T> = ((dispatch: any) => IPayload<T> | Promise<IPayload<T>>);
+export type ICrudGetAction<T> = (id: string | number) => IPayload<T> | ((dispatch: any) => IPayload<T>);
+export type ICrudGetAllAction<T> = (page?: number, size?: number, sort?: string) => IPayload<T> | ((dispatch: any) => IPayload<T>);
+export type ICrudSearchAction<T> = (search?: string) => IPayload<T> | ((dispatch: any) => IPayload<T>);
+export type ICrudDeleteAction<T> = (id?: string | number) => IPayload<T> | IPayloadResult<T>;
+export type ICrudPutAction<T> = (data?: T) => IPayload<T> | IPayloadResult<T>;
