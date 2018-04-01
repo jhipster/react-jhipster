@@ -5,7 +5,7 @@ import * as moment from 'moment';
 export type ITextFormatTypes = 'date' | 'number';
 
 export interface ITextFormatProps {
-  value: string | number | Date;
+  value: string | number | Date | moment.Moment;
   type: ITextFormatTypes;
   format?: string;
   blankOnInvalid?: boolean;
