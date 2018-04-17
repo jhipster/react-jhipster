@@ -139,7 +139,14 @@ class Translate extends React.Component<ITranslateProps> {
   }
 }
 
-export const translate = (contentKey: string, interpolate?: any, children?: string) =>
-  doTranslate(contentKey, interpolate, children).content;
+export const translate = (contentKey: string, interpolate?: any, children?: string) => {
+  const translation = doTranslate(contentKey, interpolate, children);
+
+  if (translation.html) {
+    return React.createElement('span', { dangerouslySetInnerHTML: { __html: translation.content } });
+  } else {
+    return translation.content;
+  }
+}
 
 export default Translate;
