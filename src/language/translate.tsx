@@ -147,6 +147,6 @@ export const translate = (contentKey: string, interpolate?: any, children?: stri
   } else {
     return translation.content;
   }
-}
+};
 
 export default Translate;

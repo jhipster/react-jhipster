@@ -10,7 +10,8 @@ TranslatorContext.registerTranslations('en', {
     fooz: 'text {{foo }} this {{bar}}',
     foofoo: 'text {{ foo}} this {{bar}} <b>test</b>',
     foodirty: 'text {{ foo }} this {{bar}} <script>execute</script><br/><hr><div>test</div> <a href="test">link</a>',
-    'baz.foo': 'dirty key'
+    'baz.foo': 'dirty key',
+    foozfooz: 'jhipster is <strong>awesome</strong>!'
   }
 });
 TranslatorContext.registerTranslations('fr', {
@@ -115,5 +116,12 @@ describe('translate service', () => {
   it('produce translated content', () => {
     const out = translate('foo.bar');
     expect(out).to.equal('i18n text');
+  });
+
+  it('produce translated React component', () => {
+    const mountedWrapper = mount(translate('foo.foozfooz'));
+    const span = mountedWrapper.find('span');
+    expect(span.length).to.equal(1);
+    expect(mountedWrapper.html()).to.equal('<span>jhipster is <strong>awesome</strong>!</span>');
   });
 });
