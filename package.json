@@ -141,8 +141,9 @@
     "test:watch": "karma start tests/karma.conf.js --watch --test",
     "build": "npm run cleanup && npm run tsc && webpack && shx cp bundles/react-jhipster.umd.js bundles/index.js",
     "release": "npm test && git push && git push --tags && npm publish",
-    "release:patch": "npm run build && npm version patch -a -m \"Update to %s\" && npm run release",
-    "release:minor": "npm run build && npm version minor -a -m \"Update to %s\" && npm run release",
-    "release:major": "npm run build && npm version major -a -m \"Update to %s\" && npm run release"
+    "commit-lib": "git add lib && git commit -m \"Update libs\"",
+    "release:patch": "npm run build && npm run commit-lib && npm version patch -a -m \"Update to %s\" && npm run release",
+    "release:minor": "npm run build && npm run commit-lib && npm version minor -a -m \"Update to %s\" && npm run release",
+    "release:major": "npm run build && npm run commit-lib && npm version major -a -m \"Update to %s\" && npm run release"
   }
 }
