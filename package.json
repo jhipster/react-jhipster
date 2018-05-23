@@ -32,6 +32,7 @@
   ],
   "homepage": "https://www.jhipster.tech",
   "peerDependencies": {
+    "axios": "^0.18.0",
     "lodash": "^4.17.4",
     "react": "^16.0.0",
     "react-addons-css-transition-group": "^16.0.0-alpha.3",
@@ -55,6 +56,7 @@
     "@types/react-router-dom": "4.2.6",
     "@types/webpack-env": "1.13.5",
     "awesome-typescript-loader": "5.0.0-1",
+    "axios": "^0.18.0",
     "chai": "4.1.2",
     "chai-as-promised": "7.1.1",
     "chai-enzyme": "1.0.0-beta.0",
