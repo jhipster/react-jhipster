@@ -124,7 +124,7 @@
     "@types/react": "16.1.0",
     "@types/react-dom": "16.0.4"
   },
-  "version": "0.5.1",
+  "version": "0.5.2",
   "lint-staged": {
     "*.{ts,tsx}": [
       "prettier --write",
