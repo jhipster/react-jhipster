@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash';
+import * as isEqual from 'lodash.isequal';
 
 /**
  * Retrieve new data when infinite scrolling

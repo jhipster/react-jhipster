@@ -33,7 +33,6 @@
   "homepage": "https://www.jhipster.tech",
   "peerDependencies": {
     "axios": "^0.18.0",
-    "lodash": "^4.17.4",
     "react": "^16.0.0",
     "react-addons-css-transition-group": "^16.0.0-alpha.3",
     "react-addons-transition-group": "^16.0.0-alpha.3",
@@ -41,6 +40,8 @@
     "reactstrap": "^5.0.0"
   },
   "dependencies": {
+    "lodash.get": "^4.4.2",
+    "lodash.isequal": "^4.5.0",
     "moment": "^2.22.0",
     "numeral": "^2.0.6",
     "sanitize-html": "^1.18.2"
@@ -48,7 +49,6 @@
   "devDependencies": {
     "@types/chai": "4.1.2",
     "@types/chai-enzyme": "0.6.4",
-    "@types/lodash": "4.14.106",
     "@types/mocha": "5.0.0",
     "@types/node": "9.6.1",
     "@types/react": "16.1.0",
@@ -83,7 +83,6 @@
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "3.0.0",
     "lint-staged": "7.0.1",
-    "lodash": "^4.17.4",
     "merge-jsons-webpack-plugin": "1.0.14",
     "mocha": "5.0.5",
     "node-sass": "4.8.3",
