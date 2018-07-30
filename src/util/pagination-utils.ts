@@ -1,29 +1,15 @@
-import * as isEqual from 'lodash.isequal';
-
 /**
  * Retrieve new data when infinite scrolling
  * @param currentData
  * @param incomingData
  * @param links
  */
- export const loadMoreDataWhenScrolled = (currentData: any, incomingData: any, links: any, itemsPerPage: number): any => {
-   let data = null;
-   if (links.first === links.last) {
-     data = incomingData;
-   } else {
-     if (incomingData.length === currentData.length) {
-       if (links.prev === undefined) {
-         data = incomingData;
-       } else if (!isEqual(currentData, incomingData)) {
-         data = [...currentData, ...incomingData];
-       }
-     } else {
-       if (incomingData.length === itemsPerPage) {
-         data = incomingData;
-       } else {
-         data = [...currentData, ...incomingData];
-       }
-     }
-   }
-   return data;
- };
+export const loadMoreDataWhenScrolled = (currentData: any, incomingData: any, links: any): any => {
+  if (links.first === links.last || !currentData.length) {
+    return incomingData;
+  }
+  if (currentData.length >= incomingData.length) {
+    return [...currentData, ...incomingData];
+  }
+  return null;
+};
