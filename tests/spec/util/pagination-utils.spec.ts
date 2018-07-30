@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { loadMoreDataWhenScrolled } from '../../../react-jhipster';
+import { loadMoreDataWhenScrolled } from '../../../src/util';
 
 describe('loadMoreDataWhenScrolled', () => {
   const setLinks = (first, last, prev) => ({ first, last, prev });
