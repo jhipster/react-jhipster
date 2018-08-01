@@ -40,10 +40,10 @@
     "reactstrap": "^5.0.0"
   },
   "dependencies": {
-    "lodash.get": "^4.4.2",
-    "moment": "^2.22.0",
-    "numeral": "^2.0.6",
-    "sanitize-html": "^1.18.2"
+    "lodash.get": "4.4.2",
+    "moment": "2.22.2",
+    "numeral": "2.0.6",
+    "sanitize-html": "1.18.3"
   },
   "devDependencies": {
     "@types/chai": "4.1.2",
@@ -53,6 +53,7 @@
     "@types/react": "16.1.0",
     "@types/react-dom": "16.0.4",
     "@types/react-router-dom": "4.2.6",
+    "@types/sanitize-html": "^1.18.0",
     "@types/webpack-env": "1.13.5",
     "awesome-typescript-loader": "5.0.0-1",
     "axios": "^0.18.0",
