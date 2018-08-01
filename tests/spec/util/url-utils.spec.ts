@@ -30,4 +30,8 @@ describe('getUrlParameter', () => {
     expect(getUrlParameter('key', '?test=1245&key=123hghygh1225&test2=55558')).to.eql('123hghygh1225');
     expect(getUrlParameter('key', '?test=1245&key=123hghyg+h1225&test2=55558')).to.eql('123hghyg h1225');
   });
+
+  it('should return an empty string for missing name', () => {
+    expect(getUrlParameter('test', '?')).to.eql('');
+  });
 });
