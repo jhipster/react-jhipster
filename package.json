@@ -43,7 +43,7 @@
     "lodash.get": "4.4.2",
     "moment": "2.22.2",
     "numeral": "2.0.6",
-    "sanitize-html": "1.18.3"
+    "sanitize-html": "1.18.2"
   },
   "devDependencies": {
     "@types/chai": "4.1.2",
