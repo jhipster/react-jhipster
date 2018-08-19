@@ -1,6 +1,6 @@
 {
   "name": "react-jhipster",
-  "description": "A Jhipster util library for React",
+  "description": "A Jhipster util library for React and React Native",
   "repository": {
     "type": "git",
     "url": "https://github.com/jhipster/react-jhipster.git"
@@ -33,11 +33,7 @@
   "homepage": "https://www.jhipster.tech",
   "peerDependencies": {
     "axios": "^0.18.0",
-    "react": "^16.0.0",
-    "react-addons-css-transition-group": "^16.0.0-alpha.3",
-    "react-addons-transition-group": "^16.0.0-alpha.3",
-    "react-dom": "^16.0.0",
-    "reactstrap": "^5.0.0"
+    "react": "^16.0.0"
   },
   "dependencies": {
     "lodash.get": "4.4.2",
