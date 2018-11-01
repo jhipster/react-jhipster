@@ -94,6 +94,14 @@ const doTranslate = (key, interpolate, children) => {
   const translationData = TranslatorContext.context.translations;
   const currentLocale = TranslatorContext.context.locale || TranslatorContext.context.defaultLocale;
   const data = translationData[currentLocale];
+
+  // If there is no translation data, it means it hasn’t loaded yet, so return no content
+  if (!Object.keys(translationData).length) {
+    return {
+      content: null
+    };
+  }
+
   const preRender = data ? get(data, key) || deepFindDirty(data, key, true) : null;
   const preSanitize = render(preRender, interpolate) || showMissingOrDefault(key, children);
   if (/<[a-z][\s\S]*>/i.test(preSanitize)) {
