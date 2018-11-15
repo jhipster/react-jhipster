@@ -16,6 +16,11 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-export * from './pagination/pagination';
-export * from './pagination/pagination-utils';
-export * from './metrics';
+export * from './jvmMemory';
+export * from './jvmThreads';
+export * from './systemMetrics';
+export * from './httpRequestMetrics';
+export * from './serviceMetrics';
+export * from './cacheMetrics';
+export * from './datasourceMetrics';
+export * from './garbageCollectorMetrics';
