@@ -22,9 +22,6 @@ export class CacheMetrics extends React.Component<ICacheMetricsProps> {
               <th>Cache Hits</th>
               <th>Cache Misses</th>
               <th>Cache Gets</th>
-              <th>Cache Puts</th>
-              <th>Cache Removals</th>
-              <th>Cache Evictions</th>
               <th>Cache Hit %</th>
               <th>Cache Miss %</th>
             </tr>
@@ -36,9 +33,6 @@ export class CacheMetrics extends React.Component<ICacheMetricsProps> {
                 <td>{cacheMetrics[key]['cache.gets.hit']}</td>
                 <td>{cacheMetrics[key]['cache.gets.miss']}</td>
                 <td>{cacheMetrics[key]['cache.gets.miss'] + cacheMetrics[key]['cache.gets.hit']}</td>
-                <td>{cacheMetrics[key]['cache.gets.puts']}</td>
-                <td>{cacheMetrics[key]['cache.gets.removals']}</td>
-                <td>{cacheMetrics[key]['cache.gets.evictions']}</td>
                 <td>
                   <TextFormat
                     value={this.filterNaN(

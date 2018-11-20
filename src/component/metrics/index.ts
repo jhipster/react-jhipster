@@ -24,3 +24,5 @@ export * from './serviceMetrics';
 export * from './cacheMetrics';
 export * from './datasourceMetrics';
 export * from './garbageCollectorMetrics';
+export * from './thread-item';
+export * from './threads-modal';

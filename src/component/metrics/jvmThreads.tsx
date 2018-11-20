@@ -2,6 +2,7 @@ import * as React from 'react';
 import { TextFormat } from '../../formatter';
 import { Progress, Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ThreadsModal from './threads-modal';
 
 export interface IJvmThreadsProps {
   jvmThreads: any;
@@ -65,12 +66,19 @@ export class JvmThreads extends React.Component<IJvmThreadsProps, IJvmThreadsSta
     }
   }
 
-  openModal() {
-    // this.props.systemThreadDump();
+  openModal = () => {
     this.setState({
       showModal: true
     });
-  }
+  };
+
+  handleClose = () => {
+    this.setState({
+      showModal: false
+    });
+  };
+
+  renderModal = () => <ThreadsModal handleClose={this.handleClose} showModal={this.state.showModal} threadDump={this.props.jvmThreads} />;
 
   render() {
     const { wholeNumberFormat } = this.props;
@@ -117,6 +125,7 @@ export class JvmThreads extends React.Component<IJvmThreadsProps, IJvmThreadsSta
             <TextFormat value={threadStats.threadDumpBlocked * 100 / threadStats.threadDumpAll} type="number" format={wholeNumberFormat} />
           </span>
         </Progress>
+        {this.renderModal()}
       </div>
     );
   }
