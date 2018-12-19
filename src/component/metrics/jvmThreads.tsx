@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { TextFormat } from '../../formatter';
 import { Progress, Button } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ThreadsModal from './threads-modal';
 
 export interface IJvmThreadsProps {
@@ -34,6 +33,14 @@ export class JvmThreads extends React.Component<IJvmThreadsProps, IJvmThreadsSta
 
   countThreadByState() {
     if (this.props.jvmThreads.threads) {
+      this.state.threadStats = {
+        threadDumpAll: 0,
+        threadDumpRunnable: 0,
+        threadDumpTimedWaiting: 0,
+        threadDumpWaiting: 0,
+        threadDumpBlocked: 0
+      };
+
       this.props.jvmThreads.threads.forEach(thread => {
         if (thread.threadState === 'RUNNABLE') {
           this.state.threadStats.threadDumpRunnable += 1;
@@ -86,9 +93,6 @@ export class JvmThreads extends React.Component<IJvmThreadsProps, IJvmThreadsSta
     return (
       <div>
         <b>Threads</b> (Total: {threadStats.threadDumpAll}){' '}
-        <Button color="link" className="hand" onClick={this.openModal}>
-          <FontAwesomeIcon icon="eye" />
-        </Button>
         <p>
           <span>Runnable</span> {threadStats.threadDumpRunnable}
         </p>
@@ -126,6 +130,9 @@ export class JvmThreads extends React.Component<IJvmThreadsProps, IJvmThreadsSta
           </span>
         </Progress>
         {this.renderModal()}
+        <Button color="primary" size="sm" className="hand" onClick={this.openModal}>
+          Expand
+        </Button>
       </div>
     );
   }
