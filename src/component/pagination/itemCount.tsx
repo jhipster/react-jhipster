@@ -5,7 +5,7 @@ export interface IJhiItemCountProps {
   page: number;
   total: number;
   itemsPerPage: number;
-  i18nEnabled: boolean;
+  i18nEnabled?: boolean;
 }
 
 export class JhiItemCount extends React.Component<IJhiItemCountProps> {
@@ -31,16 +31,13 @@ export class JhiItemCount extends React.Component<IJhiItemCountProps> {
     return (
       <div className="info jhi-item-count">
         {i18nEnabled ? (
-          <span>
-            <Translate contentKey="global.item-count" interpolate={this.i18nValues()}>
-              Count
-            </Translate>
-          </span>
+          <Translate contentKey="global.item-count" interpolate={this.i18nValues()}>
+            Count
+          </Translate>
         ) : (
           <span>
-            Showing
-            {(page - 1) * itemsPerPage === 0 ? 1 : (page - 1) * itemsPerPage + 1}
-            - {page * itemsPerPage < total ? page * itemsPerPage : total} of {total} items.
+            Showing {(page - 1) * itemsPerPage === 0 ? 1 : (page - 1) * itemsPerPage + 1} -{' '}
+            {page * itemsPerPage < total ? page * itemsPerPage : total} of {total} items.
           </span>
         )}
       </div>
