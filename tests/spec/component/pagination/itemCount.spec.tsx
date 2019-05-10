@@ -37,7 +37,7 @@ describe('JhiItemCountComponent test', () => {
   });
 
   describe('Translation tests', () => {
-    before(() => {
+    it('should change on language change', () => {
       TranslatorContext.registerTranslations('en', {
         global: {
           'item-count': 'Showing {{first}} - {{second}} of {{total}} items.'
@@ -49,13 +49,7 @@ describe('JhiItemCountComponent test', () => {
           'item-count': 'Affichage {{first}} - {{second}} de {{total}} items.'
         }
       });
-    });
-
-    beforeEach(() => {
       TranslatorContext.setLocale('en');
-    });
-
-    it('should change on language change', () => {
       const mountedWrapper = mount(<JhiItemCount page={1} itemsPerPage={10} total={100} i18nEnabled />);
       let span = mountedWrapper.find('span');
       expect(span.html()).to.equal('<span>Showing 1 - 10 of 100 items.</span>');
@@ -64,6 +58,14 @@ describe('JhiItemCountComponent test', () => {
       const mountedWrapperFr = mount(<JhiItemCount page={1} itemsPerPage={10} total={100} i18nEnabled />);
       span = mountedWrapperFr.find('span');
       expect(span.html()).to.equal('<span>Affichage 1 - 10 de 100 items.</span>');
+
+      // Reset TranslatorContext to default so that other tests pass
+      TranslatorContext.context = {
+        ...TranslatorContext.context,
+        translations: {},
+        locale: null,
+        previousLocale: null
+      };
     });
   });
 });
