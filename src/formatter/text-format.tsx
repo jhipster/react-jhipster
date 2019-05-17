@@ -24,6 +24,7 @@ export const TextFormat = ({ value, type, format, blankOnInvalid }: ITextFormatP
   if (blankOnInvalid) {
     if (!value || !type) return null;
   }
+
   if (type === 'date') {
     return <span>{moment(value).format(format)}</span>;
   } else if (type === 'number') {
