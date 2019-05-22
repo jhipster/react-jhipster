@@ -1,0 +1,62 @@
+#
+# Copyright 2013-2019 the original author or authors from the JHipster project.
+#
+# This file is part of the JHipster project, see https://www.jhipster.tech/
+# for more information.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+trigger:
+  branches:
+    exclude:
+      - "/^v\\d+\\.\\d+\\.\\d+$/"
+
+jobs:
+  - job: Test
+    pool:
+      vmImage: "Ubuntu 16.04"
+    variables:
+      DISPLAY: :99.0
+      CHROME_BIN: google-chrome
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "10.15.3"
+        displayName: "Install Node.js"
+      - script: npm install -g npm
+        displayName: 'TOOLS: update NPM'
+      - script: |
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+          sudo apt update
+          sudo apt install google-chrome-stable
+        displayName: 'TOOLS: install google-chrome-stable'
+      - script: |
+          set -e
+          Xvfb :99 -screen 0 1024x768x24 -ac 2>&1 > /dev/null &
+          sudo chown root /opt/google/chrome/chrome-sandbox
+          sudo chmod 4755 /opt/google/chrome/chrome-sandbox
+        displayName: 'TOOLS: Setup Chrome'
+      - script: npm install
+        displayName: 'Install dependencies'
+      - script: |
+          set -e
+          npm test
+          npm run build
+        displayName: 'Test'
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testRunner: JUnit
+          testResultsFiles: 'build/test-results/karma/TESTS-results.xml'
+

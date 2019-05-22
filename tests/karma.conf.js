@@ -53,7 +53,7 @@ module.exports = config => {
     },
 
     junitReporter: {
-      outputFile: '../../../../build/test-results/karma/TESTS-results.xml'
+      outputFile: '../../build/test-results/karma/TESTS-results.xml'
     },
 
     notifyReporter: {
