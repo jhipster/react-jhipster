@@ -22,9 +22,3 @@ export const getSortState = (location, itemsPerPage): IPaginationBaseState => {
   }
   return { itemsPerPage, sort, order, activePage };
 };
-
-export const getPaginationItemsNumber = (totalItems, itemsPerPage) => {
-  const division = Math.floor(totalItems / itemsPerPage);
-  const modulo = totalItems % itemsPerPage;
-  return division + (modulo !== 0 ? 1 : 0);
-};

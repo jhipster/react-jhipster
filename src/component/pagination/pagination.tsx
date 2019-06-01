@@ -2,10 +2,11 @@ import * as React from 'react';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 
 export interface IJhiPaginationProps {
-  items: number;
   activePage: number;
   onSelect: (page: number) => void;
   maxButtons: number;
+  totalItems: number;
+  itemsPerPage: number;
 }
 
 export interface IJhiPaginationState {
@@ -39,14 +40,15 @@ export class JhiPagination extends React.Component<IJhiPaginationProps, IJhiPagi
     const items = [];
     let item: any = {};
     let previousItem: any = {};
+    const maxPage = this.getMaxPage();
     const padSup = Math.floor((this.props.maxButtons - 1) / 2);
     const modulo = (this.props.maxButtons - 1) % 2;
     const padInf = padSup + modulo;
-    for (let j = 0; j < this.props.items; j++) {
+    for (let j = 0; j < maxPage; j++) {
       item = {};
       if (
         j === 0 ||
-        j === this.props.items - 1 ||
+        j === maxPage - 1 ||
         j === activePage - 1 ||
         j === activePage - 2 ||
         (activePage === 1 && j === 1) ||
@@ -75,8 +77,27 @@ export class JhiPagination extends React.Component<IJhiPaginationProps, IJhiPagi
     </PaginationItem>
   );
 
+  cleanActivePage = () => {
+    const { totalItems, itemsPerPage, activePage } = this.props;
+    const cleanActivePage = totalItems === 0 ? 1 : Math.min(activePage, Math.ceil(totalItems / itemsPerPage));
+
+    if (cleanActivePage !== activePage) {
+      this.updateActivePage(cleanActivePage)();
+    }
+  };
+
+  getMaxPage = () => {
+    const { itemsPerPage, totalItems } = this.props;
+    const division = Math.floor(totalItems / itemsPerPage);
+    const modulo = totalItems % itemsPerPage;
+    return division + (modulo !== 0 ? 1 : 0);
+  };
+
   render() {
-    const { activePage, items } = this.props;
+    this.cleanActivePage();
+    const { activePage } = this.props;
+    const maxPage = this.getMaxPage();
+
     return (
       <div>
         <Pagination>
@@ -98,11 +119,11 @@ export class JhiPagination extends React.Component<IJhiPaginationProps, IJhiPagi
                 </PaginationItem>
               ) : null
           )}
-          <PaginationItem {...activePage === items && { disabled: true }}>
+          <PaginationItem {...activePage === maxPage && { disabled: true }}>
             <PaginationLink next onClick={this.nextPage} href="javascript:void(0)" />
           </PaginationItem>
-          <PaginationItem {...activePage === items && { disabled: true }}>
-            <PaginationLink onClick={this.updateActivePage(items)} href="javascript:void(0)">
+          <PaginationItem {...activePage === maxPage && { disabled: true }}>
+            <PaginationLink onClick={this.updateActivePage(maxPage)} href="javascript:void(0)">
               »»
             </PaginationLink>
           </PaginationItem>
