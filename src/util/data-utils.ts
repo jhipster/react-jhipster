@@ -50,7 +50,7 @@ export const byteSize = (base64String: string) => formatAsBytes(size(base64Strin
 export const setFileData = (event, callback: Function, isImage: boolean) => {
   if (event && event.target.files && event.target.files[0]) {
     const file = event.target.files[0];
-    if (isImage && !/^image\//.test(file.type)) {
+    if (isImage && !file.type.startsWith('image/')) {
       return;
     }
 

@@ -13,8 +13,8 @@ export class JvmMemory extends React.Component<IJvmMemoryProps> {
     return (
       <div>
         <h3>Memory</h3>
-        {Object.keys(jvmMetrics).map(key => (
-          <div>
+        {Object.keys(jvmMetrics).map((key, index) => (
+          <div key={index}>
             {jvmMetrics[key].max !== -1 ? (
               <span>
                 <span>{key}</span> (<TextFormat value={jvmMetrics[key].used / 1048576} type="number" format={wholeNumberFormat} />M /{' '}

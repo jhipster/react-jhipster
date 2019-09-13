@@ -33,7 +33,7 @@ export class JvmThreads extends React.Component<IJvmThreadsProps, IJvmThreadsSta
 
   countThreadByState() {
     if (this.props.jvmThreads.threads) {
-      this.state.threadStats = {
+      const threadStats = {
         threadDumpAll: 0,
         threadDumpRunnable: 0,
         threadDumpTimedWaiting: 0,
@@ -43,21 +43,20 @@ export class JvmThreads extends React.Component<IJvmThreadsProps, IJvmThreadsSta
 
       this.props.jvmThreads.threads.forEach(thread => {
         if (thread.threadState === 'RUNNABLE') {
-          this.state.threadStats.threadDumpRunnable += 1;
+          threadStats.threadDumpRunnable += 1;
         } else if (thread.threadState === 'WAITING') {
-          this.state.threadStats.threadDumpWaiting += 1;
+          threadStats.threadDumpWaiting += 1;
         } else if (thread.threadState === 'TIMED_WAITING') {
-          this.state.threadStats.threadDumpTimedWaiting += 1;
+          threadStats.threadDumpTimedWaiting += 1;
         } else if (thread.threadState === 'BLOCKED') {
-          this.state.threadStats.threadDumpBlocked += 1;
+          threadStats.threadDumpBlocked += 1;
         }
       });
 
-      this.state.threadStats.threadDumpAll =
-        this.state.threadStats.threadDumpRunnable +
-        this.state.threadStats.threadDumpWaiting +
-        this.state.threadStats.threadDumpTimedWaiting +
-        this.state.threadStats.threadDumpBlocked;
+      threadStats.threadDumpAll =
+        threadStats.threadDumpRunnable + threadStats.threadDumpWaiting + threadStats.threadDumpTimedWaiting + threadStats.threadDumpBlocked;
+
+      this.setState({ threadStats });
     }
   }
 

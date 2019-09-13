@@ -14,7 +14,7 @@ const level: LogLevelType = initLevels();
  * @param data data
  */
 export const logDebug = (msg, ...data): void => {
-  // tslint:disable-next-line
+  // eslint-disable-next-line no-console
   if (level === 'debug') console.debug(msg, data);
 };
 
@@ -24,7 +24,7 @@ export const logDebug = (msg, ...data): void => {
  * @param data data
  */
 export const logInfo = (msg, ...data): void => {
-  // tslint:disable-next-line
+  // eslint-disable-next-line no-console
   if (['debug', 'info'].includes(level)) console.info(msg, data);
 };
 

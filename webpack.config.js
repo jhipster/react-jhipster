@@ -36,39 +36,34 @@ module.exports = {
   // require those dependencies but don't bundle them
 
   module: {
-    rules: [{
-      enforce: 'pre',
-      test: /\.tsx?$/,
-      loader: 'tslint-loader',
-      exclude: [root('node_modules')]
-    }, {
-      test: /\.tsx?$/,
-      loader: 'awesome-typescript-loader?declaration=false',
-      exclude: [/\.e2e\.ts$/]
-    }]
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.(j|t)sx?$/,
+        loader: 'eslint-loader',
+        exclude: [root('node_modules')]
+      },
+      {
+        test: /\.tsx?$/,
+        loader: 'awesome-typescript-loader?declaration=false',
+        exclude: [/\.e2e\.ts$/]
+      }
+    ]
   },
 
-  plugins: [
-    new webpack.NamedModulesPlugin(),
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        tslintLoader: {
-          emitErrors: false,
-          failOnHint: false
-        }
+  plugins: [new webpack.NamedModulesPlugin()],
+  externals: TEST
+    ? {
+        cheerio: 'window',
+        'react/addons': true,
+        'react/lib/ExecutionEnvironment': true,
+        'react/lib/ReactContext': true
       }
-    })
-  ],
-  externals: TEST ? {
-    cheerio: 'window',
-    'react/addons': true,
-    'react/lib/ExecutionEnvironment': true,
-    'react/lib/ReactContext': true
-  } : {
-    'lodash': true,
-    'react': true,
-    'react-addons-css-transition-group': true,
-    'react-addons-transition-group': true,
-    'react-dom': true
-  }
+    : {
+        lodash: true,
+        react: true,
+        'react-addons-css-transition-group': true,
+        'react-addons-transition-group': true,
+        'react-dom': true
+      }
 };

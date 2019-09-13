@@ -18,16 +18,16 @@ export class SystemMetrics extends React.Component<ISystemMetricsProps> {
       minute: 60000,
       second: 1000
     };
-    let time_string = '';
+    let timeString = '';
     let plural = '';
     for (const key in times) {
       if (Math.floor(ms / times[key]) > 0) {
         plural = Math.floor(ms / times[key]) > 1 ? 's' : '';
-        time_string += Math.floor(ms / times[key]).toString() + ' ' + key.toString() + plural + ' ';
+        timeString += Math.floor(ms / times[key]).toString() + ' ' + key.toString() + plural + ' ';
         ms = ms - times[key] * Math.floor(ms / times[key]);
       }
     }
-    return time_string;
+    return timeString;
   }
 
   render() {

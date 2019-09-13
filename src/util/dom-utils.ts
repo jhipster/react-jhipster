@@ -16,7 +16,6 @@ export const browserLocale = (): string => {
   let lang;
 
   const nav: any = navigator;
-  // tslint:disable-next-line
   if (nav.languages && nav.languages.length) {
     // latest versions of Chrome and Firefox set this correctly
     lang = nav.languages[0];
