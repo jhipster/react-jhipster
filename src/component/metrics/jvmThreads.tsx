@@ -66,8 +66,8 @@ export class JvmThreads extends React.Component<IJvmThreadsProps, IJvmThreadsSta
     }
   }
 
-  componentDidUpdate() {
-    if (this.props.jvmThreads.threads) {
+  componentDidUpdate(prevProps) {
+    if (this.props.jvmThreads.threads && this.props.jvmThreads.threads !== prevProps.jvmThreads.threads) {
       this.countThreadByState();
     }
   }
