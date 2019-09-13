@@ -129,7 +129,7 @@
   "lint-staged": {
     "*.{ts,tsx}": [
       "prettier --write",
-      "yarn lint:fix",
+      "npm run lint:fix",
       "git add"
     ]
   },
