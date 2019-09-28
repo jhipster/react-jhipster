@@ -72,7 +72,6 @@ const deepFindDirty = (obj, path, placeholder) => {
     paths[paths.length - 2] = `${paths[paths.length - 2]}.${paths[paths.length - 1]}`;
     paths.pop();
   }
-  // tslint:disable-next-line:prefer-for-of
   for (let i = 0; i < paths.length; ++i) {
     if (current[paths[i]] === undefined) {
       return undefined;

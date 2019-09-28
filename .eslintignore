@@ -1,0 +1,7 @@
+node_modules/
+tests/karma.conf.js
+webpack.config.js
+target/
+build/
+bundles/
+lib/

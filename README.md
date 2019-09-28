@@ -40,7 +40,7 @@ Go to the [react-jhipster project](https://github.com/jhipster/react-jhipster) a
 
 Run `npm install` to install all dependencies.
 
-Make some changes, run `npm run test` to run both tslint and karma tests.
+Make some changes, run `npm run test` to run both eslint and karma tests.
 
 Package the library with `npm run build`.
 
