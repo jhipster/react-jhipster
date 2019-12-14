@@ -22,7 +22,18 @@ describe('Translate', () => {
           foofoo: 'text {{ foo}} this {{bar}} <b>test</b>',
           foodirty: 'text {{ foo }} this {{bar}} <script>execute</script><br/><hr><div>test</div> <a href="test">link</a>',
           'baz.foo': 'dirty key',
-          foozfooz: 'jhipster is <strong>awesome</strong>!'
+          foozfooz: 'jhipster is <strong>awesome</strong>!',
+          'bar1.bar2': {
+            bar3: 'bar123'
+          },
+          bar4: {
+            'bar5.bar6': 'bar456'
+          },
+          bar7: {
+            'bar8.bar9': {
+              'bar10.bar11': 'bar7891011'
+            }
+          }
         }
       });
       TranslatorContext.registerTranslations('fr', {
@@ -75,12 +86,33 @@ describe('Translate', () => {
       expect(span.html()).to.equal('<span>i18n text</span>');
       expect(span.text()).to.equal('i18n text');
     });
-    it('renders a default span with translated content for dirty key', () => {
+    it('renders a default span with translated content for dirty key 1', () => {
       const mountedWrapper = mount(<Translate contentKey="foo.baz.foo" />);
       const span = mountedWrapper.find('span');
       expect(span.length).to.equal(1);
       expect(span.html()).to.equal('<span>dirty key</span>');
       expect(span.text()).to.equal('dirty key');
+    });
+    it('renders a default span with translated content for dirty key 2', () => {
+      const mountedWrapper = mount(<Translate contentKey="foo.bar1.bar2.bar3" />);
+      const span = mountedWrapper.find('span');
+      expect(span.length).to.equal(1);
+      expect(span.html()).to.equal('<span>bar123</span>');
+      expect(span.text()).to.equal('bar123');
+    });
+    it('renders a default span with translated content for dirty key 3', () => {
+      const mountedWrapper = mount(<Translate contentKey="foo.bar4.bar5.bar6" />);
+      const span = mountedWrapper.find('span');
+      expect(span.length).to.equal(1);
+      expect(span.html()).to.equal('<span>bar456</span>');
+      expect(span.text()).to.equal('bar456');
+    });
+    it('renders a default span with translated content for dirty key 4', () => {
+      const mountedWrapper = mount(<Translate contentKey="foo.bar7.bar8.bar9.bar10.bar11" />);
+      const span = mountedWrapper.find('span');
+      expect(span.length).to.equal(1);
+      expect(span.html()).to.equal('<span>bar7891011</span>');
+      expect(span.text()).to.equal('bar7891011');
     });
     it('renders a provided componenet with translated content', () => {
       const mountedWrapper = mount(<Translate contentKey="foo.bar" component="h1" />);
