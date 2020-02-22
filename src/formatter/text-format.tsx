@@ -21,7 +21,7 @@ export interface ITextFormatProps {
  *    For date type momentJs(http://momentjs.com/docs/#/displaying) format is used
  *    For number type NumeralJS (http://numeraljs.com/#format) format is used
  * @param blankOnInvalid optional to output error or blank on null/invalid values
- * @param locale optional locale in which to format value
+ * @param locale optional locale in which to format value or current locale from TranslatorContext
  */
 export const TextFormat = ({ value, type, format, blankOnInvalid, locale }: ITextFormatProps) => {
   if (blankOnInvalid) {
