@@ -2,6 +2,8 @@ import * as React from 'react';
 import * as moment from 'moment';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
+import * as numeral from 'numeral';
+require('numeral/locales'); // load numeral-js locale data
 
 import { TextFormat } from '../../../react-jhipster';
 
@@ -30,6 +32,24 @@ describe('text-format component', () => {
       expect(node.length).to.eql(1);
       expect(node.text()).to.eql(moment(d).format('DD MM YY'));
     });
+    describe('using locales and formats', () => {
+      const locales = ['en', 'it', 'de', 'fr', 'sk', 'tr', 'vi']; // a sample of locales
+      const formats = ['ddd', 'dddd', 'MMM', 'MMMM']; // short and long textual formats of days and months
+      locales.forEach(locale => {
+        formats.forEach(format => {
+          it(`Should return a valid date formatted with format '${format}' in '${locale}'`, () => {
+            const d = new Date();
+            const node = mount(<TextFormat value={d} type="date" format={format} locale={locale} />);
+            expect(node.length).to.eql(1);
+            expect(node.text()).to.eql(
+              moment(d)
+                .locale(locale)
+                .format(format)
+            );
+          });
+        });
+      });
+    });
   });
   describe('number format', () => {
     it('Should return 0 in text when value is invalid', () => {
@@ -53,6 +73,22 @@ describe('text-format component', () => {
       const node = mount(<TextFormat value={n} type="number" format="0,0.00" />);
       expect(node.length).to.eql(1);
       expect(node.text()).to.eql(moment(n).format('100,000.12'));
+    });
+    // a sample of locales
+    ['en', 'it', 'de', 'fr', 'sk', 'tr', 'vi'].forEach(locale => {
+      describe(`using locale: '${locale}'`, () => {
+        before(() => numeral.locale(locale));
+
+        // currency and ordinal textual formats
+        ['$0,0.00', '$ 0,0[.]00'].forEach(format => {
+          it(`Should return a number formatted with format '${format}' in '${locale}'`, () => {
+            const n = 100000.1234;
+            const node = mount(<TextFormat value={n} type="number" format={format} locale={locale} />);
+            expect(node.length).to.eql(1);
+            expect(node.text()).to.eql(numeral(n).format(format));
+          });
+        });
+      });
     });
   });
 });

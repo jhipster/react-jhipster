@@ -1,5 +1,5 @@
 /**
- * Holder for tranlation content and locale
+ * Holder for translation content and locale
  */
 
 class TranslatorContext {
