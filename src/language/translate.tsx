@@ -39,7 +39,7 @@ const normalizeValue = (value, key) => {
   }
 };
 
-const isNullOrUndefined = (value: any) => value == null;
+const isNullOrUndefined = (value: any) => value === null || value === undefined;
 
 /**
  * Adapted from https://github.com/bloodyowl/react-translate
