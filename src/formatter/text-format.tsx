@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as numeral from 'numeral';
 import * as moment from 'moment';
 import TranslatorContext from '../language/translator-context';
+import 'numeral/locales';
 
 export type ITextFormatTypes = 'date' | 'number';
 
@@ -33,7 +34,6 @@ export const TextFormat = ({ value, type, format, blankOnInvalid, locale }: ITex
     locale = TranslatorContext.context.locale;
     numeral.locale(locale);
   }
-
   if (type === 'date') {
     return (
       <span>
