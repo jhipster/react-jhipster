@@ -39,6 +39,8 @@ const normalizeValue = (value, key) => {
   }
 };
 
+const isNullOrUndefined = (value: any) => value === null || value === undefined;
+
 /**
  * Adapted from https://github.com/bloodyowl/react-translate
  * licenced under The MIT License (MIT) Copyright (c) 2014 Matthias Le Brun
@@ -152,8 +154,11 @@ const doTranslate = (key, interpolate, children) => {
   }
 
   const preRender = data ? get(data, key) || deepFindDirty(data, key) : null;
-  const preSanitize = render(preRender, interpolate) || showMissingOrDefault(key, children);
-  if (/<[a-z][\s\S]*>/i.test(preSanitize)) {
+  const renderedValue = render(preRender, interpolate);
+
+  const preSanitize = !isNullOrUndefined(renderedValue) ? renderedValue : showMissingOrDefault(key, children);
+
+  if (preSanitize === false || /<[a-z][\s\S]*>/i.test(preSanitize)) {
     // String contains HTML tags. Allow only a super restricted set of tags and attributes
     const content = sanitizeHtml(preSanitize, {
       allowedTags: ['b', 'i', 'em', 'strong', 'a', 'br', 'hr'],
