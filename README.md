@@ -14,13 +14,13 @@ Full documentation and information is available on our website at [http://www.jh
 
 Please read our [guidelines](https://github.com/jhipster/generator-jhipster/CONTRIBUTING.md#submitting-an-issue) before submitting an issue. If your issue is a bug, please use the bug template pre populated [here](https://github.com/jhipster/generator-jhipster/issues/new). For feature requests and queries you can use [this template][feature-template].
 
-[jhipster-image]: https://raw.githubusercontent.com/jhipster/jhipster.github.io/master/images/logo/logo-jhipster2x.png
+[jhipster-image]: https://raw.githubusercontent.com/jhipster/jhipster.github.io/main/images/logo/logo-jhipster2x.png
 [jhipster-url]: http://www.jhipster.tech/
 [npm-image]: https://badge.fury.io/js/react-jhipster.svg
 [npm-url]: https://npmjs.org/package/react-jhipster
-[azure-devops-image]: https://dev.azure.com/jhipster/react-jhipster/_apis/build/status/jhipster.react-jhipster?branchName=master
+[azure-devops-image]: https://dev.azure.com/jhipster/react-jhipster/_apis/build/status/jhipster.react-jhipster?branchName=main
 [azure-devops-url-main]: https://dev.azure.com/jhipster/react-jhipster/_build
-[travis-image]: https://travis-ci.org/jhipster/react-jhipster.svg?branch=master
+[travis-image]: https://travis-ci.org/jhipster/react-jhipster.svg?branch=main
 [travis-url]: https://travis-ci.org/jhipster/react-jhipster
 [daviddm-image]: https://david-dm.org/jhipster/react-jhipster.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/jhipster/react-jhipster
