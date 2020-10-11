@@ -14,7 +14,7 @@ export class CacheMetrics extends React.Component<ICacheMetricsProps> {
     const { cacheMetrics, twoDigitAfterPointFormat } = this.props;
     return (
       <div>
-        <h3>Ehcache statistics</h3>
+        <h3>Cache statistics</h3>
         <Table>
           <thead>
             <tr>
