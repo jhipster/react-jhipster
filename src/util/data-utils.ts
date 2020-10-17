@@ -26,7 +26,7 @@ const toBase64 = (file: File, cb: Function) => {
   const fileReader: FileReader = new FileReader();
   fileReader.readAsDataURL(file);
   fileReader.onload = e => {
-    const base64Data = e.target['result'].substr(e.target['result'].indexOf('base64,') + 'base64,'.length);
+    const base64Data = e.target['result'].toString().substr(e.target['result'].toString().indexOf('base64,') + 'base64,'.length);
     cb(base64Data);
   };
 };
