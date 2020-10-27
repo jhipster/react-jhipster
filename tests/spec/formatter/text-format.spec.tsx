@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as moment from 'moment';
+import * as dayjs from 'dayjs';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 import * as numeral from 'numeral';
@@ -10,10 +10,10 @@ import { TextFormat } from '../../../react-jhipster';
 describe('text-format component', () => {
   // All tests will go here
   describe('date format', () => {
-    it('Should return Invalid date in text when value is invalid', () => {
+    it('Should return Invalid Date in text when value is invalid', () => {
       const node = mount(<TextFormat value={null} type="date" />);
       expect(node.length).to.eql(1);
-      expect(node.text()).to.eql('Invalid date');
+      expect(node.text()).to.eql('Invalid Date');
     });
     it('Should return blank when value is invalid and blankOnInvalid is true', () => {
       const node = mount(<TextFormat value={null} type="date" blankOnInvalid />);
@@ -24,13 +24,13 @@ describe('text-format component', () => {
       const d = new Date();
       const node = mount(<TextFormat value={d} type="date" />);
       expect(node.length).to.eql(1);
-      expect(node.text()).to.eql(moment(d).format());
+      expect(node.text()).to.eql(dayjs(d).format());
     });
     it('Should return formatted date for valid date and format', () => {
       const d = new Date();
       const node = mount(<TextFormat value={d} type="date" format="DD MM YY" />);
       expect(node.length).to.eql(1);
-      expect(node.text()).to.eql(moment(d).format('DD MM YY'));
+      expect(node.text()).to.eql(dayjs(d).format('DD MM YY'));
     });
     describe('using locales and formats', () => {
       const locales = ['en', 'it', 'de', 'fr', 'sk', 'tr', 'vi']; // a sample of locales
@@ -42,7 +42,7 @@ describe('text-format component', () => {
             const node = mount(<TextFormat value={d} type="date" format={format} locale={locale} />);
             expect(node.length).to.eql(1);
             expect(node.text()).to.eql(
-              moment(d)
+              dayjs(d)
                 .locale(locale)
                 .format(format)
             );
@@ -72,7 +72,7 @@ describe('text-format component', () => {
       const n = 100000.1234;
       const node = mount(<TextFormat value={n} type="number" format="0,0.00" />);
       expect(node.length).to.eql(1);
-      expect(node.text()).to.eql(moment(n).format('100,000.12'));
+      expect(node.text()).to.eql('100,000.12');
     });
     // a sample of locales
     ['en', 'it', 'de', 'fr', 'sk', 'tr', 'vi'].forEach(locale => {

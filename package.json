@@ -33,6 +33,7 @@
   "homepage": "https://www.jhipster.tech",
   "peerDependencies": {
     "axios": "^0.18.0",
+    "dayjs": "^1.9.4",
     "react": "^16.8.5",
     "react-transition-group": "2.7.0",
     "react-dom": "^16.8.5",
@@ -40,7 +41,6 @@
   },
   "dependencies": {
     "lodash.get": "4.4.2",
-    "moment": "^2.24.0",
     "numeral": "2.0.6",
     "sanitize-html": "2.1.0"
   },
@@ -64,6 +64,7 @@
     "copy-webpack-plugin": "4.5.1",
     "cross-env": "5.1.4",
     "css-loader": "^2.1.1",
+    "dayjs": "^1.9.4",
     "enzyme": "3.9.0",
     "enzyme-adapter-react-16": "1.13.0",
     "eslint": "^6.1.0",
