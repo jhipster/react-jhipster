@@ -35,9 +35,9 @@ describe('Translate', () => {
             }
           },
           barfalsy: {
-            'empty': '',
-            'zero': 0,
-            'false': false,
+            empty: '',
+            zero: 0,
+            false: false
           }
         }
       });
