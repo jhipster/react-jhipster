@@ -31,6 +31,7 @@ class TranslatorContext {
   static setLocale(locale: string) {
     this.context.previousLocale = this.context.locale;
     this.context.locale = locale || this.context.defaultLocale;
+    require('dayjs/locale/' + this.context.locale);
   }
 }
 
