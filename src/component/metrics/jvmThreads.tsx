@@ -78,7 +78,7 @@ export class JvmThreads extends React.Component<IJvmThreadsProps, IJvmThreadsSta
     });
   };
 
-  handleClose = () => {
+  handleClose = (e) => {
     this.setState({
       showModal: false
     });
