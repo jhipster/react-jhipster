@@ -8,7 +8,6 @@ export interface IGarbageCollectorMetricsProps {
 }
 
 export class GarbageCollectorMetrics extends React.Component<IGarbageCollectorMetricsProps> {
-  filterNaN = input => (isNaN(input) ? 0 : input);
 
   render() {
     const { garbageCollectorMetrics, wholeNumberFormat } = this.props;

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { TextFormat } from '../../formatter';
 import { Progress, Table } from 'reactstrap';
+import { nanToZero } from '../../util/number-utils';
 
 export interface IHttpRequestMetricsProps {
   requestMetrics: any;
@@ -9,7 +10,6 @@ export interface IHttpRequestMetricsProps {
 }
 
 export class HttpRequestMetrics extends React.Component<IHttpRequestMetricsProps> {
-  filterNaN = input => (isNaN(input) ? 0 : input);
 
   render() {
     const { requestMetrics, wholeNumberFormat, twoDigitAfterPointFormat } = this.props;
@@ -43,10 +43,10 @@ export class HttpRequestMetrics extends React.Component<IHttpRequestMetricsProps
                   </Progress>
                 </td>
                 <td className="text-right">
-                  <TextFormat value={this.filterNaN(requestMetrics.percode[key].mean)} type="number" format={twoDigitAfterPointFormat} />
+                  <TextFormat value={nanToZero(requestMetrics.percode[key].mean)} type="number" format={twoDigitAfterPointFormat} />
                 </td>
                 <td className="text-right">
-                  <TextFormat value={this.filterNaN(requestMetrics.percode[key].max)} type="number" format={twoDigitAfterPointFormat} />
+                  <TextFormat value={nanToZero(requestMetrics.percode[key].max)} type="number" format={twoDigitAfterPointFormat} />
                 </td>
               </tr>
             ))}

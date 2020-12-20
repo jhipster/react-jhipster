@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { TextFormat } from '../../formatter';
 import { Table } from 'reactstrap';
+import { nanToZero } from '../../util/number-utils';
 
 export interface ICacheMetricsProps {
   cacheMetrics: any;
@@ -8,7 +9,6 @@ export interface ICacheMetricsProps {
 }
 
 export class CacheMetrics extends React.Component<ICacheMetricsProps> {
-  filterNaN = input => (isNaN(input) ? 0 : input);
 
   render() {
     const { cacheMetrics, twoDigitAfterPointFormat } = this.props;
@@ -35,7 +35,7 @@ export class CacheMetrics extends React.Component<ICacheMetricsProps> {
                 <td>{cacheMetrics[key]['cache.gets.miss'] + cacheMetrics[key]['cache.gets.hit']}</td>
                 <td>
                   <TextFormat
-                    value={this.filterNaN(
+                    value={nanToZero(
                       100 *
                         cacheMetrics[key]['cache.gets.hit'] /
                         (cacheMetrics[key]['cache.gets.hit'] + cacheMetrics[key]['cache.gets.miss'])
@@ -46,7 +46,7 @@ export class CacheMetrics extends React.Component<ICacheMetricsProps> {
                 </td>
                 <td>
                   <TextFormat
-                    value={this.filterNaN(
+                    value={nanToZero(
                       100 *
                         cacheMetrics[key]['cache.gets.miss'] /
                         (cacheMetrics[key]['cache.gets.hit'] + cacheMetrics[key]['cache.gets.miss'])

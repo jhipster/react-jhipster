@@ -8,7 +8,6 @@ export interface IDatasourceMetricsProps {
 }
 
 export class DatasourceMetrics extends React.Component<IDatasourceMetricsProps> {
-  filterNaN = input => (isNaN(input) ? 0 : input);
 
   render() {
     const { datasourceMetrics, twoDigitAfterPointFormat } = this.props;
