@@ -33,5 +33,16 @@
     "@typescript-eslint/ban-types": [
       "warn"
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["./tests/spec/**/*"],
+      "rules": {
+        "@typescript-eslint/no-unsafe-return": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off"
+      }
+    }
+  ]
 }
