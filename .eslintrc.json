@@ -1,7 +1,37 @@
 {
-  "extends": ["jhipster-react"],
+  "extends": [
+    "jhipster-react"
+  ],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "rules": {}
+  "rules": {
+    "@typescript-eslint/explicit-module-boundary-types": [
+      "warn"
+    ],
+    "@typescript-eslint/no-unsafe-assignment": [
+      "warn"
+    ],
+    "@typescript-eslint/no-unsafe-call": [
+      "warn"
+    ],
+    "@typescript-eslint/no-unsafe-member-access": [
+      "warn"
+    ],
+    "@typescript-eslint/no-unsafe-return": [
+      "warn"
+    ],
+    "no-shadow": [
+      "warn"
+    ],
+    "@typescript-eslint/restrict-template-expressions": [
+      "warn"
+    ],
+    "@typescript-eslint/restrict-plus-operands": [
+      "warn"
+    ],
+    "@typescript-eslint/ban-types": [
+      "warn"
+    ]
+  }
 }
