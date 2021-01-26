@@ -1,5 +1,8 @@
 /* eslint-disable */
 const webpackConfig = require('../webpack.config.js');
+const path = require('path');
+const os = require('os');
+
 /* eslint-enable */
 const WATCH = process.argv.indexOf('--watch') > -1;
 const DEBUG = process.argv.indexOf('--debug') > -1;
@@ -17,10 +20,10 @@ module.exports = config => {
     frameworks: ['mocha', 'chai'],
 
     // list of files / patterns to load in the browser
-    files: ['spec/entry.ts'],
+    files: [ { pattern: 'spec/entry.ts', watched: false}],
 
     // list of files to exclude
-    exclude: ['e2e/**'],
+    exclude: ['e2e/**', 'node_modules'],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
@@ -28,7 +31,39 @@ module.exports = config => {
       'spec/entry.ts': ['webpack', 'sourcemap']
     },
 
-    webpack: webpackConfig,
+    webpack: {
+      devtool: 'inline-source-map',
+      mode: 'development',
+      resolve: {
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
+        modules: ['node_modules']
+      },
+
+      output: {
+        filename: '[name].js',
+        path: path.join(os.tmpdir(), '_karma_webpack_'),
+      },
+
+      // require those dependencies but don't bundle them
+
+      module: {
+        rules: [
+          {
+            test: /\.tsx?$/,
+            loader: 'ts-loader',
+            exclude: [/\.e2e\.ts$/]
+          }
+        ]
+      },
+
+      // plugins: [new webpack.NamedModulesPlugin()],
+      externals: {
+        cheerio: 'window',
+        'react/addons': true,
+        'react/lib/ExecutionEnvironment': true,
+        'react/lib/ReactContext': true
+      }
+    },
 
     webpackMiddleware: {
       noInfo: true
