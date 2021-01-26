@@ -1,8 +1,6 @@
 /* eslint-disable */
-const webpackConfig = require('../webpack.config.js');
 const path = require('path');
 const os = require('os');
-
 /* eslint-enable */
 const WATCH = process.argv.indexOf('--watch') > -1;
 const DEBUG = process.argv.indexOf('--debug') > -1;
