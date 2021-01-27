@@ -5,7 +5,7 @@ import ThreadItem from './thread-item';
 
 export interface IThreadsModalProps {
   showModal: boolean;
-  handleClose: Function;
+  handleClose: (e) => void;
   threadDump: any;
 }
 
