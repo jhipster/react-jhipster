@@ -7,10 +7,10 @@ export interface IPaginationBaseState {
   activePage: number;
 }
 
-export const getSortState = (location, itemsPerPage): IPaginationBaseState => {
+export const getSortState = (location, itemsPerPage, idField): IPaginationBaseState => {
   const pageParam = getUrlParameter('page', location.search);
   const sortParam = getUrlParameter('sort', location.search);
-  let sort = 'id';
+  let sort = idField || 'id';
   let order = 'asc';
   let activePage = 1;
   if (pageParam !== '' && !isNaN(parseInt(pageParam, 10))) {
