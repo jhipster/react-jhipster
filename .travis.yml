@@ -3,7 +3,7 @@ services:
   - xvfb
 language: node_js
 node_js:
-  - "14.15.0"
+  - "14.16.0"
 cache:
   directories:
     - $HOME/.npm
