@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 /*
  Copyright 2017-2021 the original author or authors from the JHipster project.
 
@@ -17,22 +20,20 @@
  limitations under the License.
  */
 import * as React from 'react';
-import { mount } from 'enzyme';
-import { expect } from 'chai';
+import { render, screen } from '@testing-library/react';
 
-import { JhiItemCount } from './itemCount';
+import { JhiItemCount } from './item-count';
 import { TranslatorContext } from '../../language';
-
 describe('JhiItemCountComponent test', () => {
   describe('UI logic tests', () => {
     it('should change the content on page change', () => {
-      const mountedWrapper = mount(<JhiItemCount page={1} itemsPerPage={10} total={100} />);
-      const span = mountedWrapper.find('span');
-      expect(span.html()).to.equal('<span>Showing 1 - 10 of 100 items.</span>');
+      const { rerender } = render(<JhiItemCount page={1} itemsPerPage={10} total={100} />);
 
-      mountedWrapper.setProps({ page: 2 });
+      expect(screen.getByText('Showing 1 - 10 of 100 items.')).not.toBeNull();
 
-      expect(span.html()).to.equal('<span>Showing 11 - 20 of 100 items.</span>');
+      rerender(<JhiItemCount page={2} itemsPerPage={10} total={100} />);
+
+      expect(screen.getByText('Showing 11 - 20 of 100 items.')).not.toBeNull();
     });
   });
 
@@ -50,14 +51,12 @@ describe('JhiItemCountComponent test', () => {
         },
       });
       TranslatorContext.setLocale('en');
-      const mountedWrapper = mount(<JhiItemCount page={1} itemsPerPage={10} total={100} i18nEnabled />);
-      let span = mountedWrapper.find('span');
-      expect(span.html()).to.equal('<span>Showing 1 - 10 of 100 items.</span>');
+      const mountedWrapper = render(<JhiItemCount page={1} itemsPerPage={10} total={100} i18nEnabled />);
+      expect(mountedWrapper.getByText('Showing 1 - 10 of 100 items.')).not.toBeNull();
 
       TranslatorContext.setLocale('fr');
-      const mountedWrapperFr = mount(<JhiItemCount page={1} itemsPerPage={10} total={100} i18nEnabled />);
-      span = mountedWrapperFr.find('span');
-      expect(span.html()).to.equal('<span>Affichage 1 - 10 de 100 items.</span>');
+      const mountedWrapperFr = render(<JhiItemCount page={1} itemsPerPage={10} total={100} i18nEnabled />);
+      expect(mountedWrapperFr.getByText('Affichage 1 - 10 de 100 items.')).not.toBeNull();
 
       // Reset TranslatorContext to default so that other tests pass
       TranslatorContext.context = {

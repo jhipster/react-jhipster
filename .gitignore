@@ -22,6 +22,7 @@ coverage
 *.metadata.json
 /bundles
 /lib/tests
+build/
 
 #################
 ## IDE
