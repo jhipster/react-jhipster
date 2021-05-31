@@ -241,6 +241,22 @@ describe.only('ValidatedForm', () => {
     });
   });
   describe('with validated input & field children', () => {
+    it('should override register, error, isTouched & isDirty', () => {
+      const { container } = render(
+        <ValidatedForm onSubmit={() => {}} className="myform">
+          <ValidatedInput name="test-1" error={{ type: 'required', message: 'Your email is required.' }} isTouched={true} isDirty={true} />
+        </ValidatedForm>
+      );
+      const form = container.querySelector('form.myform');
+      expect(form).not.toBeNull();
+      const input: HTMLInputElement = container.querySelector('input[name="test-1"]');
+      expect(input.name).toEqual('test-1');
+      expect(input.type).toEqual('text');
+      expect(input.className).toEqual('is-invalid form-control');
+      expect(input.value).toEqual('hello');
+
+      expect(screen.findByText('Your email is required.')).not.toBeNull();
+    });
     describe('renders them with default values passed inline', () => {
       it('for text field', () => {
         const { container } = render(

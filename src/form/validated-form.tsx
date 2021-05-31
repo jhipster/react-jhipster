@@ -22,6 +22,17 @@ export interface ValidatedFormProps {
   [key: string]: any;
 }
 
+/**
+ * A wrapper for simple validated forms using Reactstrap Form and React-hook-form.
+ * The validated fields/inputs must be direct children of the form.
+ * This components injects methods and values from react-hook-form's `useForm` hook into the ValidatedField/ValidatedInput components
+ * For complex use cases or for nested children, use Reactstrap form elements
+ * or ValidatedField or ValidatedInput and pass methods and values from react-hook-form's `useForm` hook
+ * directly as props
+ *
+ * @param ValidatedFormProps
+ * @returns JSX.Element
+ */
 export function ValidatedForm({ defaultValues, children, onSubmit, mode, ...rest }: ValidatedFormProps): JSX.Element {
   const {
     handleSubmit,
@@ -47,8 +58,8 @@ export function ValidatedForm({ defaultValues, children, onSubmit, mode, ...rest
                 ...child.props,
                 register: child.props.register || register,
                 error: child.props.error || errors[child.props.name],
-                isTouched: child.props.isTouched || touchedFields[child.props.name],
-                isDirty: child.props.isDirty || dirtyFields[child.props.name],
+                isTouched: typeof child.props.isTouched !== 'undefined' ? touchedFields[child.props.name] : child.props.isTouched,
+                isDirty: typeof child.props.isDirty !== 'undefined' ? dirtyFields[child.props.name] : child.props.isDirty,
                 key: child.props.name,
               },
             })
@@ -94,6 +105,14 @@ export interface ValidatedFieldProps extends ValidatedInputProps {
   inputClass?: string;
 }
 
+/**
+ * A utility wrapper over Reactstrap Input component thats uses react-hook-form data to
+ * show error message and error/validated styles.
+ * This component can be used with ValidatedForm
+ *
+ * @param ValidatedInputProps
+ * @returns JSX.Element
+ */
 export function ValidatedInput({
   name,
   register,
@@ -145,6 +164,14 @@ export function ValidatedInput({
   );
 }
 
+/**
+ * A utility wrapper over Reactstrap FormGroup + Label + ValidatedInput
+ * that uses react-hook-form data to show error message and error/validated styles.
+ * This component can be used with ValidatedForm
+ *
+ * @param ValidatedFieldProps
+ * @returns JSX.Element
+ */
 export function ValidatedField({
   children,
   id,
