@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { isPromise } from '../../../react-jhipster';
+import { isPromise } from './index';
 
 describe('Promise util', () => {
   describe('isPromise', () => {

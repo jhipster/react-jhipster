@@ -20,8 +20,8 @@ import * as React from 'react';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 
-import { JhiItemCount } from '../../../../src/component';
-import { TranslatorContext } from '../../../../src/language';
+import { JhiItemCount } from './itemCount';
+import { TranslatorContext } from '../../language';
 
 describe('JhiItemCountComponent test', () => {
   describe('UI logic tests', () => {
@@ -40,14 +40,14 @@ describe('JhiItemCountComponent test', () => {
     it('should change on language change', () => {
       TranslatorContext.registerTranslations('en', {
         global: {
-          'item-count': 'Showing {{first}} - {{second}} of {{total}} items.'
-        }
+          'item-count': 'Showing {{first}} - {{second}} of {{total}} items.',
+        },
       });
 
       TranslatorContext.registerTranslations('fr', {
         global: {
-          'item-count': 'Affichage {{first}} - {{second}} de {{total}} items.'
-        }
+          'item-count': 'Affichage {{first}} - {{second}} de {{total}} items.',
+        },
       });
       TranslatorContext.setLocale('en');
       const mountedWrapper = mount(<JhiItemCount page={1} itemsPerPage={10} total={100} i18nEnabled />);
@@ -64,7 +64,7 @@ describe('JhiItemCountComponent test', () => {
         ...TranslatorContext.context,
         translations: {},
         locale: null,
-        previousLocale: null
+        previousLocale: null,
       };
     });
   });

@@ -1,9 +1,9 @@
 /* eslint-disable */
 const path = require('path');
 const os = require('os');
-/* eslint-enable */
-const WATCH = process.argv.indexOf('--watch') > -1;
+const WATCH = process.argv.indexOf('--auto-watch') > -1;
 const DEBUG = process.argv.indexOf('--debug') > -1;
+/* eslint-enable */
 
 module.exports = config => {
   config.set({
@@ -18,7 +18,7 @@ module.exports = config => {
     frameworks: ['mocha', 'chai'],
 
     // list of files / patterns to load in the browser
-    files: [ { pattern: 'spec/entry.ts', watched: false}],
+    files: [ { pattern: 'src/entry.ts', watched: false}],
 
     // list of files to exclude
     exclude: ['e2e/**', 'node_modules'],
@@ -26,7 +26,7 @@ module.exports = config => {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'spec/entry.ts': ['webpack', 'sourcemap']
+      'src/entry.ts': ['webpack', 'sourcemap']
     },
 
     webpack: {
@@ -86,7 +86,7 @@ module.exports = config => {
     },
 
     junitReporter: {
-      outputFile: '../../build/test-results/karma/TESTS-results.xml'
+      outputFile: './build/test-results/karma/TESTS-results.xml'
     },
 
     notifyReporter: {

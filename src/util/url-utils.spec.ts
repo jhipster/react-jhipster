@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { parseHeaderForLinks, getUrlParameter } from '../../../react-jhipster';
+import { parseHeaderForLinks, getUrlParameter } from './index';
 
 describe('parseHeaderForLinks', () => {
   it('should throw an error when passed an empty string', () => {

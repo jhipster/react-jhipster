@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { loadMoreDataWhenScrolled } from '../../../react-jhipster';
+import { loadMoreDataWhenScrolled } from './pagination-utils';
 
 describe('loadMoreDataWhenScrolled', () => {
   const setLinks = (first, last, prev) => ({ first, last, prev });
@@ -19,3 +19,5 @@ describe('loadMoreDataWhenScrolled', () => {
     });
   });
 });
+
+/* TODO add unit tests */

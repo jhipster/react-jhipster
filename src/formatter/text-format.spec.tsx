@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import * as numeral from 'numeral';
 require('numeral/locales'); // load numeral-js locale data
 
-import { TextFormat } from '../../../react-jhipster';
+import { TextFormat } from './index';
 
 describe('text-format component', () => {
   // All tests will go here

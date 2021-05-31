@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { Storage, StorageType, getStorage } from '../../../react-jhipster';
+import { Storage, StorageType, getStorage } from './index';
 
 describe('Storage Util', () => {
   describe('getStorage', () => {

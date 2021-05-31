@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { size, byteSize } from '../../../react-jhipster';
+import { size, byteSize } from './index';
 
 describe('Data utils', () => {
   describe('size', () => {

@@ -37,6 +37,7 @@
     "react": "^17.0.1",
     "react-transition-group": "^4.4.1",
     "react-dom": "^17.0.1",
+    "react-hook-form": "^7.6.8",
     "reactstrap": "^8.9.0"
   },
   "dependencies": {
@@ -101,6 +102,7 @@
     "react-addons-test-utils": "^16.0.0-alpha.3",
     "react-addons-transition-group": "^16.0.0-alpha.3",
     "react-dom": "^17.0.1",
+    "react-hook-form": "^7.6.8",
     "react-redux": "^7.2.2",
     "react-router-dom": "^5.2.0",
     "react-test-renderer": "^17.0.1",
@@ -142,8 +144,8 @@
     "cleanup": "rimraf lib/* src/*.d.ts src/**/*.d.ts src/*.{js,jsx} src/**/*.{js,jsx} tests/**/*.d.ts tests/*.d.ts",
     "lint": "eslint . --ext .js,.ts,.jsx,.tsx",
     "lint:fix": "npm run lint -- --fix",
-    "test": "npm run lint && karma start tests/karma.conf.js",
-    "test:watch": "karma start tests/karma.conf.js --watch",
+    "test": "npm run lint && karma start karma.conf.js",
+    "test:watch": "karma start karma.conf.js --auto-watch",
     "build": "npm run cleanup && npm run tsc && webpack && shx cp bundles/react-jhipster.umd.js bundles/index.js",
     "release": "npm test && git push && git push --tags && npm publish",
     "commit-lib": "git add lib && git commit --allow-empty -m \"Update libs\"",
