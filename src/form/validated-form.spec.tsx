@@ -1,187 +1,677 @@
-// import * as React from 'react';
-// import { mount } from 'enzyme';
-// import { expect } from 'chai';
+/**
+ * @jest-environment jsdom
+ */
+import * as React from 'react';
+import { render, fireEvent, act, screen, waitFor } from '@testing-library/react';
+import { useForm } from 'react-hook-form';
 
-// import {
-//   // ValidatedForm,
-//   // ValidatedField,
-//   ValidatedInput,
-//   // ValidatedFieldProps,
-//   // ValidatedFormProps,
-//   // ValidatedInputProps,
-// } from './index';
+import { ValidatedForm, ValidatedField, ValidatedInput } from './index';
 
-// describe.only('ValidatedInput', () => {
-//   describe('with basic text input', () => {
-//     it('without default value renders an empty input', () => {
-//       const mountedWrapper = mount(<ValidatedInput name="test-1" />);
-//       const input = mountedWrapper.find('input');
-//       expect(input.html()).to.equal('<input name="test-1" type="text" class="form-control">');
-//     });
-//     it('with default value renders an input with value', () => {
-//       const mountedWrapper = mount(<ValidatedInput name="test-1" defaultValue="hello" />);
-//       const input = mountedWrapper.find('input');
-//       expect(input.html()).to.equal('<input name="test-1" type="text" class="form-control" value="hello">');
-//     });
-//     it('with register renders an input', () => {
-//       const mountedWrapper = mount(<ValidatedInput name="test-1" defaultValue="hello" />);
-//       const input = mountedWrapper.find('input');
-//       expect(input.html()).to.equal('<input name="test-1" type="text" class="form-control" value="hello">');
-//     });
-//   });
+describe.only('ValidatedInput', () => {
+  describe('with basic text input', () => {
+    it('without default value renders an empty input', () => {
+      const { container } = render(<ValidatedInput name="test-1" />);
+      const input = container.querySelector('input');
+      expect(input.name).toEqual('test-1');
+      expect(input.type).toEqual('text');
+      expect(input.className).toEqual('form-control');
+      expect(input.value).toEqual('');
+    });
+    it('with default value renders an input with value', () => {
+      const { container } = render(<ValidatedInput name="test-1" defaultValue="hello" isTouched={true} />);
+      const input = container.querySelector('input');
+      expect(input.name).toEqual('test-1');
+      expect(input.type).toEqual('text');
+      expect(input.className).toEqual('form-control');
+      expect(input.value).toEqual('hello');
+    });
+  });
 
-//   // describe('with translation', () => {
-//   //   before(() => {
+  describe('with register renders', () => {
+    function InputApp({ name, ...rest }) {
+      const onSubmit = data => {
+        // do nothing
+      };
+      const {
+        register,
+        handleSubmit,
+        formState: { errors },
+      } = useForm();
+      return (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <ValidatedInput register={register} name={name} error={errors[name]} role="textbox" {...rest} />
+          <button type="submit">SUBMIT</button>
+        </form>
+      );
+    }
+    it('without default value renders an empty input', () => {
+      const { container } = render(<InputApp name="test" defaultValue="" />);
+      const input = container.querySelector('input');
+      expect(input.name).toEqual('test');
+      expect(input.type).toEqual('text');
+      expect(input.className).toEqual('form-control');
+      expect(input.value).toEqual('');
+    });
+    it('with default value renders an input', () => {
+      const { container } = render(<InputApp name="test" defaultValue="hello" isTouched={true} />);
+      const input = container.querySelector('input');
+      expect(input.name).toEqual('test');
+      expect(input.type).toEqual('text');
+      expect(input.className).toEqual(' is-touched is-valid form-control');
+      expect(input.value).toEqual('hello');
+    });
+    it('with default value renders an input and shows error when value is absent', async () => {
+      const mockChange = jest.fn(e => {
+        // do nothing
+      });
+      await act(async () => {
+        const { container } = render(
+          <InputApp name="test" defaultValue="hello" validate={{ required: 'this is required' }} onChange={mockChange} />
+        );
 
-//   //   });
+        let input = container.querySelector('input');
+        expect(input.name).toEqual('test');
+        expect(input.type).toEqual('text');
+        expect(input.className).toEqual('form-control');
+        expect(input.value).toEqual('hello');
 
-//   //   beforeEach(() => {
-//   //     // TranslatorContext.setLocale('en');
-//   //   });
-//   //   // All tests will go here
-//   //   it('renders child content when key is invalid and renderInnerTextForMissingKeys is true', () => {
-//   //     const mountedWrapper = mount(<Translate contentKey="foo.baz">def text</Translate>);
-//   //     const span = mountedWrapper.find('span');
-//   //     expect(span.length).to.equal(1);
-//   //     expect(span.html()).to.equal('<span>def text</span>');
-//   //   });
-//   //   it('renders key-missing message when child content is null & key is invalid', () => {
-//   //     const mountedWrapper = mount(<Translate contentKey="foo.baz" />);
-//   //     const span = mountedWrapper.find('span');
-//   //     expect(span.length).to.equal(1);
-//   //     expect(span.html()).to.equal('<span>translation-not-found[foo.baz]</span>');
-//   //   });
-//   //   it('renders key-missing message when key is invalid & renderInnerTextForMissingKeys is false', () => {
-//   //     TranslatorContext.setRenderInnerTextForMissingKeys(false);
-//   //     const mountedWrapper = mount(<Translate contentKey="foo.baz">def text</Translate>);
-//   //     const span = mountedWrapper.find('span');
-//   //     expect(span.length).to.equal(1);
-//   //     expect(span.html()).to.equal('<span>translation-not-found[foo.baz]</span>');
-//   //     expect(span.text()).to.equal('translation-not-found[foo.baz]');
-//   //   });
-//   //   it('renders key-missing message when key is invalid & interpolate argument given', () => {
-//   //     const mountedWrapper = mount(
-//   //       <Translate contentKey="foo.baz" interpolate={{ foo: 'FOO', bar: 'BAR' }}>
-//   //         def text
-//   //       </Translate>
-//   //     );
-//   //     const span = mountedWrapper.find('span');
-//   //     expect(span.length).to.equal(1);
-//   //     expect(span.html()).to.equal('<span>translation-not-found[foo.baz]</span>');
-//   //     expect(span.text()).to.equal('translation-not-found[foo.baz]');
-//   //   });
-//   //   it('renders a default span with translated content', () => {
-//   //     const mountedWrapper = mount(<Translate contentKey="foo.bar" />);
-//   //     const span = mountedWrapper.find('span');
-//   //     expect(span.length).to.equal(1);
-//   //     expect(span.html()).to.equal('<span>i18n text</span>');
-//   //     expect(span.text()).to.equal('i18n text');
-//   //   });
-//   //   it('renders a default span with translated content for dirty key 1', () => {
-//   //     const mountedWrapper = mount(<Translate contentKey="foo.baz.foo" />);
-//   //     const span = mountedWrapper.find('span');
-//   //     expect(span.length).to.equal(1);
-//   //     expect(span.html()).to.equal('<span>dirty key</span>');
-//   //     expect(span.text()).to.equal('dirty key');
-//   //   });
-//   //   it('renders a default span with translated content for dirty key 2', () => {
-//   //     const mountedWrapper = mount(<Translate contentKey="foo.bar1.bar2.bar3" />);
-//   //     const span = mountedWrapper.find('span');
-//   //     expect(span.length).to.equal(1);
-//   //     expect(span.html()).to.equal('<span>bar123</span>');
-//   //     expect(span.text()).to.equal('bar123');
-//   //   });
-//   //   it('renders a default span with translated content for dirty key 3', () => {
-//   //     const mountedWrapper = mount(<Translate contentKey="foo.bar4.bar5.bar6" />);
-//   //     const span = mountedWrapper.find('span');
-//   //     expect(span.length).to.equal(1);
-//   //     expect(span.html()).to.equal('<span>bar456</span>');
-//   //     expect(span.text()).to.equal('bar456');
-//   //   });
-//   //   it('renders a default span with translated content for dirty key 4', () => {
-//   //     const mountedWrapper = mount(<Translate contentKey="foo.bar7.bar8.bar9.bar10.bar11" />);
-//   //     const span = mountedWrapper.find('span');
-//   //     expect(span.length).to.equal(1);
-//   //     expect(span.html()).to.equal('<span>bar7891011</span>');
-//   //     expect(span.text()).to.equal('bar7891011');
-//   //   });
-//   //   it('renders a provided component with translated content', () => {
-//   //     const mountedWrapper = mount(<Translate contentKey="foo.bar" component="h1" />);
-//   //     const span = mountedWrapper.find('h1');
-//   //     expect(span.length).to.equal(1);
-//   //     expect(span.html()).to.equal('<h1>i18n text</h1>');
-//   //     expect(span.text()).to.equal('i18n text');
-//   //   });
-//   //   it('renders a provided component with translated & interpolated content', () => {
-//   //     const mountedWrapper = mount(<Translate contentKey="foo.fooz" component="h1" interpolate={{ foo: 'FOO', bar: 'BAR' }} />);
-//   //     const span = mountedWrapper.find('h1');
-//   //     expect(span.length).to.equal(1);
-//   //     expect(span.html()).to.equal('<h1>text FOO this BAR</h1>');
-//   //     expect(span.text()).to.equal('text FOO this BAR');
-//   //   });
-//   //   it('renders a provided component with translated & interpolated content with html', () => {
-//   //     const mountedWrapper = mount(<Translate contentKey="foo.foofoo" component="h1" interpolate={{ foo: 'FOO', bar: 'BAR' }} />);
-//   //     const span = mountedWrapper.find('h1');
-//   //     expect(span.length).to.equal(1);
-//   //     expect(span.html()).to.equal('<h1>text FOO this BAR <b>test</b></h1>');
-//   //     expect(span.text()).to.equal('text FOO this BAR test');
-//   //   });
-//   //   it('renders a provided component with translated, sanitized & interpolated content', () => {
-//   //     const mountedWrapper = mount(<Translate contentKey="foo.foodirty" component="h1" interpolate={{ foo: 'FOO', bar: 'BAR' }} />);
-//   //     const span = mountedWrapper.find('h1');
-//   //     expect(span.length).to.equal(1);
-//   //     expect(span.html()).to.equal('<h1>text FOO this BAR <br><hr>test <a href="test">link</a></h1>');
-//   //     expect(span.text()).to.equal('text FOO this BAR test link');
-//   //   });
-//   //   it('renders a default span with translated content with new locale', () => {
-//   //     TranslatorContext.setLocale('fr');
-//   //     const mountedWrapper = mount(<Translate contentKey="foo.bar" />);
-//   //     const span = mountedWrapper.find('span');
-//   //     expect(span.length).to.equal(1);
-//   //     expect(span.html()).to.equal('<span>i18n text fr</span>');
-//   //     expect(span.text()).to.equal('i18n text fr');
-//   //   });
+        fireEvent.input(screen.getByRole('textbox'), {
+          target: {
+            value: '',
+          },
+        });
+        expect(mockChange).toBeCalled();
 
-//   //   it('renders a default span with translated content for empty string', () => {
-//   //     const mountedWrapper = mount(<Translate contentKey="foo.barfalsy.empty" />);
-//   //     const span = mountedWrapper.find('span');
-//   //     expect(span.length).to.equal(1);
-//   //     expect(span.html()).to.equal('<span></span>');
-//   //     expect(span.text()).to.equal('');
-//   //   });
+        fireEvent.submit(screen.getByRole('button'));
 
-//   //   it('renders a default span with translated content for number 0', () => {
-//   //     const mountedWrapper = mount(<Translate contentKey="foo.barfalsy.zero" />);
-//   //     const span = mountedWrapper.find('span');
-//   //     expect(span.length).to.equal(1);
-//   //     expect(span.html()).to.equal('<span>0</span>');
-//   //     expect(span.text()).to.equal('0');
-//   //   });
+        await waitFor(() => expect(screen.getByText('this is required')).not.toBeNull());
+        input = container.querySelector('input');
+        expect(input.className).toEqual('is-invalid form-control');
+        expect(input.value).toEqual('');
+      });
+    });
+  });
+});
 
-//   //   it('renders a default span with translated content for boolean false', () => {
-//   //     const mountedWrapper = mount(<Translate contentKey="foo.barfalsy.false" />);
-//   //     const span = mountedWrapper.find('span');
-//   //     expect(span.length).to.equal(1);
-//   //     expect(span.html()).to.equal('<span>false</span>');
-//   //     expect(span.text()).to.equal('false');
-//   //   });
-//   // });
-// });
+describe.only('ValidatedField', () => {
+  describe('with basic text input', () => {
+    it('without default value & label renders an empty input', () => {
+      const { container } = render(<ValidatedField name="test-1" />);
+      const fg = container.querySelector('div.form-group');
+      expect(fg).not.toBeNull();
+      const input = container.querySelector('input');
+      expect(input.name).toEqual('test-1');
+      expect(input.type).toEqual('text');
+      expect(input.className).toEqual('form-control');
+      expect(input.value).toEqual('');
+    });
+    it('with label renders an input with label', () => {
+      const { container } = render(<ValidatedField name="test-1" defaultValue="hello" isTouched={true} label="Label" />);
+      const col = container.querySelector('div.col');
+      expect(col).toBeNull();
+      const fg = container.querySelector('div.form-group');
+      expect(fg).not.toBeNull();
+      const input = container.querySelector('input');
+      expect(input.name).toEqual('test-1');
+      expect(input.type).toEqual('text');
+      expect(input.className).toEqual('form-control');
+      expect(input.value).toEqual('hello');
+      const lb = container.querySelector('label');
+      expect(lb).not.toBeNull();
+      expect(screen.getByText('Label')).not.toBeNull();
+    });
+    it('with row renders an input in a column', () => {
+      const { container } = render(<ValidatedField name="test-1" defaultValue="hello" isTouched={true} label="Label" row />);
+      const col = container.querySelector('div.col');
+      expect(col).not.toBeNull();
+      const fg = container.querySelector('div.form-group');
+      expect(fg).not.toBeNull();
+      const input = container.querySelector('input');
+      expect(input.name).toEqual('test-1');
+      expect(input.type).toEqual('text');
+      expect(input.className).toEqual('form-control');
+      expect(input.value).toEqual('hello');
+      const lb = container.querySelector('label');
+      expect(lb).not.toBeNull();
+      expect(screen.getByText('Label')).not.toBeNull();
+    });
+    it('with check renders an input before label', () => {
+      const { container } = render(<ValidatedField name="test-1" label="Label" check />);
+      const fg = container.querySelector('div.form-check');
+      expect(fg).not.toBeNull();
+      expect(fg.innerHTML).toEqual('<input name="test-1" type="text" class="form-control"><label class="form-check-label">Label</label>');
+    });
+  });
 
-// // describe('translate service', () => {
-// //   beforeEach(() => {
-// //     TranslatorContext.setLocale('en');
-// //   });
+  describe('with register renders', () => {
+    function InputApp({ name, ...rest }) {
+      const onSubmit = data => {
+        // do nothing
+      };
+      const {
+        register,
+        handleSubmit,
+        formState: { errors },
+      } = useForm();
+      return (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <ValidatedField register={register} name={name} error={errors[name]} role="textbox" {...rest} />
+          <button type="submit">SUBMIT</button>
+        </form>
+      );
+    }
+    it('without default value renders an empty input', () => {
+      const { container } = render(<InputApp name="test" defaultValue="" />);
+      const input = container.querySelector('input');
+      expect(input.name).toEqual('test');
+      expect(input.type).toEqual('text');
+      expect(input.className).toEqual('form-control');
+      expect(input.value).toEqual('');
+    });
+    it('with default value renders an input', () => {
+      const { container } = render(<InputApp name="test" defaultValue="hello" isTouched={true} />);
+      const input = container.querySelector('input');
+      expect(input.name).toEqual('test');
+      expect(input.type).toEqual('text');
+      expect(input.className).toEqual(' is-touched is-valid form-control');
+      expect(input.value).toEqual('hello');
+    });
+    it('with default value renders an input and shows error when value is absent', async () => {
+      const mockChange = jest.fn(e => {
+        // do nothing
+      });
+      await act(async () => {
+        const { container } = render(
+          <InputApp name="test" defaultValue="hello" validate={{ required: 'this is required' }} onChange={mockChange} />
+        );
 
-// //   it('produce translated content', () => {
-// //     const out = translate('foo.bar');
-// //     expect(out).to.equal('i18n text');
-// //   });
+        let input = container.querySelector('input');
+        expect(input.name).toEqual('test');
+        expect(input.type).toEqual('text');
+        expect(input.className).toEqual('form-control');
+        expect(input.value).toEqual('hello');
 
-// //   it('produce translated React component', () => {
-// //     const mountedWrapper = mount(translate('foo.foozfooz'));
-// //     const span = mountedWrapper.find('span');
-// //     expect(span.length).to.equal(1);
-// //     expect(mountedWrapper.html()).to.equal('<span>jhipster is <strong>awesome</strong>!</span>');
-// //   });
-// // });
+        fireEvent.input(screen.getByRole('textbox'), {
+          target: {
+            value: '',
+          },
+        });
+        expect(mockChange).toBeCalled();
+
+        fireEvent.submit(screen.getByRole('button'));
+
+        await waitFor(() => expect(screen.getByText('this is required')).not.toBeNull());
+        input = container.querySelector('input');
+        expect(input.className).toEqual('is-invalid form-control');
+        expect(input.value).toEqual('');
+      });
+    });
+  });
+});
+describe.only('ValidatedForm', () => {
+  describe('with non-input children', () => {
+    it('renders them as single element', () => {
+      const { container } = render(
+        <ValidatedForm onSubmit={() => {}} className="myform">
+          <div>a div</div>
+        </ValidatedForm>
+      );
+      const form = container.querySelector('form.myform');
+      expect(form).not.toBeNull();
+      expect(screen.getByText('a div')).not.toBeNull();
+    });
+    it('renders them as array of elements', () => {
+      const { container } = render(
+        <ValidatedForm onSubmit={() => {}} className="myform">
+          {/* A comment */}
+          <div>a div</div>
+          <button>a button</button>
+          <div>
+            <span>
+              <button>nested button</button>
+            </span>
+          </div>
+        </ValidatedForm>
+      );
+      const form = container.querySelector('form.myform');
+      expect(form).not.toBeNull();
+      expect(screen.getByText('a div')).not.toBeNull();
+      expect(screen.getByText('a button')).not.toBeNull();
+      expect(screen.getByText('nested button')).not.toBeNull();
+    });
+  });
+  describe('with validated input & field children', () => {
+    describe('renders them with default values passed inline', () => {
+      it('for text field', () => {
+        const { container } = render(
+          <ValidatedForm onSubmit={() => {}} className="myform">
+            <ValidatedInput name="test-1" defaultValue="hello" />
+          </ValidatedForm>
+        );
+        const input: HTMLInputElement = container.querySelector('input[name="test-1"]');
+        expect(input.name).toEqual('test-1');
+        expect(input.type).toEqual('text');
+        expect(input.className).toEqual('form-control');
+        expect(input.value).toEqual('hello');
+      });
+
+      it('for password field', () => {
+        const { container } = render(
+          <ValidatedForm onSubmit={() => {}} className="myform">
+            <ValidatedField name="test-2" type="password" label="password" defaultValue="1231" />
+          </ValidatedForm>
+        );
+        const input2: HTMLInputElement = container.querySelector('input[name="test-2"]');
+        expect(input2.name).toEqual('test-2');
+        expect(input2.type).toEqual('password');
+        expect(input2.className).toEqual('form-control');
+        expect(input2.value).toEqual('1231');
+      });
+
+      it('for checkbox field', () => {
+        const { container } = render(
+          <ValidatedForm onSubmit={() => {}} className="myform">
+            <ValidatedField name="test-3" type="checkbox" value={true} check label="check label" />
+          </ValidatedForm>
+        );
+        const input3: HTMLInputElement = container.querySelector('input[name="test-3"]');
+        expect(input3.name).toEqual('test-3');
+        expect(input3.type).toEqual('checkbox');
+        expect(input3.className).toEqual('form-check-input');
+        expect(input3.value).toEqual('true');
+      });
+
+      it('for radio field', () => {
+        const { container } = render(
+          <ValidatedForm onSubmit={() => {}} className="myform">
+            <ValidatedField name="test-4" type="radio" value="on" label="radio label" />
+          </ValidatedForm>
+        );
+        const input4: HTMLInputElement = container.querySelector('input[name="test-4"]');
+        expect(input4.name).toEqual('test-4');
+        expect(input4.type).toEqual('radio');
+        expect(input4.className).toEqual('form-check-input');
+        expect(input4.value).toEqual('on');
+      });
+
+      it('for select field', () => {
+        const { container } = render(
+          <ValidatedForm onSubmit={() => {}} className="myform">
+            <ValidatedInput name="test-5" type="select" label="select label" defaultValue="value 1">
+              <option>value 1</option>
+              <option>value 2</option>
+            </ValidatedInput>
+            <ValidatedField name="test-6" type="select" multiple label="select label" defaultValue={['value 1', 'value 3']}>
+              <option>value 1</option>
+              <option>value 2</option>
+              <option>value 3</option>
+            </ValidatedField>
+          </ValidatedForm>
+        );
+        const input5: HTMLSelectElement = container.querySelector('select[name="test-5"]');
+        expect(input5.name).toEqual('test-5');
+        expect(input5.className).toEqual('form-control');
+        expect(input5.value).toEqual('value 1');
+
+        const input6: HTMLSelectElement = container.querySelector('select[name="test-6"]');
+        expect(input6.name).toEqual('test-6');
+        expect(input6.multiple).toEqual(true);
+        expect(input6.className).toEqual('form-control');
+        expect(input6.selectedOptions[0].value).toEqual('value 1');
+        expect(input6.selectedOptions[1].value).toEqual('value 3');
+      });
+    });
+    describe('renders them with default values passed via form', () => {
+      it('for text field', () => {
+        const { container } = render(
+          <ValidatedForm
+            onSubmit={() => {}}
+            className="myform"
+            defaultValues={{
+              test1: 'test1',
+              test2: 'test2',
+            }}
+          >
+            <ValidatedField name="test1" />
+            <ValidatedField name="test2" type="password" label="password" />
+          </ValidatedForm>
+        );
+
+        const input: HTMLInputElement = container.querySelector('input[name="test1"]');
+        expect(input.name).toEqual('test1');
+        expect(input.type).toEqual('text');
+        expect(input.className).toEqual('form-control');
+        expect(input.value).toEqual('test1');
+
+        const input2: HTMLInputElement = container.querySelector('input[name="test2"]');
+        expect(input2.name).toEqual('test2');
+        expect(input2.type).toEqual('password');
+        expect(input2.className).toEqual('form-control');
+        expect(input2.value).toEqual('test2');
+      });
+
+      it('for checkbox/radio field should retain value inline', () => {
+        const { container } = render(
+          <ValidatedForm
+            onSubmit={() => {}}
+            className="myform"
+            defaultValues={{
+              test3: 'false',
+              test4: 'on',
+            }}
+          >
+            <ValidatedField name="test3" type="checkbox" value={true} check label="check label" />
+            <ValidatedField name="test4" type="radio" value="on" label="radio label" />
+          </ValidatedForm>
+        );
+        // should retain the value
+        const input3: HTMLInputElement = container.querySelector('input[name="test3"]');
+        expect(input3.name).toEqual('test3');
+        expect(input3.type).toEqual('checkbox');
+        expect(input3.className).toEqual('form-check-input');
+        expect(input3.value).toEqual('true');
+        expect(input3.checked).toEqual(true);
+        // should retain the value
+        const input4: HTMLInputElement = container.querySelector('input[name="test4"]');
+        expect(input4.name).toEqual('test4');
+        expect(input4.type).toEqual('radio');
+        expect(input4.className).toEqual('form-check-input');
+        expect(input4.value).toEqual('on');
+        expect(input4.checked).toEqual(true);
+      });
+
+      it('for select field', () => {
+        const { container } = render(
+          <ValidatedForm
+            onSubmit={() => {}}
+            className="myform"
+            defaultValues={{
+              test5: 'value 1',
+              test6: ['value 1', 'value 3'],
+            }}
+          >
+            <ValidatedInput name="test5" type="select" label="select label">
+              <option>value 1</option>
+              <option>value 2</option>
+            </ValidatedInput>
+            <ValidatedField name="test6" type="select" multiple label="select label">
+              <option>value 1</option>
+              <option>value 2</option>
+              <option>value 3</option>
+            </ValidatedField>
+          </ValidatedForm>
+        );
+        const input5: HTMLSelectElement = container.querySelector('select[name="test5"]');
+        expect(input5.name).toEqual('test5');
+        expect(input5.className).toEqual('form-control');
+        expect(input5.selectedOptions[0].value).toEqual('value 1');
+        expect(input5.value).toEqual('value 1');
+
+        const input6: HTMLSelectElement = container.querySelector('select[name="test6"]');
+        expect(input6.name).toEqual('test6');
+        expect(input6.multiple).toEqual(true);
+        expect(input6.className).toEqual('form-control');
+        expect(input6.selectedOptions[0].value).toEqual('value 1');
+        expect(input6.selectedOptions[1].value).toEqual('value 3');
+      });
+    });
+    describe('validate the form with no default values', () => {
+      const mockSubmit = jest.fn((email, password, active, select, multiselect) => {
+        // do nothing
+      });
+
+      const onSubmit = ({ email, password, active, select, multiselect }) => {
+        mockSubmit(email, password, active, select, multiselect);
+      };
+
+      beforeEach(() => {
+        render(
+          <ValidatedForm onSubmit={onSubmit} className="myform">
+            <ValidatedField
+              name="email"
+              label="email"
+              id="email"
+              validate={{
+                required: 'Your email is required.',
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: 'Entered value does not match email format',
+                },
+              }}
+            />
+            <ValidatedField
+              name="password"
+              type="password"
+              label="password"
+              id="password"
+              validate={{
+                required: 'Your password is required.',
+                minLength: {
+                  value: 5,
+                  message: 'min length is 5',
+                },
+              }}
+            />
+            <ValidatedField name="active" type="checkbox" value={true} label="active" check id="active" />
+            <ValidatedField
+              name="select"
+              type="select"
+              label="select"
+              id="select"
+              validate={{
+                required: 'Your select is required.',
+              }}
+            >
+              <option>v1</option>
+              <option>v2</option>
+            </ValidatedField>
+            <ValidatedField
+              name="multiselect"
+              type="select"
+              multiple
+              label="multiselect"
+              id="multiselect"
+              defaultValue={['v2']}
+              validate={{
+                required: 'Your multiselect is required.',
+              }}
+            >
+              <option>v1</option>
+              <option>v2</option>
+              <option>v3</option>
+            </ValidatedField>
+            <button type="submit">SUBMIT</button>
+          </ValidatedForm>
+        );
+      });
+      it('should display required error when value is invalid', async () => {
+        fireEvent.submit(screen.getByRole('button'));
+
+        expect(await screen.findByText('Your email is required.')).not.toBeNull();
+        expect(await screen.findByText('Your password is required.')).not.toBeNull();
+        expect(mockSubmit).not.toBeCalled();
+      });
+      it('should display matching error when email is invalid', async () => {
+        fireEvent.input(screen.getByLabelText('email'), {
+          target: {
+            value: 'test',
+          },
+        });
+
+        fireEvent.input(screen.getByLabelText('password'), {
+          target: {
+            value: 'password',
+          },
+        });
+
+        fireEvent.submit(screen.getByRole('button'));
+
+        expect(await screen.findByText('Entered value does not match email format')).not.toBeNull();
+        expect(mockSubmit).not.toBeCalled();
+        const email = screen.getByLabelText('email') as HTMLInputElement;
+        expect(email.value).toBe('test');
+        const password = screen.getByLabelText('password') as HTMLInputElement;
+        expect(password.value).toBe('password');
+      });
+      it('should display min length error when password is invalid', async () => {
+        fireEvent.input(screen.getByLabelText('email'), {
+          target: {
+            value: 'test@mail.com',
+          },
+        });
+
+        fireEvent.input(screen.getByLabelText('password'), {
+          target: {
+            value: 'pass',
+          },
+        });
+
+        fireEvent.submit(screen.getByRole('button'));
+
+        expect(await screen.findByText('min length is 5')).not.toBeNull();
+        expect(mockSubmit).not.toBeCalled();
+        const email = screen.getByLabelText('email') as HTMLInputElement;
+        expect(email.value).toBe('test@mail.com');
+        const password = screen.getByLabelText('password') as HTMLInputElement;
+        expect(password.value).toBe('pass');
+      });
+      it('should not display error when value is valid', async () => {
+        fireEvent.input(screen.getByLabelText('email'), {
+          target: {
+            value: 'test@mail.com',
+          },
+        });
+
+        fireEvent.input(screen.getByLabelText('password'), {
+          target: {
+            value: 'password',
+          },
+        });
+
+        fireEvent.submit(screen.getByRole('button'));
+
+        // await for first one
+        await waitFor(() => expect(screen.queryByText('Your email is required.')).toBeNull());
+        expect(screen.queryByText('Your email is required.')).toBeNull();
+        expect(screen.queryByText('Your password is required.')).toBeNull();
+        expect(screen.queryByText('Entered value does not match email format')).toBeNull();
+        expect(screen.queryByText('min length is 5')).toBeNull();
+        expect(screen.queryByText('Your select is required.')).toBeNull();
+        expect(screen.queryByText('Your multiselect is required.')).toBeNull();
+
+        expect(mockSubmit).toBeCalledWith('test@mail.com', 'password', false, 'v1', ['v2']);
+      });
+    });
+    describe('validate the form with default values', () => {
+      const mockSubmit = jest.fn((email, password, active, select, multiselect) => {
+        // do nothing
+      });
+
+      const onSubmit = ({ email, password, active, select, multiselect }) => {
+        mockSubmit(email, password, active, select, multiselect);
+      };
+
+      beforeEach(() => {
+        render(
+          <ValidatedForm
+            onSubmit={onSubmit}
+            className="myform"
+            defaultValues={{
+              email: 'test@test.com',
+              password: 'password',
+              active: true,
+              select: 'v1',
+              multiselect: ['v1', 'v3'],
+            }}
+          >
+            <ValidatedField
+              name="email"
+              label="email"
+              id="email"
+              validate={{
+                required: 'Your email is required.',
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: 'Entered value does not match email format',
+                },
+              }}
+            />
+            <ValidatedField
+              name="password"
+              type="password"
+              label="password"
+              id="password"
+              validate={{
+                required: 'Your password is required.',
+                minLength: {
+                  value: 5,
+                  message: 'min length is 5',
+                },
+              }}
+            />
+            <ValidatedField name="active" type="checkbox" value={true} label="active" check id="active" />
+            <ValidatedField
+              name="select"
+              type="select"
+              label="select"
+              id="select"
+              validate={{
+                required: 'Your select is required.',
+              }}
+            >
+              <option>v1</option>
+              <option>v2</option>
+            </ValidatedField>
+            <ValidatedField
+              name="multiselect"
+              type="select"
+              multiple
+              label="multiselect"
+              id="multiselect"
+              validate={{
+                required: 'Your multiselect is required.',
+              }}
+            >
+              <option>v1</option>
+              <option>v2</option>
+              <option>v3</option>
+            </ValidatedField>
+            <button type="submit">SUBMIT</button>
+          </ValidatedForm>
+        );
+      });
+
+      it('should not display error when value is valid', async () => {
+        fireEvent.input(screen.getByLabelText('email'), {
+          target: {
+            value: 'test@mail.com',
+          },
+        });
+
+        fireEvent.input(screen.getByLabelText('password'), {
+          target: {
+            value: 'password',
+          },
+        });
+        fireEvent.input(screen.getByLabelText('select'), {
+          target: {
+            value: 'v2',
+          },
+        });
+
+        fireEvent.submit(screen.getByRole('button'));
+
+        // await for first one
+        await waitFor(() => expect(screen.queryByText('Your email is required.')).toBeNull());
+        expect(screen.queryByText('Your email is required.')).toBeNull();
+        expect(screen.queryByText('Your password is required.')).toBeNull();
+        expect(screen.queryByText('Entered value does not match email format')).toBeNull();
+        expect(screen.queryByText('min length is 5')).toBeNull();
+        expect(screen.queryByText('Your select is required.')).toBeNull();
+        expect(screen.queryByText('Your multiselect is required.')).toBeNull();
+
+        expect(mockSubmit).toBeCalledWith('test@mail.com', 'password', true, 'v1', ['v1', 'v3']);
+      });
+    });
+  });
+});

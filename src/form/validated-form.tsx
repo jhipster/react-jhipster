@@ -37,7 +37,10 @@ export function ValidatedForm({ defaultValues, children, onSubmit, mode, ...rest
   return (
     <Form onSubmit={handleSubmit(onSubmit)} {...rest}>
       {React.Children.map(children, (child: ReactElement) => {
-        const isValidated = child?.props?.name && ['ValidatedField', 'ValidatedInput'].includes((child.type as any).displayName);
+        const isValidated =
+          child?.props?.name &&
+          (['ValidatedField', 'ValidatedInput'].includes((child.type as any).displayName) ||
+            ['ValidatedField', 'ValidatedInput'].includes((child.type as any).name));
         return isValidated
           ? React.createElement(child.type, {
               ...{
@@ -104,10 +107,6 @@ export function ValidatedInput({
   onBlur,
   ...attributes
 }: ValidatedInputProps): JSX.Element {
-  className = className || '';
-  className = isTouched ? `${className} is-touched` : className;
-  className = isDirty ? `${className} is-dirty` : className;
-
   if (!register) {
     return (
       <Input name={name} className={className} onChange={onChange} onBlur={onBlur} {...attributes}>
@@ -115,6 +114,11 @@ export function ValidatedInput({
       </Input>
     );
   }
+
+  className = className || '';
+  className = isTouched ? `${className} is-touched` : className;
+  className = isDirty ? `${className} is-dirty` : className;
+
   const { name: registeredName, onBlur: onBlurValidate, onChange: onChangeValidate, ref } = register(name, validate);
   return (
     <>
@@ -161,12 +165,12 @@ export function ValidatedField({
     </ValidatedInput>
   );
 
-  const inputRow = row ? <Col {...col}>{input}</Col> : <>{input}</>;
+  const inputRow = row ? <Col {...col}>{input}</Col> : input;
   return (
     <FormGroup check={check} disabled={disabled} row={row} className={className}>
       {check && inputRow}
       {label && (
-        <Label for={id} className={labelClass} hidden={labelHidden}>
+        <Label check={check} for={id} className={labelClass} hidden={labelHidden}>
           {label}
         </Label>
       )}
