@@ -7,12 +7,15 @@ This is the JHipster React utilities library
 
 [![NPM version][npm-image]][npm-url]
 [![Azure DevOps Build Status][azure-devops-image]][azure-devops-url-main] 
-[![Build Status][travis-image]][travis-url]
+[![Build Status][github-actions-image]][github-actions-url]
 [![Dependency Status][daviddm-image]][daviddm-url]
 
 Full documentation and information is available on our website at [http://www.jhipster.tech/][jhipster-url]
 
 Please read our [guidelines](https://github.com/jhipster/generator-jhipster/CONTRIBUTING.md#submitting-an-issue) before submitting an issue. If your issue is a bug, please use the bug template pre populated [here](https://github.com/jhipster/generator-jhipster/issues/new). For feature requests and queries you can use [this template][feature-template].
+
+[github-actions-image]: https://github.com/jhipster/react-jhipster/workflows/ci.yml/badge.svg
+[github-actions-url]: https://github.com/jhipster/react-jhipster/actions
 
 [jhipster-image]: https://raw.githubusercontent.com/jhipster/jhipster.github.io/main/images/logo/logo-jhipster2x.png
 [jhipster-url]: http://www.jhipster.tech/
