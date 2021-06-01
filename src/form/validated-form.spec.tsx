@@ -166,7 +166,9 @@ describe.only('ValidatedField', () => {
       const { container } = render(<ValidatedField name="test-1" label="Label" check />);
       const fg = container.querySelector('div.form-check');
       expect(fg).not.toBeNull();
-      expect(fg.innerHTML).toEqual('<input name="test-1" type="text" class="form-control"><label class="form-check-label">Label</label>');
+      expect(fg.innerHTML).toEqual(
+        '<input name="test-1" type="text" class="form-control"><label id="test-1Label" class="form-check-label">Label</label>'
+      );
     });
   });
 

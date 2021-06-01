@@ -176,6 +176,7 @@ export function ValidatedInput({
  */
 export function ValidatedField({
   children,
+  name,
   id,
   disabled,
   className,
@@ -192,7 +193,7 @@ export function ValidatedField({
   ...attributes
 }: ValidatedFieldProps): JSX.Element {
   const input = (
-    <ValidatedInput id={id} disabled={disabled} className={inputClass} hidden={hidden} tag={inputTag} {...attributes}>
+    <ValidatedInput name={name} id={id} disabled={disabled} className={inputClass} hidden={hidden} tag={inputTag} {...attributes}>
       {children}
     </ValidatedInput>
   );
@@ -202,7 +203,7 @@ export function ValidatedField({
     <FormGroup check={check} disabled={disabled} row={row} className={className} hidden={hidden} tag={tag}>
       {check && inputRow}
       {label && (
-        <Label check={check} for={id} className={labelClass} hidden={labelHidden || hidden}>
+        <Label id={`${name}Label`} check={check} for={id} className={labelClass} hidden={labelHidden || hidden}>
           {label}
         </Label>
       )}

@@ -58,3 +58,5 @@ For testing, you will want to integrate your version of `react-jhipster` into an
 Go to your application folder, run `npm link react-jhipster` so that the local version has a symbolic link to the development version of `react-jhipster`.
 
 You should see your changes reflected in the application.
+
+Another way is to run `npm pack` on react-jhipster and then do `npm install path-to/react-jhipster/react-jhipster-0.15.0.tgz` on the generated application. this is the most fool proof way to test if `npm link` doesn't work
