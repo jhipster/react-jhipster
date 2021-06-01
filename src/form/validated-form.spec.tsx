@@ -6,6 +6,7 @@ import { render, fireEvent, act, screen, waitFor } from '@testing-library/react'
 import { useForm } from 'react-hook-form';
 
 import { ValidatedForm, ValidatedField, ValidatedInput } from './index';
+import { CustomInput } from 'reactstrap';
 
 describe.only('ValidatedInput', () => {
   describe('with basic text input', () => {
@@ -14,6 +15,22 @@ describe.only('ValidatedInput', () => {
       const input = container.querySelector('input');
       expect(input.name).toEqual('test-1');
       expect(input.type).toEqual('text');
+      expect(input.className).toEqual('form-control');
+      expect(input.value).toEqual('');
+    });
+    it('with custom tag value renders an custom input', () => {
+      const { container } = render(<ValidatedInput name="test-1" tag={CustomInput} type="radio" id="test" />);
+      const input = container.querySelector('input');
+      expect(input.name).toEqual('test-1');
+      expect(input.type).toEqual('radio');
+      expect(input.className).toEqual('custom-control-input');
+      expect(input.value).toEqual('on');
+    });
+    it('with custom string tag value renders an custom input', () => {
+      const { container } = render(<ValidatedInput name="test-1" tag="select" id="test" />);
+      const input = container.querySelector('select');
+      expect(input.name).toEqual('test-1');
+      expect(input.type).toEqual('select-one');
       expect(input.className).toEqual('form-control');
       expect(input.value).toEqual('');
     });
@@ -103,6 +120,16 @@ describe.only('ValidatedField', () => {
       expect(input.name).toEqual('test-1');
       expect(input.type).toEqual('text');
       expect(input.className).toEqual('form-control');
+      expect(input.value).toEqual('');
+    });
+    it('with custom tags renders a custom input', () => {
+      const { container } = render(<ValidatedField name="test-1" tag="fieldset" inputTag={CustomInput} id="test" />);
+      const fg = container.querySelector('fieldset.form-group');
+      expect(fg).not.toBeNull();
+      const input = container.querySelector('input');
+      expect(input.name).toEqual('test-1');
+      expect(input.type).toEqual('text');
+      expect(input.className).toEqual('form-control custom-text');
       expect(input.value).toEqual('');
     });
     it('with label renders an input with label', () => {

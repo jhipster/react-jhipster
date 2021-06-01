@@ -103,6 +103,8 @@ export interface ValidatedFieldProps extends ValidatedInputProps {
   check?: boolean;
   // css class for the input element
   inputClass?: string;
+  // tag attribute for input
+  inputTag?: React.ElementType;
 }
 
 /**
@@ -180,24 +182,27 @@ export function ValidatedField({
   check,
   row,
   col,
+  tag,
   label,
   labelClass,
   labelHidden,
   inputClass,
+  inputTag,
+  hidden,
   ...attributes
 }: ValidatedFieldProps): JSX.Element {
   const input = (
-    <ValidatedInput id={id} disabled={disabled} className={inputClass} {...attributes}>
+    <ValidatedInput id={id} disabled={disabled} className={inputClass} hidden={hidden} tag={inputTag} {...attributes}>
       {children}
     </ValidatedInput>
   );
 
   const inputRow = row ? <Col {...col}>{input}</Col> : input;
   return (
-    <FormGroup check={check} disabled={disabled} row={row} className={className}>
+    <FormGroup check={check} disabled={disabled} row={row} className={className} hidden={hidden} tag={tag}>
       {check && inputRow}
       {label && (
-        <Label check={check} for={id} className={labelClass} hidden={labelHidden}>
+        <Label check={check} for={id} className={labelClass} hidden={labelHidden || hidden}>
           {label}
         </Label>
       )}
