@@ -15,7 +15,7 @@ module.exports = {
   mode: 'production',
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
-    modules: ['node_modules']
+    modules: ['node_modules'],
   },
 
   entry: root('react-jhipster.ts'),
@@ -25,7 +25,11 @@ module.exports = {
     publicPath: '/',
     filename: 'react-jhipster.umd.js',
     libraryTarget: 'umd',
-    library: 'react-jhipster'
+    library: 'react-jhipster',
+  },
+
+  optimization: {
+    moduleIds: 'named',
   },
 
   // require those dependencies but don't bundle them
@@ -36,29 +40,28 @@ module.exports = {
         enforce: 'pre',
         test: /\.(j|t)sx?$/,
         loader: 'eslint-loader',
-        exclude: [root('node_modules')]
+        exclude: [root('node_modules')],
       },
       {
         test: /\.tsx?$/,
         loader: 'ts-loader',
-        exclude: [/\.e2e\.ts$/]
-      }
-    ]
+        exclude: [/\.e2e\.ts$/],
+      },
+    ],
   },
 
-  plugins: [new webpack.NamedModulesPlugin()],
   externals: TEST
     ? {
         cheerio: 'window',
         'react/addons': true,
         'react/lib/ExecutionEnvironment': true,
-        'react/lib/ReactContext': true
+        'react/lib/ReactContext': true,
       }
     : {
         lodash: true,
         react: true,
         'react-addons-css-transition-group': true,
         'react-addons-transition-group': true,
-        'react-dom': true
-      }
+        'react-dom': true,
+      },
 };

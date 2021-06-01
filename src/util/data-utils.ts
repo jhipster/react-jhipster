@@ -1,5 +1,3 @@
-import React = require('react');
-
 /*
  Copyright 2017-2021 the original author or authors from the JHipster project.
  This file is part of the JHipster project, see https://www.jhipster.tech/
