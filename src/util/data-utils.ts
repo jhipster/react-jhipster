@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 /*
  Copyright 2017-2021 the original author or authors from the JHipster project.
  This file is part of the JHipster project, see https://www.jhipster.tech/
@@ -22,7 +24,7 @@ export const openFile = (contentType: string, data: string) => () => {
   );
 };
 
-const toBase64 = (file: File, cb: Function) => {
+const toBase64 = (file: File, cb: (v: string) => void) => {
   const fileReader: FileReader = new FileReader();
   fileReader.readAsDataURL(file);
   fileReader.onload = e => {
@@ -43,13 +45,18 @@ const paddingSize = (value: string): number => {
 
 const formatAsBytes = (sizeValue: number): string => sizeValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' bytes';
 
-export const size = (value: string): number => value.length / 4 * 3 - paddingSize(value);
+export const size = (value: string): number => (value.length / 4) * 3 - paddingSize(value);
 
 export const byteSize = (base64String: string) => formatAsBytes(size(base64String));
 
-export const setFileData = (event, callback: Function, isImage: boolean) => {
-  if (event && event.target.files && event.target.files[0]) {
-    const file = event.target.files[0];
+export const setFileData = (
+  event: React.ChangeEvent<HTMLInputElement> | React.FocusEvent<HTMLInputElement>,
+  callback: (type: any, v: string) => void,
+  isImage: boolean
+) => {
+  const target = event?.target;
+  if (target && target.files && target.files[0]) {
+    const file = target.files[0];
     if (isImage && !file.type.startsWith('image/')) {
       return;
     }
@@ -57,5 +64,7 @@ export const setFileData = (event, callback: Function, isImage: boolean) => {
     toBase64(file, base64Data => {
       callback(file.type, base64Data);
     });
+  } else {
+    callback('', '');
   }
 };

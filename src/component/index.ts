@@ -17,6 +17,6 @@
  limitations under the License.
  */
 export * from './pagination/pagination';
-export * from './pagination/itemCount';
+export * from './pagination/item-count';
 export * from './pagination/pagination-utils';
 export * from './metrics';

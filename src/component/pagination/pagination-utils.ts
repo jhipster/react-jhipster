@@ -7,7 +7,7 @@ export interface IPaginationBaseState {
   activePage: number;
 }
 
-export const getSortState = (location, itemsPerPage, idField): IPaginationBaseState => {
+export const getSortState = (location: { search: string }, itemsPerPage: number, idField: string): IPaginationBaseState => {
   const pageParam = getUrlParameter('page', location.search);
   const sortParam = getUrlParameter('sort', location.search);
   let sort = idField || 'id';
@@ -21,4 +21,20 @@ export const getSortState = (location, itemsPerPage, idField): IPaginationBaseSt
     order = sortParam.split(',')[1];
   }
   return { itemsPerPage, sort, order, activePage };
+};
+
+/**
+ * Retrieve new data when infinite scrolling
+ * @param currentData
+ * @param incomingData
+ * @param links
+ */
+ export const loadMoreDataWhenScrolled = (currentData: any, incomingData: any, links: any): any => {
+  if (links.first === links.last || !currentData.length) {
+    return incomingData;
+  }
+  if (currentData.length >= incomingData.length) {
+    return [...currentData, ...incomingData];
+  }
+  return null;
 };
