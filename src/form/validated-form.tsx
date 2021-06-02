@@ -15,7 +15,7 @@ import {
 } from 'react-hook-form';
 import { Button, Col, CustomInput, Form, FormFeedback, FormGroup, Input, InputProps, Label, Row } from 'reactstrap';
 
-import { byteSize, openFile, setFileData } from '../util';
+import { byteSize, isEmpty, openFile, setFileData } from '../util';
 
 export interface ValidatedFormProps {
   children: React.ReactNode;
@@ -425,4 +425,12 @@ export function ValidatedBlobField({
       {inputRow(input)}
     </>
   );
+}
+
+const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i;
+
+export function isEmail(value) {
+  if (isEmpty(value)) return true;
+
+  return EMAIL_REGEXP.test(value);
 }

@@ -7,9 +7,9 @@ import { useForm } from 'react-hook-form';
 
 import { ValidatedForm, ValidatedField, ValidatedInput } from './index';
 import { CustomInput } from 'reactstrap';
-import { ValidatedBlobField } from './validated-form';
+import { isEmail, ValidatedBlobField } from './validated-form';
 
-describe.only('ValidatedInput', () => {
+describe('ValidatedInput', () => {
   describe('with basic text input', () => {
     it('without default value renders an empty input', () => {
       const { container } = render(<ValidatedInput name="test-1" />);
@@ -111,7 +111,7 @@ describe.only('ValidatedInput', () => {
   });
 });
 
-describe.only('ValidatedField', () => {
+describe('ValidatedField', () => {
   describe('with basic text input', () => {
     it('without default value & label renders an empty input', () => {
       const { container } = render(<ValidatedField name="test-1" />);
@@ -239,7 +239,7 @@ describe.only('ValidatedField', () => {
   });
 });
 
-describe.only('ValidatedBlobField', () => {
+describe('ValidatedBlobField', () => {
   describe('with basic input', () => {
     it('without default value, register & label renders an empty file input', () => {
       const { container } = render(<ValidatedBlobField name="test-1" />);
@@ -419,7 +419,7 @@ describe.only('ValidatedBlobField', () => {
   });
 });
 
-describe.only('ValidatedForm', () => {
+describe('ValidatedForm', () => {
   describe('with non-input children', () => {
     it('renders them as single element', () => {
       const { container } = render(
@@ -900,5 +900,38 @@ describe.only('ValidatedForm', () => {
         expect(mockSubmit).toBeCalledWith('test@mail.com', 'password', true, 'v1', ['v1', 'v3']);
       });
     });
+  });
+});
+
+describe('isEmail', () => {
+  it('should return false when passed object is not an email', () => {
+    expect(isEmail('foo')).toEqual(false);
+    expect(isEmail('123foo')).toEqual(false);
+    expect(isEmail('foo123foo')).toEqual(false);
+    expect(isEmail('foo123.fr')).toEqual(false);
+    expect(isEmail('foo123@me')).toEqual(false);
+    expect(isEmail({})).toEqual(false);
+    expect(isEmail([10])).toEqual(false);
+    expect(isEmail(true)).toEqual(false);
+    expect(isEmail('evan.sharp@availity')).toEqual(false);
+    expect(isEmail('evan.sharp@')).toEqual(false);
+    expect(isEmail('@availity.com')).toEqual(false);
+    expect(isEmail('evan.sharp@.com')).toEqual(false);
+    expect(isEmail('evan.sharp')).toEqual(false);
+    expect(isEmail('availity.com')).toEqual(false);
+    expect(isEmail('Evan@Sharp@Availity.com')).toEqual(false);
+  });
+  it('should return true when passed object is an email or undefined', () => {
+    expect(isEmail(false)).toEqual(true);
+    expect(isEmail('')).toEqual(true);
+    expect(isEmail([])).toEqual(true);
+    expect(isEmail(null)).toEqual(true);
+    expect(isEmail(undefined)).toEqual(true);
+    expect(isEmail('me@me.com')).toEqual(true);
+    expect(isEmail('evan.sharp@availity.com')).toEqual(true);
+    expect(isEmail('evan.sharp+more-things@availity.com')).toEqual(true);
+    expect(isEmail('evan.sharp@availity.com.co')).toEqual(true);
+    expect(isEmail('evan.sharp@development.availity.com')).toEqual(true);
+    expect(isEmail('Evan.Sharp@Availity.com')).toEqual(true);
   });
 });
