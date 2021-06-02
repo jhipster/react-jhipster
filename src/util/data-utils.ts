@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 /*
  Copyright 2017-2021 the original author or authors from the JHipster project.
  This file is part of the JHipster project, see https://www.jhipster.tech/
@@ -47,9 +49,13 @@ export const size = (value: string): number => (value.length / 4) * 3 - paddingS
 
 export const byteSize = (base64String: string) => formatAsBytes(size(base64String));
 
-export const setFileData = (event: Event, callback: (type: any, v: string) => void, isImage: boolean) => {
-  const target = event.target as HTMLInputElement;
-  if (event && target.files && target.files[0]) {
+export const setFileData = (
+  event: React.ChangeEvent<HTMLInputElement> | React.FocusEvent<HTMLInputElement>,
+  callback: (type: any, v: string) => void,
+  isImage: boolean
+) => {
+  const target = event?.target;
+  if (target && target.files && target.files[0]) {
     const file = target.files[0];
     if (isImage && !file.type.startsWith('image/')) {
       return;
@@ -58,5 +64,7 @@ export const setFileData = (event: Event, callback: (type: any, v: string) => vo
     toBase64(file, base64Data => {
       callback(file.type, base64Data);
     });
+  } else {
+    callback('', '');
   }
 };

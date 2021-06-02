@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 
 import { ValidatedForm, ValidatedField, ValidatedInput } from './index';
 import { CustomInput } from 'reactstrap';
+import { ValidatedBlobField } from './validated-form';
 
 describe.only('ValidatedInput', () => {
   describe('with basic text input', () => {
@@ -237,6 +238,187 @@ describe.only('ValidatedField', () => {
     });
   });
 });
+
+describe.only('ValidatedBlobField', () => {
+  describe('with basic input', () => {
+    it('without default value, register & label renders an empty file input', () => {
+      const { container } = render(<ValidatedBlobField name="test-1" />);
+      const fg = container.querySelector('div.form-group');
+      expect(fg).not.toBeNull();
+      const input = container.querySelector('input');
+      expect(input.name).toEqual('test-1');
+      expect(input.type).toEqual('file');
+      expect(input.className).toEqual('custom-file-input');
+      expect(input.value).toEqual('');
+    });
+    it('with custom tags renders a custom input', () => {
+      const { container } = render(<ValidatedBlobField name="test-1" tag="fieldset" inputTag={'input'} id="test" />);
+      const fg = container.querySelector('fieldset.form-group');
+      expect(fg).not.toBeNull();
+      const input = container.querySelector('input');
+      expect(input.name).toEqual('test-1');
+      expect(input.type).toEqual('file');
+      expect(input.className).toEqual('custom-file-input');
+      expect(input.value).toEqual('');
+    });
+    it('with label renders an input with label', () => {
+      const { container } = render(<ValidatedBlobField name="test-1" isTouched={true} label="Label" />);
+      const col = container.querySelector('div.col');
+      expect(col).toBeNull();
+      const fg = container.querySelector('div.form-group');
+      expect(fg).not.toBeNull();
+      const input = container.querySelector('input');
+      expect(input.name).toEqual('test-1');
+      expect(input.type).toEqual('file');
+      expect(input.className).toEqual('custom-file-input');
+      expect(input.value).toEqual('');
+      const lb = container.querySelector('label');
+      expect(lb).not.toBeNull();
+      expect(screen.getByText('Label')).not.toBeNull();
+    });
+    it('with row renders an input in a column', () => {
+      const { container } = render(<ValidatedBlobField name="test-1" isTouched={true} label="Label" row />);
+      const col = container.querySelector('div.col');
+      expect(col).not.toBeNull();
+      const fg = container.querySelector('div.form-group');
+      expect(fg).not.toBeNull();
+      const input = container.querySelector('input');
+      expect(input.name).toEqual('test-1');
+      expect(input.type).toEqual('file');
+      expect(input.className).toEqual('custom-file-input');
+      expect(input.value).toEqual('');
+      const lb = container.querySelector('label');
+      expect(lb).not.toBeNull();
+      expect(screen.getByText('Label')).not.toBeNull();
+    });
+  });
+
+  describe('with register renders', () => {
+    function InputApp({ name, ...rest }) {
+      const onSubmit = data => {
+        // do nothing
+      };
+      const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors },
+      } = useForm({ mode: 'onChange' });
+      return (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <ValidatedBlobField register={register} setValue={setValue} name={name} error={errors[name]} role="textbox" {...rest} />
+          <button type="submit" role="submit">
+            SUBMIT
+          </button>
+        </form>
+      );
+    }
+    it('without default value renders an empty inputs with no data preview', () => {
+      const { container } = render(<InputApp name="test" defaultValue="" />);
+      const inputContentType: HTMLInputElement = container.querySelector('input');
+      expect(inputContentType.id).toEqual('file_test_content_type');
+      expect(inputContentType.name).toEqual('testContentType');
+      expect(inputContentType.type).toEqual('hidden');
+      expect(inputContentType.value).toEqual('');
+      const input: HTMLInputElement = container.querySelector('input.custom-file-input');
+      expect(input.name).toEqual('test');
+      expect(input.type).toEqual('file');
+      expect(input.className).toEqual('custom-file-input');
+      expect(input.value).toEqual('');
+    });
+    it('with default value renders an input with data preview for image', () => {
+      const { container } = render(
+        <InputApp name="test" defaultValue="hello" defaultContentType="image/jpg" isTouched={true} isImage imageClassName="my-image" />
+      );
+      const inputContentType: HTMLInputElement = container.querySelector('input');
+      expect(inputContentType.name).toEqual('testContentType');
+      const input: HTMLInputElement = container.querySelector('input.custom-file-input');
+      expect(input.name).toEqual('test');
+      expect(input.type).toEqual('file');
+      expect(input.className).toEqual('is-valid custom-file-input');
+      const div: HTMLDivElement = container.querySelector('div.jhi-validated-blob-field-item-container');
+      expect(div).not.toBeNull();
+      const img: HTMLImageElement = container.querySelector('img.my-image');
+      expect(img).not.toBeNull();
+      expect(img.src).toEqual('data:image/jpg;base64,hello');
+      expect(container.querySelector('div.jhi-validated-blob-field-item-row')).not.toBeNull();
+      expect(container.querySelector('div.jhi-validated-blob-field-item-row-col')).not.toBeNull();
+      expect(container.querySelector('div.jhi-validated-blob-field-item-clear-btn')).not.toBeNull();
+    });
+    it('with default value renders an input with data preview for blob', () => {
+      const { container } = render(
+        <InputApp
+          name="test"
+          defaultValue="hello"
+          defaultContentType="text/pdf"
+          isTouched={true}
+          openActionLabel="open this"
+          clearBtn={() => <button className="my-btn" />}
+        />
+      );
+      const inputContentType: HTMLInputElement = container.querySelector('input');
+      expect(inputContentType.name).toEqual('testContentType');
+      const input: HTMLInputElement = container.querySelector('input.custom-file-input');
+      expect(input.name).toEqual('test');
+      expect(input.type).toEqual('file');
+      expect(input.className).toEqual('is-valid custom-file-input');
+      const div: HTMLDivElement = container.querySelector('div.jhi-validated-blob-field-item-container');
+      expect(div).not.toBeNull();
+      const anchor: HTMLAnchorElement = container.querySelector('a.jhi-validated-blob-field-item-anchor');
+      expect(anchor).not.toBeNull();
+      expect(anchor.innerHTML).toEqual('open this');
+      expect(container.querySelector('div.jhi-validated-blob-field-item-row')).not.toBeNull();
+      expect(container.querySelector('div.jhi-validated-blob-field-item-row-col')).not.toBeNull();
+      expect(container.querySelector('div.jhi-validated-blob-field-item-clear-btn')).not.toBeNull();
+      expect(container.querySelector('button.my-btn')).not.toBeNull();
+    });
+    it('with default value renders an input and shows error when value is absent', async () => {
+      const mockChange = jest.fn(e => {
+        // do nothing
+      });
+      await act(async () => {
+        const { container, getByRole } = render(
+          <InputApp
+            name="test"
+            defaultValue="hello"
+            defaultContentType="image/jpg"
+            validate={{ required: 'this is required' }}
+            onChange={mockChange}
+            isImage
+            imageClassName="my-image"
+          />
+        );
+
+        const inputContentType: HTMLInputElement = container.querySelector('input');
+        expect(inputContentType.name).toEqual('testContentType');
+        let input: HTMLInputElement = container.querySelector('input.custom-file-input');
+        expect(input.name).toEqual('test');
+        expect(input.type).toEqual('file');
+        expect(input.className).toEqual('custom-file-input');
+        let img: HTMLImageElement = container.querySelector('img.my-image');
+        expect(img).not.toBeNull();
+        expect(img.src).toEqual('data:image/jpg;base64,hello');
+
+        fireEvent.change(getByRole('textbox'), {
+          target: {
+            value: '',
+          },
+        });
+        expect(mockChange).toBeCalled();
+
+        fireEvent.submit(screen.getByRole('submit'));
+
+        await waitFor(() => expect(screen.getByText('this is required')).not.toBeNull());
+        input = container.querySelector('input.custom-file-input');
+        expect(input.className).toEqual('is-invalid custom-file-input');
+        expect(input.value).toEqual('');
+        img = container.querySelector('img.my-image');
+        expect(img).toBeNull();
+      });
+    });
+  });
+});
+
 describe.only('ValidatedForm', () => {
   describe('with non-input children', () => {
     it('renders them as single element', () => {
@@ -281,7 +463,7 @@ describe.only('ValidatedForm', () => {
       const input: HTMLInputElement = container.querySelector('input[name="test-12"]');
       expect(input.name).toEqual('test-12');
       expect(input.type).toEqual('text');
-      expect(input.className).toEqual('is-invalid form-control');
+      expect(input.className).toEqual(' is-touched is-dirty is-invalid form-control');
       expect(input.value).toEqual('');
 
       expect(await findByText('Your email is required.')).not.toBeNull();
