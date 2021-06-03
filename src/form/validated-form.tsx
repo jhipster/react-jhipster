@@ -54,10 +54,7 @@ export function ValidatedForm({ defaultValues, children, onSubmit, mode, ...rest
       {React.Children.map(children, (child: ReactElement) => {
         const type = child?.type as any;
         const isValidated =
-          type &&
-          child?.props?.name &&
-          (['ValidatedField', 'ValidatedInput', 'ValidatedBlobField'].includes(type.name) ||
-            ['ValidatedField', 'ValidatedInput', 'ValidatedBlobField'].includes(type.displayName));
+          type && child?.props?.name && ['ValidatedField', 'ValidatedInput', 'ValidatedBlobField'].includes(type.displayName);
 
         if (isValidated) {
           const childName = child.props.name;
@@ -69,7 +66,7 @@ export function ValidatedForm({ defaultValues, children, onSubmit, mode, ...rest
             isDirty: typeof child.props.isDirty === 'undefined' ? dirtyFields[childName] : child.props.isDirty,
             key: childName,
           };
-          if (type.name === 'ValidatedBlobField' || type.displayName === 'ValidatedBlobField') {
+          if (type.displayName === 'ValidatedBlobField') {
             const defaultValue = defaultValues[childName];
             const defaultContentType = defaultValues[`${childName}ContentType`];
             elem.setValue = typeof child.props.setValue === 'undefined' ? setValue : child.props.setValue;
@@ -84,6 +81,8 @@ export function ValidatedForm({ defaultValues, children, onSubmit, mode, ...rest
     </Form>
   );
 }
+
+ValidatedForm.displayName = 'ValidatedForm';
 
 export interface ValidatedInputProps extends InputProps {
   // name of the component, also used for validation
@@ -184,6 +183,8 @@ export function ValidatedInput({
   );
 }
 
+ValidatedInput.displayName = 'ValidatedInput';
+
 /**
  * A utility wrapper over Reactstrap FormGroup + Label + ValidatedInput
  * that uses react-hook-form data to show error message and error/validated styles.
@@ -229,6 +230,8 @@ export function ValidatedField({
     </FormGroup>
   );
 }
+
+ValidatedField.displayName = 'ValidatedField';
 
 interface ValidatedBlobFieldProps extends ValidatedFieldProps {
   // set value function from react-hook-forms
@@ -418,6 +421,8 @@ export function ValidatedBlobField({
     </>
   );
 }
+
+ValidatedBlobField.displayName = 'ValidatedBlobField';
 
 const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i;
 
