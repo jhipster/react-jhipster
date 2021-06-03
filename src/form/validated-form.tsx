@@ -133,6 +133,7 @@ export interface ValidatedFieldProps extends ValidatedInputProps {
  */
 export function ValidatedInput({
   name,
+  id = name,
   register,
   error,
   isTouched,
@@ -146,7 +147,7 @@ export function ValidatedInput({
 }: ValidatedInputProps): JSX.Element {
   if (!register) {
     return (
-      <Input name={name} className={className} onChange={onChange} onBlur={onBlur} {...attributes}>
+      <Input name={name} id={id} className={className} onChange={onChange} onBlur={onBlur} {...attributes}>
         {children}
       </Input>
     );
@@ -161,6 +162,7 @@ export function ValidatedInput({
     <>
       <Input
         name={registeredName}
+        id={id}
         valid={isTouched && !error}
         invalid={!!error}
         innerRef={ref}
@@ -267,7 +269,7 @@ export function ValidatedBlobField({
   className,
   onChange,
   onBlur,
-  id,
+  id = name,
   disabled,
   row,
   col,
@@ -326,17 +328,7 @@ export function ValidatedBlobField({
 
   if (!register) {
     return renderFormGroup(
-      inputRow(
-        <CustomInput
-          type="file"
-          id={id || `file_${name}`}
-          name={name}
-          className={className}
-          onChange={onChange}
-          onBlur={onBlur}
-          {...attributes}
-        />
-      )
+      inputRow(<CustomInput type="file" id={id} name={name} className={className} onChange={onChange} onBlur={onBlur} {...attributes} />)
     );
   }
 
@@ -354,7 +346,7 @@ export function ValidatedBlobField({
       <input id={`file_${name}_content_type`} name={contentTypeName} type="hidden" />
       <CustomInput
         type="file"
-        id={id || `file_${name}`}
+        id={id}
         name={name}
         valid={isTouched && !error}
         invalid={!!error}
