@@ -35,9 +35,10 @@ export const TextFormat = ({ value, type, format, blankOnInvalid, locale }: ITex
 
     if (!numeral.locales.includes(locale)) {
      // if not include, by default as en
-     locale = 'en';
+      numeral.locale('en');
+    } else {
+      numeral.locale(locale);
     }
-    numeral.locale(locale);
   } else {
     require('dayjs/locale/' + locale + '.js');
   }
