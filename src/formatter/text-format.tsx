@@ -33,7 +33,7 @@ export const TextFormat = ({ value, type, format, blankOnInvalid, locale }: ITex
     // TODO: find a better way to keep track of *current* locale
     locale = TranslatorContext.context.locale;
 
-    if (!numeral.locales.includes(locale)) {
+    if (!numeral.locales[locale]) {
      // if not include, by default as en
       numeral.locale('en');
     } else {
