@@ -31,15 +31,6 @@
     "react-jhipster.ts"
   ],
   "homepage": "https://www.jhipster.tech",
-  "peerDependencies": {
-    "axios": "^0.21.1",
-    "dayjs": "^1.10.4",
-    "react": "^17.0.1",
-    "react-transition-group": "^4.4.1",
-    "react-dom": "^17.0.1",
-    "react-hook-form": "^7.6.8",
-    "reactstrap": "^8.9.0"
-  },
   "dependencies": {
     "lodash.get": "^4.4.2",
     "numeral": "^2.0.6",
