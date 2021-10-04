@@ -58,8 +58,12 @@ module.exports = {
         'react/lib/ReactContext': true,
       }
     : {
+        axios: true,
+        dayjs: true,
         lodash: true,
         react: true,
         'react-dom': true,
+        'react-hook-form': true,
+        'reactstrap': true,
       },
 };
