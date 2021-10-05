@@ -22,89 +22,89 @@ export class DatasourceMetrics extends React.Component<IDatasourceMetricsProps> 
                 (active: {datasourceMetrics.active.value}, min: {datasourceMetrics.min.value}, max: {datasourceMetrics.max.value}, idle:{' '}
                 {datasourceMetrics.idle.value})
               </th>
-              <th className="text-right">Count</th>
-              <th className="text-right">Mean</th>
-              <th className="text-right">Min</th>
-              <th className="text-right">p50</th>
-              <th className="text-right">p75</th>
-              <th className="text-right">p95</th>
-              <th className="text-right">p99</th>
-              <th className="text-right">Max</th>
+              <th className="text-end">Count</th>
+              <th className="text-end">Mean</th>
+              <th className="text-end">Min</th>
+              <th className="text-end">p50</th>
+              <th className="text-end">p75</th>
+              <th className="text-end">p95</th>
+              <th className="text-end">p99</th>
+              <th className="text-end">Max</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>Acquire</td>
-              <td className="text-right">{datasourceMetrics.acquire.count}</td>
-              <td className="text-right">
+              <td className="text-end">{datasourceMetrics.acquire.count}</td>
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.acquire.mean} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
-              <td className="text-right">
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.acquire['0.0']} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
-              <td className="text-right">
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.acquire['0.5']} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
-              <td className="text-right">
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.acquire['0.75']} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
-              <td className="text-right">
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.acquire['0.95']} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
-              <td className="text-right">
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.acquire['0.99']} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
-              <td className="text-right">
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.acquire.max} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
             </tr>
             <tr>
               <td>Creation</td>
-              <td className="text-right">{datasourceMetrics.creation.count}</td>
-              <td className="text-right">
+              <td className="text-end">{datasourceMetrics.creation.count}</td>
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.creation.mean} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
-              <td className="text-right">
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.creation['0.0']} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
-              <td className="text-right">
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.creation['0.5']} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
-              <td className="text-right">
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.creation['0.75']} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
-              <td className="text-right">
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.creation['0.95']} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
-              <td className="text-right">
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.creation['0.99']} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
-              <td className="text-right">
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.creation.max} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
             </tr>
             <tr>
               <td>Usage</td>
-              <td className="text-right">{datasourceMetrics.usage.count}</td>
-              <td className="text-right">
+              <td className="text-end">{datasourceMetrics.usage.count}</td>
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.usage.mean} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
-              <td className="text-right">
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.usage['0.0']} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
-              <td className="text-right">
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.usage['0.5']} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
-              <td className="text-right">
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.usage['0.75']} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
-              <td className="text-right">
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.usage['0.95']} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
-              <td className="text-right">
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.usage['0.99']} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
-              <td className="text-right">
+              <td className="text-end">
                 <TextFormat value={datasourceMetrics.usage.max} type={'number'} format={twoDigitAfterPointFormat} />
               </td>
             </tr>

@@ -13,7 +13,7 @@ import {
   UseFormSetValue,
   ValidationMode,
 } from 'react-hook-form';
-import { Button, Col, CustomInput, Form, FormFeedback, FormGroup, Input, InputProps, Label, Row } from 'reactstrap';
+import { Button, Col, Form, FormFeedback, FormGroup, Input, InputProps, Label, Row } from 'reactstrap';
 
 import { byteSize, isEmpty, openFile, setFileData } from '../util';
 
@@ -253,7 +253,7 @@ interface ValidatedBlobFieldProps extends ValidatedFieldProps {
 }
 
 /**
- * A utility wrapper over Reactstrap FormGroup + Label + CustomInput for blobs and images
+ * A utility wrapper over Reactstrap FormGroup + Label + Input for blobs and images
  * that uses react-hook-form data to show error message and error/validated styles.
  * This component can be used with ValidatedForm
  *
@@ -331,7 +331,7 @@ export function ValidatedBlobField({
 
   if (!register) {
     return renderFormGroup(
-      inputRow(<CustomInput type="file" id={id} name={name} className={className} onChange={onChange} onBlur={onBlur} {...attributes} />)
+      inputRow(<Input type="file" id={id} name={name} className={className} onChange={onChange} onBlur={onBlur} {...attributes} />)
     );
   }
 
@@ -347,7 +347,7 @@ export function ValidatedBlobField({
   const input = (
     <>
       <input id={`file_${name}_content_type`} name={contentTypeName} type="hidden" />
-      <CustomInput
+      <Input
         type="file"
         id={id}
         name={name}
