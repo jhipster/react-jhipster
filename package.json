@@ -36,7 +36,12 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-hook-form": "^7.6.8",
-    "reactstrap": "^8.9.0"
+    "reactstrap": "^9.0.0"
+  },
+  "peerDependenciesMeta": {
+    "reactstrap": {
+      "optional": true
+    }
   },
   "dependencies": {
     "lodash.get": "^4.4.2",
@@ -66,7 +71,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-hook-form": "^7.6.8",
-    "reactstrap": "^8.9.0",
+    "reactstrap": "^9.0.0",
     "redux": "^4.0.5",
     "rimraf": "^3.0.2",
     "sinon": "^11.1.1",
