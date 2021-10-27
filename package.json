@@ -31,7 +31,7 @@
   ],
   "homepage": "https://www.jhipster.tech",
   "peerDependencies": {
-    "axios": "^0.21.1",
+    "axios": "*",
     "dayjs": "^1.10.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
