@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig",
   "compilerOptions": {
-    "types": ["jest", "node"]
+    "types": ["jest", "webpack-env"]
   },
   "exclude": []
 }

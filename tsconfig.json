@@ -14,12 +14,9 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "importHelpers": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ],
     "lib": ["es2015", "es2017", "dom"],
     "outDir": "./lib",
-    "types": ["node"]
+    "types": ["webpack-env"]
   },
   "exclude": [
     "node_modules",
