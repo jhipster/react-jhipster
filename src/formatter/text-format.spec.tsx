@@ -1,10 +1,10 @@
 /**
  * @jest-environment jsdom
  */
-import * as React from 'react';
-import * as dayjs from 'dayjs';
+import React from 'react';
+import dayjs from 'dayjs';
 import { render } from '@testing-library/react';
-import * as numeral from 'numeral';
+import numeral from 'numeral';
 import 'numeral/locales'; // load numeral-js locale data
 
 import { TextFormat } from './index';

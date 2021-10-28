@@ -1,6 +1,6 @@
-import * as React from 'react';
-import * as numeral from 'numeral';
-import * as dayjs from 'dayjs';
+import React from 'react';
+import numeral from 'numeral';
+import dayjs from 'dayjs';
 import TranslatorContext from '../language/translator-context';
 import 'numeral/locales';
 
@@ -54,7 +54,7 @@ export const TextFormat = ({ value, type, format, blankOnInvalid, locale }: ITex
       </span>
     );
   } else if (type === 'number') {
-    return <span>{(numeral(value) as any).format(format)}</span>;
+    return <span>{numeral(value).format(format)}</span>;
   }
   return <span>{value}</span>;
 };

@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import * as React from 'react';
+import React from 'react';
 import { render, fireEvent, act, screen, waitFor } from '@testing-library/react';
 import { useForm } from 'react-hook-form';
 
@@ -178,7 +178,7 @@ describe('ValidatedField', () => {
       const fg = container.querySelector('div.form-check');
       expect(fg).not.toBeNull();
       expect(fg.innerHTML).toEqual(
-        '<input name="test-1" id="test-1" type="text" class="form-control"><label id="test-1Label" class="form-check-label form-label\">Label</label>'
+        '<input name="test-1" id="test-1" type="text" class="form-control"><label id="test-1Label" class="form-check-label form-label">Label</label>'
       );
     });
   });

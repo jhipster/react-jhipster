@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { TextFormat } from '../../formatter';
 import { Table } from 'reactstrap';
 

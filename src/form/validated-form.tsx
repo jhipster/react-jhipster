@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import * as React from 'react';
+import React from 'react';
 import { ReactElement, useEffect, useState } from 'react';
 import {
   DefaultValues,
