@@ -13,6 +13,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "importHelpers": true,
     "typeRoots": [
       "node_modules/@types"
     ],
