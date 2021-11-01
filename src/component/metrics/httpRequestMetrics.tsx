@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { TextFormat } from '../../formatter';
 import { Progress, Table } from 'reactstrap';
 import { nanToZero } from '../../util/number-utils';
@@ -27,8 +27,8 @@ export class HttpRequestMetrics extends React.Component<IHttpRequestMetricsProps
             <tr>
               <th>Code</th>
               <th>Count</th>
-              <th className="text-right">Mean</th>
-              <th className="text-right">Max</th>
+              <th className="text-end">Mean</th>
+              <th className="text-end">Max</th>
             </tr>
           </thead>
           <tbody>
@@ -42,10 +42,10 @@ export class HttpRequestMetrics extends React.Component<IHttpRequestMetricsProps
                     </span>
                   </Progress>
                 </td>
-                <td className="text-right">
+                <td className="text-end">
                   <TextFormat value={nanToZero(requestMetrics.percode[key].mean)} type="number" format={twoDigitAfterPointFormat} />
                 </td>
-                <td className="text-right">
+                <td className="text-end">
                   <TextFormat value={nanToZero(requestMetrics.percode[key].max)} type="number" format={twoDigitAfterPointFormat} />
                 </td>
               </tr>

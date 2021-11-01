@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 /*
  Copyright 2017-2021 the original author or authors from the JHipster project.

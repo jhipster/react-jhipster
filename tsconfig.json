@@ -2,7 +2,7 @@
   "compilerOptions": {
     "jsx": "react",
     "module": "commonjs",
-    "target": "es5",
+    "target": "es2015",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "declaration": true,
@@ -11,16 +11,19 @@
     "noUnusedLocals": true,
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
     "lib": ["es2015", "es2017", "dom"],
-    "outDir": "./lib"
+    "outDir": "./lib",
+    "types": ["webpack-env"]
   },
   "exclude": [
     "node_modules",
     "bundles",
     "coverage",
-    "build"
+    "build",
+    "**/*.spec.ts",
+    "**/*.spec.tsx"
   ]
 }

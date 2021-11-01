@@ -1,6 +1,6 @@
-import * as React from 'react';
-import * as get from 'lodash.get';
-import * as sanitizeHtml from 'sanitize-html';
+import React from 'react';
+import get from 'lodash.get';
+import sanitizeHtml from 'sanitize-html';
 import TranslatorContext from './translator-context';
 
 export interface ITranslateProps {
