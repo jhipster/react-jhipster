@@ -6,7 +6,6 @@ This is the JHipster React utilities library
 
 
 [![NPM version][npm-image]][npm-url]
-[![Azure DevOps Build Status][azure-devops-image]][azure-devops-url-main] 
 [![Build Status][github-actions-image]][github-actions-url]
 [![Dependency Status][daviddm-image]][daviddm-url]
 
@@ -21,8 +20,6 @@ Please read our [guidelines](https://github.com/jhipster/generator-jhipster/CONT
 [jhipster-url]: http://www.jhipster.tech/
 [npm-image]: https://badge.fury.io/js/react-jhipster.svg
 [npm-url]: https://npmjs.org/package/react-jhipster
-[azure-devops-image]: https://dev.azure.com/jhipster/react-jhipster/_apis/build/status/jhipster.react-jhipster?branchName=main
-[azure-devops-url-main]: https://dev.azure.com/jhipster/react-jhipster/_build
 [travis-image]: https://travis-ci.org/jhipster/react-jhipster.svg?branch=main
 [travis-url]: https://travis-ci.org/jhipster/react-jhipster
 [daviddm-image]: https://david-dm.org/jhipster/react-jhipster.svg?theme=shields.io
