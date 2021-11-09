@@ -18,6 +18,9 @@
   "exports": "./lib/index.js",
   "typings": "lib/index.d.ts",
   "types": "lib/index.d.ts",
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+  },
   "files": [
     "src",
     "lib/src",
