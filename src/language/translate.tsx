@@ -149,7 +149,7 @@ const doTranslate = (key, interpolate, children) => {
   // If there is no translation data, it means it hasn’t loaded yet, so return no content
   if (!Object.keys(translationData).length) {
     return {
-      content: null
+      content: null,
     };
   }
 
@@ -163,17 +163,17 @@ const doTranslate = (key, interpolate, children) => {
     const content = sanitizeHtml(preSanitize, {
       allowedTags: ['b', 'i', 'em', 'strong', 'a', 'br', 'hr'],
       allowedAttributes: {
-        a: ['href', 'target']
-      }
+        a: ['href', 'target'],
+      },
     });
     return {
       content,
-      html: true
+      html: true,
     };
   }
   return {
     content: preSanitize,
-    html: false
+    html: false,
   };
 };
 
@@ -182,7 +182,7 @@ const doTranslate = (key, interpolate, children) => {
  */
 class Translate extends React.Component<ITranslateProps> {
   static defaultProps = {
-    component: 'span'
+    component: 'span',
   };
 
   shouldComponentUpdate() {

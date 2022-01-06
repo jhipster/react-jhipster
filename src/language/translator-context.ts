@@ -9,12 +9,12 @@ class TranslatorContext {
     locale: null,
     translations: {},
     renderInnerTextForMissingKeys: true,
-    missingTranslationMsg: 'translation-not-found'
+    missingTranslationMsg: 'translation-not-found',
   };
   static registerTranslations(locale: string, translation: any) {
     this.context.translations = {
       ...this.context.translations,
-      [locale]: translation
+      [locale]: translation,
     };
   }
   static setDefaultLocale(locale: string) {

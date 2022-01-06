@@ -9,7 +9,6 @@ export interface ICacheMetricsProps {
 }
 
 export class CacheMetrics extends React.Component<ICacheMetricsProps> {
-
   render() {
     const { cacheMetrics, twoDigitAfterPointFormat } = this.props;
     return (
@@ -36,8 +35,7 @@ export class CacheMetrics extends React.Component<ICacheMetricsProps> {
                 <td>
                   <TextFormat
                     value={nanToZero(
-                      100 *
-                        cacheMetrics[key]['cache.gets.hit'] /
+                      (100 * cacheMetrics[key]['cache.gets.hit']) /
                         (cacheMetrics[key]['cache.gets.hit'] + cacheMetrics[key]['cache.gets.miss'])
                     )}
                     type="number"
@@ -47,8 +45,7 @@ export class CacheMetrics extends React.Component<ICacheMetricsProps> {
                 <td>
                   <TextFormat
                     value={nanToZero(
-                      100 *
-                        cacheMetrics[key]['cache.gets.miss'] /
+                      (100 * cacheMetrics[key]['cache.gets.miss']) /
                         (cacheMetrics[key]['cache.gets.hit'] + cacheMetrics[key]['cache.gets.miss'])
                     )}
                     type="number"

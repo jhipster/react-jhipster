@@ -8,7 +8,6 @@ export interface IDatasourceMetricsProps {
 }
 
 export class DatasourceMetrics extends React.Component<IDatasourceMetricsProps> {
-
   render() {
     const { datasourceMetrics, twoDigitAfterPointFormat } = this.props;
     return (

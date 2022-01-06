@@ -11,12 +11,12 @@ export interface IThreadItemState {
 
 export class ThreadItem extends React.Component<IThreadItemProps, IThreadItemState> {
   state: IThreadItemState = {
-    collapse: false
+    collapse: false,
   };
 
   toggleStackTrace = () => {
     this.setState({
-      collapse: !this.state.collapse
+      collapse: !this.state.collapse,
     });
   };
 

@@ -8,7 +8,6 @@ export interface IGarbageCollectorMetricsProps {
 }
 
 export class GarbageCollectorMetrics extends React.Component<IGarbageCollectorMetricsProps> {
-
   render() {
     const { garbageCollectorMetrics, wholeNumberFormat } = this.props;
     return (
@@ -17,44 +16,43 @@ export class GarbageCollectorMetrics extends React.Component<IGarbageCollectorMe
         <Row>
           <Col md="4">
             <span>
-              GC Live Data Size/GC Max Data Size (<TextFormat
-                value={garbageCollectorMetrics['jvm.gc.live.data.size'] / 1048576}
-                type={'number'}
-                format={wholeNumberFormat}
-              />M /{' '}
-              <TextFormat value={garbageCollectorMetrics['jvm.gc.max.data.size'] / 1048576} type={'number'} format={wholeNumberFormat} />M)
+              GC Live Data Size/GC Max Data Size (
+              <TextFormat value={garbageCollectorMetrics['jvm.gc.live.data.size'] / 1048576} type={'number'} format={wholeNumberFormat} />M
+              / <TextFormat value={garbageCollectorMetrics['jvm.gc.max.data.size'] / 1048576} type={'number'} format={wholeNumberFormat} />
+              M)
             </span>
             <Progress
               animated
               color="success"
-              value={100 * garbageCollectorMetrics['jvm.gc.live.data.size'] / garbageCollectorMetrics['jvm.gc.max.data.size']}
+              value={(100 * garbageCollectorMetrics['jvm.gc.live.data.size']) / garbageCollectorMetrics['jvm.gc.max.data.size']}
             >
               <TextFormat
-                value={100 * garbageCollectorMetrics['jvm.gc.live.data.size'] / garbageCollectorMetrics['jvm.gc.max.data.size']}
+                value={(100 * garbageCollectorMetrics['jvm.gc.live.data.size']) / garbageCollectorMetrics['jvm.gc.max.data.size']}
                 type={'number'}
                 format={wholeNumberFormat}
-              />%
+              />
+              %
             </Progress>
           </Col>
           <Col md="4">
             <span>
-              GC Memory Promoted/GC Memory Allocated (<TextFormat
-                value={garbageCollectorMetrics['jvm.gc.memory.promoted'] / 1048576}
-                type={'number'}
-                format={wholeNumberFormat}
-              />M /{' '}
-              <TextFormat value={garbageCollectorMetrics['jvm.gc.memory.allocated'] / 1048576} type={'number'} format={wholeNumberFormat} />M)
+              GC Memory Promoted/GC Memory Allocated (
+              <TextFormat value={garbageCollectorMetrics['jvm.gc.memory.promoted'] / 1048576} type={'number'} format={wholeNumberFormat} />M
+              /{' '}
+              <TextFormat value={garbageCollectorMetrics['jvm.gc.memory.allocated'] / 1048576} type={'number'} format={wholeNumberFormat} />
+              M)
             </span>
             <Progress
               animated
               color="success"
-              value={100 * garbageCollectorMetrics['jvm.gc.memory.promoted'] / garbageCollectorMetrics['jvm.gc.memory.allocated']}
+              value={(100 * garbageCollectorMetrics['jvm.gc.memory.promoted']) / garbageCollectorMetrics['jvm.gc.memory.allocated']}
             >
               <TextFormat
-                value={100 * garbageCollectorMetrics['jvm.gc.memory.promoted'] / garbageCollectorMetrics['jvm.gc.memory.allocated']}
+                value={(100 * garbageCollectorMetrics['jvm.gc.memory.promoted']) / garbageCollectorMetrics['jvm.gc.memory.allocated']}
                 type={'number'}
                 format={wholeNumberFormat}
-              />%
+              />
+              %
             </Progress>
           </Col>
           <Col md="4">

@@ -34,7 +34,7 @@ export const TextFormat = ({ value, type, format, blankOnInvalid, locale }: ITex
     locale = TranslatorContext.context.locale;
 
     if (!numeral.locales[locale]) {
-     // if not include, by default as en
+      // if not include, by default as en
       numeral.locale('en');
     } else {
       numeral.locale(locale);
@@ -44,15 +44,7 @@ export const TextFormat = ({ value, type, format, blankOnInvalid, locale }: ITex
   }
 
   if (type === 'date') {
-    return (
-      <span>
-        {locale
-          ? dayjs(value)
-              .locale(locale)
-              .format(format)
-          : dayjs(value).format(format)}
-      </span>
-    );
+    return <span>{locale ? dayjs(value).locale(locale).format(format) : dayjs(value).format(format)}</span>;
   } else if (type === 'number') {
     return <span>{numeral(value).format(format)}</span>;
   }
