@@ -16,7 +16,7 @@ export class SystemMetrics extends React.Component<ISystemMetricsProps> {
       day: 86400000,
       hour: 3600000,
       minute: 60000,
-      second: 1000
+      second: 1000,
     };
     let timeString = '';
     let plural = '';

@@ -17,7 +17,7 @@ export interface IThreadsModalState {
 export class ThreadsModal extends React.Component<IThreadsModalProps, IThreadsModalState> {
   state: IThreadsModalState = {
     badgeFilter: '',
-    searchFilter: ''
+    searchFilter: '',
   };
 
   computeFilteredList = () => {

@@ -17,7 +17,7 @@ export class JhiPagination extends React.Component<IJhiPaginationProps, IJhiPagi
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: this.props.activePage
+      currentPage: this.props.activePage,
     };
   }
 
@@ -70,7 +70,7 @@ export class JhiPagination extends React.Component<IJhiPaginationProps, IJhiPagi
   };
 
   displayPaginationItem = (i, activePage) => (
-    <PaginationItem {...activePage === i + 1 && { active: true }} key={i}>
+    <PaginationItem {...(activePage === i + 1 && { active: true })} key={i}>
       <PaginationLink onClick={this.updateActivePage(i + 1)}>{i + 1}</PaginationLink>
     </PaginationItem>
   );
@@ -99,26 +99,25 @@ export class JhiPagination extends React.Component<IJhiPaginationProps, IJhiPagi
     return (
       <div>
         <Pagination>
-          <PaginationItem {...activePage === 1 && { disabled: true }}>
+          <PaginationItem {...(activePage === 1 && { disabled: true })}>
             <PaginationLink first onClick={this.updateActivePage(1)} />
           </PaginationItem>
-          <PaginationItem {...activePage === 1 && { disabled: true }}>
+          <PaginationItem {...(activePage === 1 && { disabled: true })}>
             <PaginationLink previous onClick={this.previousPage} />
           </PaginationItem>
-          {this.itemsToDisplay(activePage).map(
-            (paginationItem, i) =>
-              paginationItem.display === 'display' ? (
-                this.displayPaginationItem(i, activePage)
-              ) : paginationItem.display === 'disabled' ? (
-                <PaginationItem disabled key={i}>
-                  <PaginationLink>...</PaginationLink>
-                </PaginationItem>
-              ) : null
+          {this.itemsToDisplay(activePage).map((paginationItem, i) =>
+            paginationItem.display === 'display' ? (
+              this.displayPaginationItem(i, activePage)
+            ) : paginationItem.display === 'disabled' ? (
+              <PaginationItem disabled key={i}>
+                <PaginationLink>...</PaginationLink>
+              </PaginationItem>
+            ) : null
           )}
-          <PaginationItem {...activePage === maxPage && { disabled: true }}>
+          <PaginationItem {...(activePage === maxPage && { disabled: true })}>
             <PaginationLink next onClick={this.nextPage} />
           </PaginationItem>
-          <PaginationItem {...activePage === maxPage && { disabled: true }}>
+          <PaginationItem {...(activePage === maxPage && { disabled: true })}>
             <PaginationLink last onClick={this.updateActivePage(maxPage)} />
           </PaginationItem>
         </Pagination>

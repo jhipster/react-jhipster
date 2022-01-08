@@ -29,7 +29,7 @@ export const getSortState = (location: { search: string }, itemsPerPage: number,
  * @param incomingData
  * @param links
  */
- export const loadMoreDataWhenScrolled = (currentData: any, incomingData: any, links: any): any => {
+export const loadMoreDataWhenScrolled = (currentData: any, incomingData: any, links: any): any => {
   if (links.first === links.last || !currentData.length) {
     return incomingData;
   }

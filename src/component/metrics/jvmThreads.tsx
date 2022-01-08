@@ -27,8 +27,8 @@ export class JvmThreads extends React.Component<IJvmThreadsProps, IJvmThreadsSta
       threadDumpRunnable: 0,
       threadDumpTimedWaiting: 0,
       threadDumpWaiting: 0,
-      threadDumpBlocked: 0
-    }
+      threadDumpBlocked: 0,
+    },
   };
 
   countThreadByState() {
@@ -38,7 +38,7 @@ export class JvmThreads extends React.Component<IJvmThreadsProps, IJvmThreadsSta
         threadDumpRunnable: 0,
         threadDumpTimedWaiting: 0,
         threadDumpWaiting: 0,
-        threadDumpBlocked: 0
+        threadDumpBlocked: 0,
       };
 
       this.props.jvmThreads.threads.forEach(thread => {
@@ -74,13 +74,13 @@ export class JvmThreads extends React.Component<IJvmThreadsProps, IJvmThreadsSta
 
   openModal = () => {
     this.setState({
-      showModal: true
+      showModal: true,
     });
   };
 
-  handleClose = (e) => {
+  handleClose = e => {
     this.setState({
-      showModal: false
+      showModal: false,
     });
   };
 
@@ -97,7 +97,11 @@ export class JvmThreads extends React.Component<IJvmThreadsProps, IJvmThreadsSta
         </p>
         <Progress animated min="0" value={threadStats.threadDumpRunnable} max={threadStats.threadDumpAll} color="success">
           <span>
-            <TextFormat value={threadStats.threadDumpRunnable * 100 / threadStats.threadDumpAll} type="number" format={wholeNumberFormat} />
+            <TextFormat
+              value={(threadStats.threadDumpRunnable * 100) / threadStats.threadDumpAll}
+              type="number"
+              format={wholeNumberFormat}
+            />
           </span>
         </Progress>
         <p>
@@ -106,7 +110,7 @@ export class JvmThreads extends React.Component<IJvmThreadsProps, IJvmThreadsSta
         <Progress animated min="0" value={threadStats.threadDumpTimedWaiting} max={threadStats.threadDumpAll} color="warning">
           <span>
             <TextFormat
-              value={threadStats.threadDumpTimedWaiting * 100 / threadStats.threadDumpAll}
+              value={(threadStats.threadDumpTimedWaiting * 100) / threadStats.threadDumpAll}
               type="number"
               format={wholeNumberFormat}
             />
@@ -117,7 +121,11 @@ export class JvmThreads extends React.Component<IJvmThreadsProps, IJvmThreadsSta
         </p>
         <Progress animated min="0" value={threadStats.threadDumpWaiting} max={threadStats.threadDumpAll} color="warning">
           <span>
-            <TextFormat value={threadStats.threadDumpWaiting * 100 / threadStats.threadDumpAll} type="number" format={wholeNumberFormat} />
+            <TextFormat
+              value={(threadStats.threadDumpWaiting * 100) / threadStats.threadDumpAll}
+              type="number"
+              format={wholeNumberFormat}
+            />
           </span>
         </Progress>
         <p>
@@ -125,7 +133,11 @@ export class JvmThreads extends React.Component<IJvmThreadsProps, IJvmThreadsSta
         </p>
         <Progress animated min="0" value={threadStats.threadDumpBlocked} max={threadStats.threadDumpAll} color="success">
           <span>
-            <TextFormat value={threadStats.threadDumpBlocked * 100 / threadStats.threadDumpAll} type="number" format={wholeNumberFormat} />
+            <TextFormat
+              value={(threadStats.threadDumpBlocked * 100) / threadStats.threadDumpAll}
+              type="number"
+              format={wholeNumberFormat}
+            />
           </span>
         </Progress>
         {this.renderModal()}

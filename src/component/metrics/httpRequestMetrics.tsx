@@ -10,7 +10,6 @@ export interface IHttpRequestMetricsProps {
 }
 
 export class HttpRequestMetrics extends React.Component<IHttpRequestMetricsProps> {
-
   render() {
     const { requestMetrics, wholeNumberFormat, twoDigitAfterPointFormat } = this.props;
     return (
