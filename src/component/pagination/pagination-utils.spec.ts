@@ -1,4 +1,5 @@
 import { loadMoreDataWhenScrolled } from './pagination-utils';
+import { getSortState } from './pagination-utils';
 
 describe('loadMoreDataWhenScrolled', () => {
   const setLinks = (first, last, prev) => ({ first, last, prev });
@@ -14,6 +15,28 @@ describe('loadMoreDataWhenScrolled', () => {
   describe('When current data length is greater or equal than incoming data length', () => {
     it('should extend current data with incoming data', () => {
       expect(loadMoreDataWhenScrolled(state.entities, payload.data, setLinks(0, 3, 1))).toEqual([...state.entities, ...payload.data]);
+    });
+  });
+});
+
+describe('getSortState', () => {
+  const NUMBER_OF_ITEMS = 25;
+
+  describe('when retrieving sort state', () => {
+
+    it('should return id,asc and page number 1 by default', () => {
+      expect(getSortState({search: ''}, NUMBER_OF_ITEMS)).toEqual({activePage: 1, itemsPerPage: NUMBER_OF_ITEMS, order: "asc", sort: "id"});
+    });
+
+    it('should return given sort filed and order and page number param values from search', () => {
+      const sortField = 'customField';
+      const sortDirection = 'desc';
+      const pageNumber = 42;
+      expect(getSortState({search: '?sort=' + sortField + ',' + sortDirection + '&page=' + pageNumber}, NUMBER_OF_ITEMS)).toEqual({activePage: pageNumber, itemsPerPage: NUMBER_OF_ITEMS, order: sortDirection, sort: sortField});
+    });
+
+    it('should fall back to 1 for page number if somehing different than a number is given', () => {
+      expect(getSortState({search: '?page=invalid'}, NUMBER_OF_ITEMS)).toEqual({activePage: 1, itemsPerPage: NUMBER_OF_ITEMS, order: 'asc', sort: 'id'});
     });
   });
 });
