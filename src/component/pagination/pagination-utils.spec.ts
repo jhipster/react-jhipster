@@ -28,7 +28,7 @@ describe('getSortState', () => {
       expect(getSortState({search: ''}, NUMBER_OF_ITEMS)).toEqual({activePage: 1, itemsPerPage: NUMBER_OF_ITEMS, order: "asc", sort: "id"});
     });
 
-    it('should return given sort filed and order and page number param values from search', () => {
+    it('should return given sort field and order and page number param values from search', () => {
       const sortField = 'customField';
       const sortDirection = 'desc';
       const pageNumber = 42;
