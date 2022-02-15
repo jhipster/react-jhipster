@@ -39,8 +39,6 @@ export const TextFormat = ({ value, type, format, blankOnInvalid, locale }: ITex
     } else {
       numeral.locale(locale);
     }
-  } else {
-    require('dayjs/locale/' + locale + '.js');
   }
 
   if (type === 'date') {
