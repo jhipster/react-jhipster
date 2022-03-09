@@ -7,30 +7,42 @@ class TranslatorContext {
     previousLocale: null,
     defaultLocale: null,
     locale: null,
+    lastChange: new Date(),
     translations: {},
     renderInnerTextForMissingKeys: true,
     missingTranslationMsg: 'translation-not-found',
   };
+
+  static change() {
+    this.context.lastChange = new Date();
+  }
+
   static registerTranslations(locale: string, translation: any) {
     this.context.translations = {
       ...this.context.translations,
       [locale]: translation,
     };
+    TranslatorContext.change();
   }
+
   static setDefaultLocale(locale: string) {
     this.context.defaultLocale = locale;
   }
 
   static setMissingTranslationMsg(msg: string) {
     this.context.missingTranslationMsg = msg;
+    TranslatorContext.change();
   }
 
   static setRenderInnerTextForMissingKeys(flag: boolean) {
     this.context.renderInnerTextForMissingKeys = flag;
+    TranslatorContext.change();
   }
+
   static setLocale(locale: string) {
     this.context.previousLocale = this.context.locale;
     this.context.locale = locale || this.context.defaultLocale;
+    TranslatorContext.change();
   }
 }
 
