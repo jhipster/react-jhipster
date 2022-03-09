@@ -1,5 +1,5 @@
 import React from 'react';
-import get from 'lodash.get';
+import get from 'lodash/get';
 import sanitizeHtml from 'sanitize-html';
 import TranslatorContext from './translator-context';
 

@@ -1,3 +1,5 @@
+import merge from 'lodash/merge';
+
 /**
  * Holder for translation content and locale
  */
@@ -18,10 +20,11 @@ class TranslatorContext {
   }
 
   static registerTranslations(locale: string, translation: any) {
-    this.context.translations = {
-      ...this.context.translations,
-      [locale]: translation,
-    };
+    if (this.context.translations[locale]) {
+      merge(this.context.translations[locale], translation);
+    } else {
+      this.context.translations[locale] = translation;
+    }
     TranslatorContext.change();
   }
 
