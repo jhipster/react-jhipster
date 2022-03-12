@@ -7,7 +7,12 @@ export interface IPaginationBaseState {
   activePage: number;
 }
 
-export const getSortState = (location: { search: string }, itemsPerPage: number, sortField = 'id', sortOrder = 'asc'): IPaginationBaseState => {
+export const getSortState = (
+  location: { search: string },
+  itemsPerPage: number,
+  sortField = 'id',
+  sortOrder = 'asc'
+): IPaginationBaseState => {
   const pageParam = getUrlParameter('page', location.search);
   const sortParam = getUrlParameter('sort', location.search);
   let sort = sortField;
