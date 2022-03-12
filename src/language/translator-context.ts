@@ -30,6 +30,7 @@ class TranslatorContext {
 
   static setDefaultLocale(locale: string) {
     this.context.defaultLocale = locale;
+    TranslatorContext.change();
   }
 
   static setMissingTranslationMsg(msg: string) {
