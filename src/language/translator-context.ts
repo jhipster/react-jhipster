@@ -9,14 +9,14 @@ class TranslatorContext {
     previousLocale: null,
     defaultLocale: null,
     locale: null,
-    lastChange: new Date(),
+    lastChange: new Date().getTime(),
     translations: {},
     renderInnerTextForMissingKeys: true,
     missingTranslationMsg: 'translation-not-found',
   };
 
   static change() {
-    this.context.lastChange = new Date();
+    this.context.lastChange = new Date().getTime();
   }
 
   static registerTranslations(locale: string, translation: any) {
