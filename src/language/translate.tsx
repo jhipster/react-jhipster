@@ -1,5 +1,5 @@
 import React from 'react';
-import get from 'lodash.get';
+import get from 'lodash/get';
 import sanitizeHtml from 'sanitize-html';
 import TranslatorContext from './translator-context';
 
@@ -185,10 +185,17 @@ class Translate extends React.Component<ITranslateProps> {
     component: 'span',
   };
 
-  shouldComponentUpdate() {
-    const currentLocale = TranslatorContext.context.locale || TranslatorContext.context.defaultLocale;
-    const prevLocale = TranslatorContext.context.previousLocale;
-    return currentLocale !== prevLocale;
+  constructor(props) {
+    super(props);
+    this.state = { lastChange: null };
+  }
+
+  componentDidUpdate() {
+    this.setState({ lastChange: TranslatorContext.context.lastChange });
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState.lastChange !== TranslatorContext.context.lastChange;
   }
 
   render() {
