@@ -46,5 +46,5 @@ export const TextFormat = ({ value, type, format, blankOnInvalid, locale }: ITex
   } else if (type === 'number') {
     return <span>{numeral(value).format(format)}</span>;
   }
-  return <span>{value}</span>;
+  return <span>{value.toString()}</span>;
 };

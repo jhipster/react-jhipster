@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react';
-import { render, fireEvent, act, screen, waitFor } from '@testing-library/react';
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { useForm } from 'react-hook-form';
 
 import { ValidatedForm, ValidatedField, ValidatedInput } from './index';
@@ -92,31 +92,29 @@ describe('ValidatedInput', () => {
       const mockChange = jest.fn(e => {
         // do nothing
       });
-      await act(async () => {
-        const { container } = render(
-          <InputApp name="test" defaultValue="hello" validate={{ required: 'this is required' }} onChange={mockChange} />
-        );
+      const { container } = render(
+        <InputApp name="test" defaultValue="hello" validate={{ required: 'this is required' }} onChange={mockChange} />
+      );
 
-        let input = container.querySelector('input');
-        expect(input.name).toEqual('test');
-        expect(input.type).toEqual('text');
-        expect(input.className).toEqual('form-control');
-        expect(input.value).toEqual('hello');
+      let input = container.querySelector('input');
+      expect(input.name).toEqual('test');
+      expect(input.type).toEqual('text');
+      expect(input.className).toEqual('form-control');
+      expect(input.value).toEqual('hello');
 
-        fireEvent.input(screen.getByRole('textbox'), {
-          target: {
-            value: '',
-          },
-        });
-        expect(mockChange).toBeCalled();
-
-        fireEvent.submit(screen.getByRole('button'));
-
-        await waitFor(() => expect(screen.getByText('this is required')).not.toBeNull());
-        input = container.querySelector('input');
-        expect(input.className).toEqual('is-invalid form-control');
-        expect(input.value).toEqual('');
+      fireEvent.input(screen.getByRole('textbox'), {
+        target: {
+          value: '',
+        },
       });
+      expect(mockChange).toBeCalled();
+
+      fireEvent.submit(screen.getByRole('button'));
+
+      await waitFor(() => expect(screen.getByText('this is required')).not.toBeNull());
+      input = container.querySelector('input');
+      expect(input.className).toEqual('is-invalid form-control');
+      expect(input.value).toEqual('');
     });
   });
 });
@@ -220,31 +218,29 @@ describe('ValidatedField', () => {
       const mockChange = jest.fn(e => {
         // do nothing
       });
-      await act(async () => {
-        const { container } = render(
-          <InputApp name="test" defaultValue="hello" validate={{ required: 'this is required' }} onChange={mockChange} />
-        );
+      const { container } = render(
+        <InputApp name="test" defaultValue="hello" validate={{ required: 'this is required' }} onChange={mockChange} />
+      );
 
-        let input = container.querySelector('input');
-        expect(input.name).toEqual('test');
-        expect(input.type).toEqual('text');
-        expect(input.className).toEqual('form-control');
-        expect(input.value).toEqual('hello');
+      let input = container.querySelector('input');
+      expect(input.name).toEqual('test');
+      expect(input.type).toEqual('text');
+      expect(input.className).toEqual('form-control');
+      expect(input.value).toEqual('hello');
 
-        fireEvent.input(screen.getByRole('textbox'), {
-          target: {
-            value: '',
-          },
-        });
-        expect(mockChange).toBeCalled();
-
-        fireEvent.submit(screen.getByRole('button'));
-
-        await waitFor(() => expect(screen.getByText('this is required')).not.toBeNull());
-        input = container.querySelector('input');
-        expect(input.className).toEqual('is-invalid form-control');
-        expect(input.value).toEqual('');
+      fireEvent.input(screen.getByRole('textbox'), {
+        target: {
+          value: '',
+        },
       });
+      expect(mockChange).toBeCalled();
+
+      fireEvent.submit(screen.getByRole('button'));
+
+      await waitFor(() => expect(screen.getByText('this is required')).not.toBeNull());
+      input = container.querySelector('input');
+      expect(input.className).toEqual('is-invalid form-control');
+      expect(input.value).toEqual('');
     });
   });
 });
@@ -398,45 +394,43 @@ describe('ValidatedBlobField', () => {
       const mockChange = jest.fn(e => {
         // do nothing
       });
-      await act(async () => {
-        const { container, getByRole } = render(
-          <InputApp
-            name="test"
-            defaultValue="hello"
-            defaultContentType="image/jpg"
-            validate={{ required: 'this is required' }}
-            onChange={mockChange}
-            isImage
-            imageClassName="my-image"
-          />
-        );
+      const { container, getByRole } = render(
+        <InputApp
+          name="test"
+          defaultValue="hello"
+          defaultContentType="image/jpg"
+          validate={{ required: 'this is required' }}
+          onChange={mockChange}
+          isImage
+          imageClassName="my-image"
+        />
+      );
 
-        const inputContentType: HTMLInputElement = container.querySelector('input');
-        expect(inputContentType.name).toEqual('testContentType');
-        let input: HTMLInputElement = container.querySelector('input.form-control');
-        expect(input.name).toEqual('test');
-        expect(input.type).toEqual('file');
-        expect(input.className).toEqual('form-control');
-        let img: HTMLImageElement = container.querySelector('img.my-image');
-        expect(img).not.toBeNull();
-        expect(img.src).toEqual('data:image/jpg;base64,hello');
+      const inputContentType: HTMLInputElement = container.querySelector('input');
+      expect(inputContentType.name).toEqual('testContentType');
+      let input: HTMLInputElement = container.querySelector('input.form-control');
+      expect(input.name).toEqual('test');
+      expect(input.type).toEqual('file');
+      expect(input.className).toEqual('form-control');
+      let img: HTMLImageElement = container.querySelector('img.my-image');
+      expect(img).not.toBeNull();
+      expect(img.src).toEqual('data:image/jpg;base64,hello');
 
-        fireEvent.change(getByRole('textbox'), {
-          target: {
-            value: '',
-          },
-        });
-        expect(mockChange).toBeCalled();
-
-        fireEvent.submit(screen.getByRole('submit'));
-
-        await waitFor(() => expect(screen.getByText('this is required')).not.toBeNull());
-        input = container.querySelector('input.form-control');
-        expect(input.className).toEqual('is-invalid form-control');
-        expect(input.value).toEqual('');
-        img = container.querySelector('img.my-image');
-        expect(img).toBeNull();
+      fireEvent.change(getByRole('textbox'), {
+        target: {
+          value: '',
+        },
       });
+      expect(mockChange).toBeCalled();
+
+      fireEvent.submit(screen.getByRole('submit'));
+
+      await waitFor(() => expect(screen.getByText('this is required')).not.toBeNull());
+      input = container.querySelector('input.form-control');
+      expect(input.className).toEqual('is-invalid form-control');
+      expect(input.value).toEqual('');
+      img = container.querySelector('img.my-image');
+      expect(img).toBeNull();
     });
   });
 });
@@ -808,7 +802,7 @@ describe('ValidatedForm', () => {
         expect(screen.queryByText('Your select is required.')).toBeNull();
         expect(screen.queryByText('Your multiselect is required.')).toBeNull();
 
-        expect(mockSubmit).toBeCalledWith('test@mail.com', 'password', false, 'v1', ['v2']);
+        await waitFor(() => expect(mockSubmit).toBeCalledWith('test@mail.com', 'password', false, 'v1', ['v2']));
       });
     });
     describe('validate the form with default values', () => {
@@ -919,7 +913,7 @@ describe('ValidatedForm', () => {
         expect(screen.queryByText('Your select is required.')).toBeNull();
         expect(screen.queryByText('Your multiselect is required.')).toBeNull();
 
-        expect(mockSubmit).toBeCalledWith('test@mail.com', 'password', true, 'v1', ['v1', 'v3']);
+        await waitFor(() => expect(mockSubmit).toBeCalledWith('test@mail.com', 'password', true, 'v1', ['v1', 'v3']));
       });
     });
   });

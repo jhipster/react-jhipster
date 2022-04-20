@@ -30,8 +30,11 @@
         "default": ["static-field", "instance-field", "constructor", "static-method", "instance-method"]
       }
     ],
+    "@typescript-eslint/no-misused-promises": "off",
     "@typescript-eslint/no-parameter-properties": ["warn", { "allows": ["public", "private", "protected"] }],
+    "@typescript-eslint/no-unnecessary-type-assertion": "off",
     "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-unsafe-argument": "off",
     "@typescript-eslint/explicit-member-accessibility": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-explicit-any": "off",
