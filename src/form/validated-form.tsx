@@ -11,6 +11,10 @@ import {
   UseFormRegister,
   UseFormSetValue,
   ValidationMode,
+  FieldName,
+} from 'react-hook-form';
+import {
+
 } from 'react-hook-form';
 import { Button, Col, Form, FormFeedback, FormGroup, Input, InputProps, Label, Row } from 'reactstrap';
 
@@ -80,7 +84,7 @@ ValidatedForm.displayName = 'ValidatedForm';
 
 export interface ValidatedInputProps extends InputProps {
   // name of the component, also used for validation
-  name: string;
+  name: FieldName<any>;
   // register function from react-hook-form
   register?: UseFormRegister<FieldValues>;
   // error object from react-hook-form for the field, errors[fieldsName]
