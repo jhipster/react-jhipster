@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
 /*
  Copyright 2017-2022 the original author or authors from the JHipster project.
 
@@ -19,9 +16,27 @@ const tslib_1 = require("tslib");
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-tslib_1.__exportStar(require("./pagination/pagination"), exports);
-tslib_1.__exportStar(require("./pagination/item-count"), exports);
-tslib_1.__exportStar(require("./pagination/pagination-utils"), exports);
-tslib_1.__exportStar(require("./pagination/sort-utils"), exports);
-tslib_1.__exportStar(require("./metrics"), exports);
-//# sourceMappingURL=index.js.map
+
+
+import { getUrlParameter } from '../../util';
+
+export interface ISortBaseState {
+  sort: string;
+  order: string;
+}
+
+export const getSortState = (
+  location: { search: string },
+  sortField = 'id',
+  sortOrder = 'asc'
+): ISortBaseState => {
+  const sortParam = getUrlParameter('sort', location.search);
+  let sort = sortField;
+  let order = sortOrder;
+  if (sortParam !== '') {
+    sort = sortParam.split(',')[0];
+    order = sortParam.split(',')[1];
+  }
+  return { sort, order };
+};
+

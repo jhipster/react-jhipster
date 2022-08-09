@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement } from 'react';
 import {
   DefaultValues,
-  FieldError,
+  FieldError, FieldErrors,
   FieldValues,
   RegisterOptions,
   SubmitHandler,
-  useForm,
   UseFormRegister,
   UseFormSetValue,
   ValidationMode,
@@ -36,18 +35,13 @@ export interface ValidatedFormProps {
  * @param ValidatedFormProps
  * @returns JSX.Element
  */
-export function ValidatedForm({ defaultValues, children, onSubmit, mode, ...rest }: ValidatedFormProps): JSX.Element {
+export function ValidatedForm({ defaultValues, form, children, onSubmit, mode, ...rest }: ValidatedFormProps): JSX.Element {
   const {
     handleSubmit,
     register,
-    reset,
-    setValue,
+    // setValue,
     formState: { errors, touchedFields, dirtyFields },
-  } = useForm({ mode: mode || 'onTouched', defaultValues });
-
-  useEffect(() => {
-    reset(defaultValues);
-  }, [reset, defaultValues]);
+  } = form;
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} {...rest}>
@@ -58,19 +52,19 @@ export function ValidatedForm({ defaultValues, children, onSubmit, mode, ...rest
 
         if (isValidated) {
           const childName = child.props.name;
+          const defaultValue = form?.defaultValues[childName];
           const elem = {
             ...child.props,
             register: child.props.register || register,
             error: child.props.error || errors[childName],
             isTouched: typeof child.props.isTouched === 'undefined' ? touchedFields[childName] : child.props.isTouched,
             isDirty: typeof child.props.isDirty === 'undefined' ? dirtyFields[childName] : child.props.isDirty,
+            // setValue: typeof child.props.setValue === 'undefined' ? setValue : child.props.setValue,
+            defaultValue: typeof child.props.defaultValue === 'undefined' ? defaultValue : child.props.defaultValue,
             key: childName,
           };
           if (type.displayName === 'ValidatedBlobField') {
-            const defaultValue = defaultValues[childName];
             const defaultContentType = defaultValues[`${childName}ContentType`];
-            elem.setValue = typeof child.props.setValue === 'undefined' ? setValue : child.props.setValue;
-            elem.defaultValue = typeof child.props.defaultValue === 'undefined' ? defaultValue : child.props.defaultValue;
             elem.defaultContentType =
               typeof child.props.defaultContentType === 'undefined' ? defaultContentType : child.props.defaultContentType;
           }
@@ -90,7 +84,7 @@ export interface ValidatedInputProps extends InputProps {
   // register function from react-hook-form
   register?: UseFormRegister<FieldValues>;
   // error object from react-hook-form for the field, errors[fieldsName]
-  error?: FieldError;
+  error?: FieldError | (FieldError | FieldErrors<any>);
   // isTouched from react-hook-form for the field, touchedFields[fieldsName]
   isTouched?: boolean;
   // isDirty from react-hook-form for the field, dirtyFields[fieldsName]
@@ -178,7 +172,7 @@ export function ValidatedInput({
       >
         {children}
       </Input>
-      {error && <FormFeedback>{error.message}</FormFeedback>}
+      {error && <FormFeedback>{error.message.toString()}</FormFeedback>}
     </>
   );
 }
@@ -290,13 +284,15 @@ export function ValidatedBlobField({
   imageClassName,
   clearBtn,
   openActionLabel,
+  blob,
+  setBlobData,
+  blobContentType,
+  setBlobContentType,
   // will be ignored as type will always be `file`
   type,
   check,
   ...attributes
 }: ValidatedBlobFieldProps): JSX.Element {
-  const [blob, setBlobData] = useState<string>(defaultValue as string);
-  const [blobContentType, setBlobContentType] = useState<string>(defaultContentType);
 
   const contentTypeName = `${name}ContentType`;
 
@@ -339,11 +335,6 @@ export function ValidatedBlobField({
   className = isTouched ? `${className} is-touched` : className;
   className = isDirty ? `${className} is-dirty` : className;
 
-  useEffect(() => {
-    register(name, validate);
-    register(contentTypeName, validate);
-  }, [register]);
-
   const input = (
     <>
       <input id={`file_${name}_content_type`} name={contentTypeName} type="hidden" />
@@ -376,7 +367,7 @@ export function ValidatedBlobField({
         }}
         {...attributes}
       />
-      {error && <FormFeedback>{error.message}</FormFeedback>}
+      {error && <FormFeedback>{error.message.toString()}</FormFeedback>}
     </>
   );
 

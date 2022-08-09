@@ -19,4 +19,5 @@
 export * from './pagination/pagination';
 export * from './pagination/item-count';
 export * from './pagination/pagination-utils';
+export * from './pagination/sort-utils';
 export * from './metrics';

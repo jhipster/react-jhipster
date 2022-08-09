@@ -1,5 +1,5 @@
-import { loadMoreDataWhenScrolled } from './pagination-utils';
-import { getSortState } from './pagination-utils';
+import { getPaginationState, loadMoreDataWhenScrolled } from './pagination-utils';
+import { getSortState } from './sort-utils';
 
 describe('loadMoreDataWhenScrolled', () => {
   const setLinks = (first, last, prev) => ({ first, last, prev });
@@ -19,40 +19,37 @@ describe('loadMoreDataWhenScrolled', () => {
   });
 });
 
-describe('getSortState', () => {
+describe('getPaginationState', () => {
   const NUMBER_OF_ITEMS = 25;
 
   describe('when retrieving sort state', () => {
-    it('should return id,asc and page number 1 by default', () => {
-      expect(getSortState({ search: '' }, NUMBER_OF_ITEMS)).toEqual({
+    it('should return page number 1 by default', () => {
+      expect(getPaginationState({ search: '' }, NUMBER_OF_ITEMS)).toEqual({
         activePage: 1,
         itemsPerPage: NUMBER_OF_ITEMS,
-        order: 'asc',
-        sort: 'id',
-      });
-    });
-
-    it('should return given sort field and order and page number param values from search', () => {
-      const sortField = 'customField';
-      const sortDirection = 'desc';
-      const pageNumber = 42;
-      expect(getSortState({ search: '?sort=' + sortField + ',' + sortDirection + '&page=' + pageNumber }, NUMBER_OF_ITEMS)).toEqual({
-        activePage: pageNumber,
-        itemsPerPage: NUMBER_OF_ITEMS,
-        order: sortDirection,
-        sort: sortField,
       });
     });
 
     it('should fall back to 1 for page number if somehing different than a number is given', () => {
-      expect(getSortState({ search: '?page=invalid' }, NUMBER_OF_ITEMS)).toEqual({
+      expect(getPaginationState({ search: '?page=invalid' }, NUMBER_OF_ITEMS)).toEqual({
         activePage: 1,
         itemsPerPage: NUMBER_OF_ITEMS,
-        order: 'asc',
-        sort: 'id',
       });
     });
   });
 });
 
+describe('getSortState', () => {
+
+  describe('when retrieving sort state', () => {
+    it('should return given sort field and order from search', () => {
+      const sortField = 'customField';
+      const sortDirection = 'desc';
+      expect(getSortState({ search: '?sort=' + sortField + ',' + sortDirection })).toEqual({
+        order: sortDirection,
+        sort: sortField,
+      });
+    });
+  });
+});
 /* TODO add unit tests */
