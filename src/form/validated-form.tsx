@@ -41,7 +41,6 @@ export function ValidatedForm({ defaultValues, form, children, onSubmit, mode, .
   const {
     handleSubmit,
     register,
-    // setValue,
     formState: { errors, touchedFields, dirtyFields },
   } = form;
 

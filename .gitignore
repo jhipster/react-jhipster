@@ -22,6 +22,7 @@ coverage
 /bundles
 build/
 lib/
+react-jhipster.iml
 
 #################
 ## IDE
