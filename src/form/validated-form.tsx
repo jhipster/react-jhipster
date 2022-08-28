@@ -11,10 +11,7 @@ import {
   UseFormRegister,
   UseFormSetValue,
   ValidationMode,
-  FieldName,
-} from 'react-hook-form';
-import {
-
+  FieldName, UseFormReturn,
 } from 'react-hook-form';
 import { Button, Col, Form, FormFeedback, FormGroup, Input, InputProps, Label, Row } from 'reactstrap';
 
@@ -23,6 +20,7 @@ import { byteSize, isEmpty, openFile, setFileData } from '../util';
 export interface ValidatedFormProps {
   children: React.ReactNode;
   onSubmit: SubmitHandler<FieldValues>;
+  form?:  UseFormReturn<any, any>;
   defaultValues?: DefaultValues<FieldValues>;
   mode?: keyof ValidationMode;
   [key: string]: any;
@@ -56,14 +54,13 @@ export function ValidatedForm({ defaultValues, form, children, onSubmit, mode, .
 
         if (isValidated) {
           const childName = child.props.name;
-          const defaultValue = form?.defaultValues[childName];
+          const defaultValue = defaultValues[childName];
           const elem = {
             ...child.props,
             register: child.props.register || register,
             error: child.props.error || errors[childName],
             isTouched: typeof child.props.isTouched === 'undefined' ? touchedFields[childName] : child.props.isTouched,
             isDirty: typeof child.props.isDirty === 'undefined' ? dirtyFields[childName] : child.props.isDirty,
-            // setValue: typeof child.props.setValue === 'undefined' ? setValue : child.props.setValue,
             defaultValue: typeof child.props.defaultValue === 'undefined' ? defaultValue : child.props.defaultValue,
             key: childName,
           };
@@ -84,11 +81,11 @@ ValidatedForm.displayName = 'ValidatedForm';
 
 export interface ValidatedInputProps extends InputProps {
   // name of the component, also used for validation
-  name: FieldName<any>;
+  name: FieldName<FieldValues>;
   // register function from react-hook-form
   register?: UseFormRegister<FieldValues>;
   // error object from react-hook-form for the field, errors[fieldsName]
-  error?: FieldError | (FieldError | FieldErrors<any>);
+  error?: FieldError | (FieldError | FieldErrors);
   // isTouched from react-hook-form for the field, touchedFields[fieldsName]
   isTouched?: boolean;
   // isDirty from react-hook-form for the field, dirtyFields[fieldsName]
