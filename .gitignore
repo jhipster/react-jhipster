@@ -5,7 +5,6 @@ nbproject
 manifest.mf
 build.xml
 node_modules
-node_modules/*
 npm-debug.log
 yarn-error.log
 src/**/*.{js,jsx}
@@ -21,8 +20,8 @@ coverage
 **/*.metadata.json
 *.metadata.json
 /bundles
-/lib/tests
 build/
+lib/
 
 #################
 ## IDE
