@@ -176,7 +176,7 @@ describe('ValidatedField', () => {
       const fg = container.querySelector('div.form-check');
       expect(fg).not.toBeNull();
       expect(fg.innerHTML).toEqual(
-        '<input name="test-1" id="test-1" type="text" class="form-control"><label id="test-1Label" class="form-check-label form-label">Label</label>'
+        '<input name="test-1" id="test-1" type="text" class="form-control"><label id="test-1Label" class="form-check-label">Label</label>'
       );
     });
   });
@@ -438,8 +438,9 @@ describe('ValidatedBlobField', () => {
 describe('ValidatedForm', () => {
   describe('with non-input children', () => {
     it('renders them as single element', () => {
+      const reactForm = { defaultValues: {}, handleSubmit() {}, formState: {errors: {}, touchedFields: {}, dirtyFields: {}} } as any;
       const { container } = render(
-        <ValidatedForm onSubmit={() => {}} className="myform">
+        <ValidatedForm onSubmit={() => {}} className="myform" form={reactForm}>
           <div>a div</div>
         </ValidatedForm>
       );
@@ -448,8 +449,9 @@ describe('ValidatedForm', () => {
       expect(screen.getByText('a div')).not.toBeNull();
     });
     it('renders them as array of elements', () => {
+      const reactForm = { defaultValues: {}, handleSubmit() {}, formState: {errors: {}, touchedFields: {}, dirtyFields: {}} } as any;
       const { container } = render(
-        <ValidatedForm onSubmit={() => {}} className="myform">
+        <ValidatedForm onSubmit={() => {}} className="myform" form={reactForm}>
           {/* A comment */}
           <div>a div</div>
           <button>a button</button>
@@ -469,8 +471,9 @@ describe('ValidatedForm', () => {
   });
   describe('with validated input & field children', () => {
     it('should override register, error, isTouched & isDirty', async () => {
+      const reactForm = { defaultValues: {}, handleSubmit() {}, formState: {errors: {}} } as any;
       const { container, findByText } = render(
-        <ValidatedForm onSubmit={() => {}} className="myform">
+        <ValidatedForm onSubmit={() => {}} className="myform" form={reactForm}>
           <ValidatedInput name="test-12" error={{ type: 'required', message: 'Your email is required.' }} isTouched={true} isDirty={true} />
         </ValidatedForm>
       );
@@ -486,8 +489,9 @@ describe('ValidatedForm', () => {
     });
     describe('renders them with default values passed inline', () => {
       it('for text field', () => {
+        const reactForm = { defaultValues: {}, handleSubmit() {}, formState: {errors: {}, touchedFields: {}, dirtyFields: {}} } as any;
         const { container } = render(
-          <ValidatedForm onSubmit={() => {}} className="myform">
+          <ValidatedForm onSubmit={() => {}} className="myform" form={reactForm}>
             <ValidatedInput name="test-1" defaultValue="hello" />
           </ValidatedForm>
         );
@@ -499,8 +503,9 @@ describe('ValidatedForm', () => {
       });
 
       it('for password field', () => {
+        const reactForm = { defaultValues: {}, handleSubmit() {}, formState: {errors: {}, touchedFields: {}, dirtyFields: {}} } as any;
         const { container } = render(
-          <ValidatedForm onSubmit={() => {}} className="myform">
+          <ValidatedForm onSubmit={() => {}} className="myform" form={reactForm}>
             <ValidatedField name="test-2" type="password" label="password" defaultValue="1231" />
           </ValidatedForm>
         );
@@ -512,8 +517,9 @@ describe('ValidatedForm', () => {
       });
 
       it('for checkbox field', () => {
+        const reactForm = { defaultValues: {}, handleSubmit() {}, formState: {errors: {}, touchedFields: {}, dirtyFields: {}} } as any;
         const { container } = render(
-          <ValidatedForm onSubmit={() => {}} className="myform">
+          <ValidatedForm onSubmit={() => {}} className="myform" form={reactForm}>
             <ValidatedField name="test-3" type="checkbox" value={true} check label="check label" />
           </ValidatedForm>
         );
@@ -525,8 +531,9 @@ describe('ValidatedForm', () => {
       });
 
       it('for radio field', () => {
+        const reactForm = { defaultValues: {}, handleSubmit() {}, formState: {errors: {}, touchedFields: {}, dirtyFields: {}} } as any;
         const { container } = render(
-          <ValidatedForm onSubmit={() => {}} className="myform">
+          <ValidatedForm onSubmit={() => {}} className="myform" form={reactForm}>
             <ValidatedField name="test-4" type="radio" value="on" label="radio label" />
           </ValidatedForm>
         );
@@ -538,8 +545,9 @@ describe('ValidatedForm', () => {
       });
 
       it('for select field', () => {
+        const reactForm = { defaultValues: {}, handleSubmit() {}, formState: {errors: {}, touchedFields: {}, dirtyFields: {}} } as any;
         const { container } = render(
-          <ValidatedForm onSubmit={() => {}} className="myform">
+          <ValidatedForm onSubmit={() => {}} className="myform" form={reactForm}>
             <ValidatedInput name="test-5" type="select" label="select label" defaultValue="value 1">
               <option>value 1</option>
               <option>value 2</option>
@@ -566,10 +574,12 @@ describe('ValidatedForm', () => {
     });
     describe('renders them with default values passed via form', () => {
       it('for text field', () => {
+        const reactForm = { defaultValues: {}, handleSubmit() {}, formState: {errors: {}, touchedFields: {}, dirtyFields: {}} } as any;
         const { container } = render(
           <ValidatedForm
             onSubmit={() => {}}
             className="myform"
+            form={reactForm}
             defaultValues={{
               test1: 'test1',
               test2: 'test2',
@@ -594,9 +604,11 @@ describe('ValidatedForm', () => {
       });
 
       it('for checkbox/radio field should retain value inline', () => {
+        const reactForm = { defaultValues: {}, handleSubmit() {}, formState: {errors: {}, touchedFields: {}, dirtyFields: {}} } as any;
         const { container } = render(
           <ValidatedForm
             onSubmit={() => {}}
+            form={reactForm}
             className="myform"
             defaultValues={{
               test3: 'false',
@@ -624,9 +636,11 @@ describe('ValidatedForm', () => {
       });
 
       it('for select field', () => {
+        const reactForm = { defaultValues: {}, handleSubmit() {}, formState: {errors: {}, touchedFields: {}, dirtyFields: {}} } as any;
         const { container } = render(
           <ValidatedForm
             onSubmit={() => {}}
+            form={reactForm}
             className="myform"
             defaultValues={{
               test5: 'value 1',
@@ -668,8 +682,9 @@ describe('ValidatedForm', () => {
       };
 
       beforeEach(() => {
+        const reactForm = { defaultValues: {}, handleSubmit() {}, formState: {errors: {}, touchedFields: {}, dirtyFields: {}} } as any;
         render(
-          <ValidatedForm onSubmit={onSubmit} className="myform">
+          <ValidatedForm onSubmit={onSubmit} className="myform" form={reactForm}>
             <ValidatedField
               name="email"
               label="email"
@@ -813,10 +828,11 @@ describe('ValidatedForm', () => {
       const onSubmit = ({ email, password, active, select, multiselect }) => {
         mockSubmit(email, password, active, select, multiselect);
       };
-
       beforeEach(() => {
+        const reactForm = { defaultValues: {}, handleSubmit() {}, formState: {errors: {}, touchedFields: {}, dirtyFields: {}} } as any;
         render(
           <ValidatedForm
+            form={reactForm}
             onSubmit={onSubmit}
             className="myform"
             defaultValues={{

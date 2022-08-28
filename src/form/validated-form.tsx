@@ -54,7 +54,7 @@ export function ValidatedForm({ defaultValues, form, children, onSubmit, mode, .
 
         if (isValidated) {
           const childName = child.props.name;
-          const defaultValue = defaultValues[childName];
+          const defaultValue = defaultValues ? defaultValues[childName] : undefined;
           const elem = {
             ...child.props,
             register: child.props.register || register,
