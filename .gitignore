@@ -20,8 +20,8 @@ coverage
 **/*.metadata.json
 *.metadata.json
 /bundles
+/lib/tests
 build/
-lib/
 react-jhipster.iml
 
 #################
