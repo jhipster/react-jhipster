@@ -10,7 +10,13 @@ export interface ValidatedTextInputFieldProps {
   touchedFields: any, errors,
   setValue: UseFormSetValue<FieldValues>,
   name: string,
-  validation: { required?: boolean | string, minLength?: { value: number, message: string }, maxLength?: { value: number, message: string }, validate?: (value: string) => boolean | string },
+  validate: {
+    required?: boolean | string,
+    minLength?: { value: number, message: string },
+    maxLength?: { value: number, message: string },
+    pattern?: { value: RegExp, message: string },
+    validate?: (value: string) => boolean | string
+  },
   labelPlaceholderKey: string,
   inputPlaceholderKey: string,
   type: InputType,
@@ -23,7 +29,7 @@ export function ValidatedTextInput(
     errors,
     setValue,
     name,
-    validation,
+    validate,
     labelPlaceholderKey,
     inputPlaceholderKey,
     type = 'text',
@@ -48,7 +54,7 @@ export function ValidatedTextInput(
         name={name}
         placeholder={ translate(inputPlaceholderKey) }
         type={type}
-        {...register(name, validation)}
+        {...register(name, validate)}
         data-cy={name}
         valid={touchedFields[name] && !errors[name]}
         invalid={!touchedFields[name] || !!errors[name]}
