@@ -19,7 +19,7 @@ export interface ValidatedTextInputFieldProps {
   },
   labelPlaceholderKey: string,
   inputPlaceholderKey: string,
-  type: InputType,
+  type?: InputType,
   updateValueOverrideMethod?: (event: any) => void,
 }
 export function ValidatedTextInput(
