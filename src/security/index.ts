@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
 /*
  Copyright 2017-2022 the original author or authors from the JHipster project.
 
@@ -19,6 +16,6 @@ const tslib_1 = require("tslib");
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-tslib_1.__exportStar(require("./text-format"), exports);
-tslib_1.__exportStar(require("./dates-format"), exports);
-//# sourceMappingURL=index.js.map
+import { AUTHORITIES } from './constants';
+
+export { AUTHORITIES };
