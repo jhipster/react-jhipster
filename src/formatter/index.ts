@@ -17,4 +17,3 @@
  limitations under the License.
  */
 export * from './text-format';
-export * from './dates-format';

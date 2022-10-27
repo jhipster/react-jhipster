@@ -22,4 +22,3 @@ export * from './component';
 export * from './form';
 export * from './formatter';
 export * from './type';
-export * from './security';
