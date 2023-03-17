@@ -187,15 +187,10 @@ class Translate extends React.Component<ITranslateProps> {
 
   constructor(props) {
     super(props);
-    this.state = { lastChange: null };
-  }
-
-  componentDidUpdate() {
-    this.setState({ lastChange: TranslatorContext.context.lastChange });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return nextState.lastChange !== TranslatorContext.context.lastChange || nextProps.interpolate !== this.props.interpolate;
+    return nextProps.interpolate !== this.props.interpolate || nextProps.contentKey !== this.props.contentKey;
   }
 
   render() {
