@@ -48,11 +48,13 @@
     "lodash": "^4.17.21",
     "numeral": "^2.0.6",
     "sanitize-html": "^2.3.1",
-    "tslib": "^2.3.1"
+    "tslib": "^2.3.1",
+    "react-transition-group": "^4.4.5",
+    "react-popper": "^2.3.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.12.0",
-    "@testing-library/react": "^13.1.1",
+    "@testing-library/react": "^14.0.0",
     "@types/jest": "^27.0.2",
     "@types/react": "^18.0.5",
     "@types/react-dom": "^18.0.1",
@@ -72,13 +74,14 @@
     "prettier": "^2.2.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-hook-form": "^7.30.0",
+    "react-hook-form": "^7.44.3",
     "reactstrap": "^9.0.3",
     "redux": "^4.0.5",
     "rimraf": "^3.0.2",
     "sinon": "^11.1.1",
     "ts-jest": "^27.0.2",
-    "typescript": "^4.3.2"
+    "typescript": "^4.3.2",
+    "prettier-plugin-packagejson": "^2.4.3"
   },
   "version": "0.24.0",
   "lint-staged": {
@@ -91,7 +94,7 @@
   "scripts": {
     "tsc": "tsc",
     "precommit": "lint-staged",
-    "prettier:format": "prettier --write '*.js' 'src/**/*.{ts,tsx}'",
+    "prettier:format": "prettier --write '*.js' package.json 'src/**/*.{ts,tsx}'",
     "cleanup": "rimraf lib/* src/*.d.ts src/**/*.d.ts src/*.{js,jsx} src/**/*.{js,jsx} tests/**/*.d.ts tests/*.d.ts",
     "lint": "eslint . --ext .js,.ts,.jsx,.tsx",
     "lint:fix": "npm run lint -- --fix",
@@ -104,6 +107,7 @@
     "commit-lib": "git add lib && git commit --allow-empty -m \"Update libs\"",
     "release:patch": "npm run build && npm run commit-lib && npm version patch -a -m \"Update to %s\" && npm run release",
     "release:minor": "npm run build && npm run commit-lib && npm version minor -a -m \"Update to %s\" && npm run release",
-    "release:major": "npm run build && npm run commit-lib && npm version major -a -m \"Update to %s\" && npm run release"
+    "release:major": "npm run build && npm run commit-lib && npm version major -a -m \"Update to %s\" && npm run release",
+    "prepare": "npm run build"
   }
 }
