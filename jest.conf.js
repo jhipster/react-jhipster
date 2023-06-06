@@ -2,7 +2,14 @@ const tsconfig = require('./tsconfig.json');
 
 module.exports = {
   transform: {
-    '^.+\\.tsx?$': 'ts-jest',
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      {
+        tsconfig: './tsconfig.test.json',
+        compiler: 'typescript',
+        diagnostics: false,
+      },
+    ],
   },
   testURL: 'http://localhost/',
   cacheDirectory: '<rootDir>/build/jest-cache',
@@ -14,13 +21,6 @@ module.exports = {
   }),
   reporters: ['default', ['jest-junit', { outputDirectory: './build/test-results/', outputName: 'TESTS-results-jest.xml' }]],
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
-  globals: {
-    'ts-jest': {
-      tsconfig: './tsconfig.test.json',
-      compiler: 'typescript',
-      diagnostics: false,
-    },
-  },
 };
 
 function mapTypescriptAliasToJestAlias(alias = {}) {
