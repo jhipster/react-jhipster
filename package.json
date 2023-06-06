@@ -39,12 +39,14 @@
     "lint:fix": "npm run lint -- --fix",
     "precommit": "lint-staged",
     "prepare": "npm run build",
+    "prettier:check": "prettier --check '*.js' package.json 'src/**/*.{ts,tsx}'",
     "prettier:format": "prettier --write '*.js' package.json 'src/**/*.{ts,tsx}'",
     "release": "npm test && git push && git push --tags && npm publish",
     "release:major": "npm run build && npm run commit-lib && npm version major -a -m \"Update to %s\" && npm run release",
     "release:minor": "npm run build && npm run commit-lib && npm version minor -a -m \"Update to %s\" && npm run release",
     "release:patch": "npm run build && npm run commit-lib && npm version patch -a -m \"Update to %s\" && npm run release",
-    "test": "npm run lint && npm run jest",
+    "pretest": "npm run lint && npm run prettier:check",
+    "test": "npm run jest",
     "test:watch": "npm run jest -- --watch",
     "tsc": "tsc"
   },
@@ -80,6 +82,7 @@
     "eslint-plugin-react": "^7.22.0",
     "husky": "^6.0.0",
     "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
     "jest-junit": "^12.1.0",
     "lint-staged": "^11.0.0",
     "prettier": "^2.2.1",
@@ -92,8 +95,7 @@
     "rimraf": "^3.0.2",
     "sinon": "^11.1.1",
     "ts-jest": "^29.1.0",
-    "typescript": "^4.3.2",
-    "jest-environment-jsdom": "^29.5.0"
+    "typescript": "^4.3.2"
   },
   "peerDependencies": {
     "axios": "*",
