@@ -1,22 +1,16 @@
 import { getUrlParameter } from '../../util/url-utils';
 
-
 export interface ISortBaseState {
   sort: string;
   order: string;
 }
-
 
 export interface IPaginationBaseState extends ISortBaseState {
   itemsPerPage: number;
   activePage: number;
 }
 
-export const getSortState = (
-  location: { search: string },
-  sortField = 'id',
-  sortOrder = 'asc'
-): ISortBaseState => {
+export const getSortState = (location: { search: string }, sortField = 'id', sortOrder = 'asc'): ISortBaseState => {
   const sortParam = getUrlParameter('sort', location.search);
   let sort = sortField;
   let order = sortOrder;
@@ -26,7 +20,6 @@ export const getSortState = (
   }
   return { sort, order };
 };
-
 
 export const getPaginationState = (
   location: { search: string },
@@ -39,7 +32,7 @@ export const getPaginationState = (
   if (pageParam !== '' && !isNaN(parseInt(pageParam, 10))) {
     activePage = parseInt(pageParam, 10);
   }
-  const {sort, order} = getSortState(location, sortField, sortOrder);
+  const { sort, order } = getSortState(location, sortField, sortOrder);
   return { itemsPerPage, sort, order, activePage };
 };
 

@@ -161,13 +161,16 @@ const doTranslate = (key, interpolate, children) => {
   if (preSanitize === false || /<[a-z][\s\S]*>/i.test(preSanitize)) {
     // String contains HTML tags. Allow only a super restricted set of tags and attributes
     const preSanitizeArray = Array.isArray(preSanitize) ? preSanitize : [preSanitize];
-    const content = preSanitizeArray.map(part => part.$$typeof === REACT_ELEMENT ? part :
-      sanitizeHtml(part, {
-        allowedTags: ['b', 'i', 'em', 'strong', 'a', 'br', 'hr'],
-        allowedAttributes: {
-          a: ['href', 'target'],
-        },
-      }));
+    const content = preSanitizeArray.map(part =>
+      part.$$typeof === REACT_ELEMENT
+        ? part
+        : sanitizeHtml(part, {
+            allowedTags: ['b', 'i', 'em', 'strong', 'a', 'br', 'hr'],
+            allowedAttributes: {
+              a: ['href', 'target'],
+            },
+          })
+    );
 
     return {
       content,
@@ -216,7 +219,9 @@ export const translate = (contentKey: string, interpolate?: any, children?: stri
 
   if (translation.html) {
     const contentArray = Array.isArray(translation.content) ? translation.content : [translation.content];
-    return contentArray.map(content => content.$$typeof === REACT_ELEMENT ? content : React.createElement('span', { dangerouslySetInnerHTML: { __html: content } }));
+    return contentArray.map(content =>
+      content.$$typeof === REACT_ELEMENT ? content : React.createElement('span', { dangerouslySetInnerHTML: { __html: content } })
+    );
   } else {
     return translation.content;
   }
