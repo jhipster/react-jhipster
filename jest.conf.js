@@ -4,7 +4,6 @@ module.exports = {
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
-  testEnvironment: 'jsdom',
   testURL: 'http://localhost/',
   cacheDirectory: '<rootDir>/build/jest-cache',
   coverageDirectory: '<rootDir>/build/test-results/',

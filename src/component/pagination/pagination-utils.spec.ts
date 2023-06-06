@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { loadMoreDataWhenScrolled } from './pagination-utils';
 import { getPaginationState } from './pagination-utils';
 

@@ -1,26 +1,25 @@
 {
   "name": "react-jhipster",
+  "version": "0.24.0",
   "description": "A Jhipster util library for React",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jhipster/react-jhipster.git"
-  },
   "keywords": [
     "jhipster",
     "react"
   ],
-  "author": "Deepu KS",
-  "license": "Apache-2.0",
+  "homepage": "https://www.jhipster.tech",
   "bugs": {
     "url": "https://github.com/jhipster/generator-jhipster/issues"
   },
-  "main": "lib/index.js",
-  "exports": "./lib/index.js",
-  "typings": "lib/index.d.ts",
-  "types": "lib/index.d.ts",
-  "engines": {
-    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jhipster/react-jhipster.git"
   },
+  "license": "Apache-2.0",
+  "author": "Deepu KS",
+  "exports": "./lib/index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "typings": "lib/index.d.ts",
   "files": [
     "src",
     "lib",
@@ -30,7 +29,72 @@
     "index.ts",
     "react-jhipster.ts"
   ],
-  "homepage": "https://www.jhipster.tech",
+  "scripts": {
+    "build": "npm run cleanup && npm run tsc",
+    "cleanup": "rimraf lib/* src/*.d.ts src/**/*.d.ts src/*.{js,jsx} src/**/*.{js,jsx} tests/**/*.d.ts tests/*.d.ts",
+    "commit-lib": "git add lib && git commit --allow-empty -m \"Update libs\"",
+    "jest": "jest --coverage --logHeapUsage --maxWorkers=2 --config jest.conf.js",
+    "jest:update": "npm run jest -- --updateSnapshot",
+    "lint": "eslint . --ext .js,.ts,.jsx,.tsx",
+    "lint:fix": "npm run lint -- --fix",
+    "precommit": "lint-staged",
+    "prepare": "npm run build",
+    "prettier:format": "prettier --write '*.js' package.json 'src/**/*.{ts,tsx}'",
+    "release": "npm test && git push && git push --tags && npm publish",
+    "release:major": "npm run build && npm run commit-lib && npm version major -a -m \"Update to %s\" && npm run release",
+    "release:minor": "npm run build && npm run commit-lib && npm version minor -a -m \"Update to %s\" && npm run release",
+    "release:patch": "npm run build && npm run commit-lib && npm version patch -a -m \"Update to %s\" && npm run release",
+    "test": "npm run lint && npm run jest",
+    "test:watch": "npm run jest -- --watch",
+    "tsc": "tsc"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "npm run lint:fix",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "numeral": "^2.0.6",
+    "react-popper": "^2.3.0",
+    "react-transition-group": "^4.4.5",
+    "sanitize-html": "^2.3.1",
+    "tslib": "^2.3.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/react": "^14.0.0",
+    "@types/jest": "^29.5.2",
+    "@types/react": "^18.0.5",
+    "@types/react-dom": "^18.0.1",
+    "@types/sanitize-html": "^2.3.1",
+    "@types/webpack-env": "^1.16.3",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
+    "axios": "^0.21.1",
+    "dayjs": "^1.10.4",
+    "eslint": "^8.13.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-react": "^7.22.0",
+    "husky": "^6.0.0",
+    "jest": "^29.5.0",
+    "jest-junit": "^12.1.0",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.2.1",
+    "prettier-plugin-packagejson": "^2.4.3",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-hook-form": "^7.44.3",
+    "reactstrap": "^9.0.3",
+    "redux": "^4.0.5",
+    "rimraf": "^3.0.2",
+    "sinon": "^11.1.1",
+    "ts-jest": "^29.1.0",
+    "typescript": "^4.3.2",
+    "jest-environment-jsdom": "^29.5.0"
+  },
   "peerDependencies": {
     "axios": "*",
     "dayjs": "^1.10.4",
@@ -44,70 +108,7 @@
       "optional": true
     }
   },
-  "dependencies": {
-    "lodash": "^4.17.21",
-    "numeral": "^2.0.6",
-    "sanitize-html": "^2.3.1",
-    "tslib": "^2.3.1",
-    "react-transition-group": "^4.4.5",
-    "react-popper": "^2.3.0"
-  },
-  "devDependencies": {
-    "@testing-library/jest-dom": "^5.12.0",
-    "@testing-library/react": "^14.0.0",
-    "@types/jest": "^27.0.2",
-    "@types/react": "^18.0.5",
-    "@types/react-dom": "^18.0.1",
-    "@types/sanitize-html": "^2.3.1",
-    "@types/webpack-env": "^1.16.3",
-    "@typescript-eslint/eslint-plugin": "^5.20.0",
-    "@typescript-eslint/parser": "^5.20.0",
-    "axios": "^0.21.1",
-    "dayjs": "^1.10.4",
-    "eslint": "^8.13.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-react": "^7.22.0",
-    "husky": "^6.0.0",
-    "jest": "^27.0.3",
-    "jest-junit": "^12.1.0",
-    "lint-staged": "^11.0.0",
-    "prettier": "^2.2.1",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-hook-form": "^7.44.3",
-    "reactstrap": "^9.0.3",
-    "redux": "^4.0.5",
-    "rimraf": "^3.0.2",
-    "sinon": "^11.1.1",
-    "ts-jest": "^27.0.2",
-    "typescript": "^4.3.2",
-    "prettier-plugin-packagejson": "^2.4.3"
-  },
-  "version": "0.24.0",
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "prettier --write",
-      "npm run lint:fix",
-      "git add"
-    ]
-  },
-  "scripts": {
-    "tsc": "tsc",
-    "precommit": "lint-staged",
-    "prettier:format": "prettier --write '*.js' package.json 'src/**/*.{ts,tsx}'",
-    "cleanup": "rimraf lib/* src/*.d.ts src/**/*.d.ts src/*.{js,jsx} src/**/*.{js,jsx} tests/**/*.d.ts tests/*.d.ts",
-    "lint": "eslint . --ext .js,.ts,.jsx,.tsx",
-    "lint:fix": "npm run lint -- --fix",
-    "test": "npm run lint && npm run jest",
-    "test:watch": "npm run jest -- --watch",
-    "jest": "jest --coverage --logHeapUsage --maxWorkers=2 --config jest.conf.js",
-    "jest:update": "npm run jest -- --updateSnapshot",
-    "build": "npm run cleanup && npm run tsc",
-    "release": "npm test && git push && git push --tags && npm publish",
-    "commit-lib": "git add lib && git commit --allow-empty -m \"Update libs\"",
-    "release:patch": "npm run build && npm run commit-lib && npm version patch -a -m \"Update to %s\" && npm run release",
-    "release:minor": "npm run build && npm run commit-lib && npm version minor -a -m \"Update to %s\" && npm run release",
-    "release:major": "npm run build && npm run commit-lib && npm version major -a -m \"Update to %s\" && npm run release",
-    "prepare": "npm run build"
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
   }
 }

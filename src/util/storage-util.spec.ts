@@ -1,6 +1,7 @@
 /**
  * @jest-environment jsdom
  */
+import { describe, expect, it } from '@jest/globals';
 import { Storage, StorageType, getStorage } from './index';
 
 describe('Storage Util', () => {

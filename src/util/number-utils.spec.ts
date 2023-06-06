@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { isNumber } from './index';
 
 describe('Number util', () => {

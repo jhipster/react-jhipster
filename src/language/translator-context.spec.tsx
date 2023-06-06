@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+import { beforeEach, describe, expect, it } from '@jest/globals';
 import { TranslatorContext } from './index';
 
 const translation = {
