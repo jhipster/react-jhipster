@@ -11,7 +11,9 @@ module.exports = {
       },
     ],
   },
-  testURL: 'http://localhost/',
+  testEnvironmentOptions: {
+    url: 'http://localhost/',
+  },
   cacheDirectory: '<rootDir>/build/jest-cache',
   coverageDirectory: '<rootDir>/build/test-results/',
   testMatch: ['<rootDir>/src/**/@(*.)@(spec.ts?(x))'],
