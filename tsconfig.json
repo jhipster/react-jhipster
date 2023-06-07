@@ -10,7 +10,6 @@
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "noImplicitAny": false,
-    "suppressImplicitAnyIndexErrors": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "importHelpers": true,

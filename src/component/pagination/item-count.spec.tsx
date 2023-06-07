@@ -1,5 +1,5 @@
 /**
- * @jest-environment jsdom
+ * @vitest-environment jsdom
  */
 /*
  Copyright 2017-2023 the original author or authors from the JHipster project.
@@ -19,7 +19,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from 'vitest';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
