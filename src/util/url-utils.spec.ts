@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { parseHeaderForLinks, getUrlParameter } from './index';
 
 describe('parseHeaderForLinks', () => {

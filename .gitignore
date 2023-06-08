@@ -13,17 +13,15 @@ tests/**/*.{js,jsx}
 /index.js
 /react-jhipster.{js,jsx}
 config/testing-utils.js
-*.map
-*.d.ts
 !make.js
 !examples/**/*.{js,jsx}
 coverage
 **/*.metadata.json
 *.metadata.json
 /bundles
-/lib/tests
 build/
 react-jhipster.iml
+lib
 
 #################
 ## IDE

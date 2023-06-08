@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { size, byteSize } from './index';
 
 describe('Data utils', () => {
