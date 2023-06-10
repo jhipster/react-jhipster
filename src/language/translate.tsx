@@ -209,7 +209,11 @@ class Translate extends React.Component<ITranslateProps> {
     const processed = doTranslate(contentKey, interpolate, children);
     if (processed.html) {
       const contentArray = Array.isArray(processed.content) ? processed.content : [processed.content];
-      return contentArray.map((content, i) => content.$$typeof === REACT_ELEMENT ? {...content, key: i} : React.createElement(component, { key: i, dangerouslySetInnerHTML: { __html: content } }));
+      return contentArray.map((content, i) =>
+        content.$$typeof === REACT_ELEMENT
+          ? { ...content, key: i }
+          : React.createElement(component, { key: i, dangerouslySetInnerHTML: { __html: content } })
+      );
     }
     return React.createElement(component, null, processed.content);
   }
@@ -220,7 +224,11 @@ export const translate = (contentKey: string, interpolate?: any, children?: stri
 
   if (translation.html) {
     const contentArray = Array.isArray(translation.content) ? translation.content : [translation.content];
-    return contentArray.map((content, i) => content.$$typeof === REACT_ELEMENT ? {...content, key: i} : React.createElement('span', { key: i, dangerouslySetInnerHTML: { __html: content } }));
+    return contentArray.map((content, i) =>
+      content.$$typeof === REACT_ELEMENT
+        ? { ...content, key: i }
+        : React.createElement('span', { key: i, dangerouslySetInnerHTML: { __html: content } })
+    );
   } else {
     return translation.content;
   }
