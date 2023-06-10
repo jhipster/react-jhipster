@@ -161,13 +161,16 @@ const doTranslate = (key, interpolate, children) => {
   if (preSanitize === false || /<[a-z][\s\S]*>/i.test(preSanitize)) {
     // String contains HTML tags. Allow only a super restricted set of tags and attributes
     const preSanitizeArray = Array.isArray(preSanitize) ? preSanitize : [preSanitize];
-    const content = preSanitizeArray.map(part => part.$$typeof === REACT_ELEMENT ? part :
-      sanitizeHtml(part, {
-        allowedTags: ['b', 'i', 'em', 'strong', 'a', 'br', 'hr'],
-        allowedAttributes: {
-          a: ['href', 'target'],
-        },
-      }));
+    const content = preSanitizeArray.map(part =>
+      part.$$typeof === REACT_ELEMENT
+        ? part
+        : sanitizeHtml(part, {
+            allowedTags: ['b', 'i', 'em', 'strong', 'a', 'br', 'hr'],
+            allowedAttributes: {
+              a: ['href', 'target'],
+            },
+          })
+    );
 
     return {
       content,

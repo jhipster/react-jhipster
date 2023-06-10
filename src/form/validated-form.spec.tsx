@@ -1,6 +1,7 @@
 /**
- * @jest-environment jsdom
+ * @vitest-environment jsdom
  */
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
 import React from 'react';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { useForm } from 'react-hook-form';
@@ -89,7 +90,7 @@ describe('ValidatedInput', () => {
       expect(input.value).toEqual('hello');
     });
     it('with default value renders an input and shows error when value is absent', async () => {
-      const mockChange = jest.fn(e => {
+      const mockChange = vitest.fn(e => {
         // do nothing
       });
       const { container } = render(
@@ -215,7 +216,7 @@ describe('ValidatedField', () => {
       expect(input.value).toEqual('hello');
     });
     it('with default value renders an input and shows error when value is absent', async () => {
-      const mockChange = jest.fn(e => {
+      const mockChange = vitest.fn(e => {
         // do nothing
       });
       const { container } = render(
@@ -391,7 +392,7 @@ describe('ValidatedBlobField', () => {
       expect(container.querySelector('button.my-btn')).not.toBeNull();
     });
     it('with default value renders an input and shows error when value is absent', async () => {
-      const mockChange = jest.fn(e => {
+      const mockChange = vitest.fn(e => {
         // do nothing
       });
       const { container, getByRole } = render(
@@ -659,7 +660,7 @@ describe('ValidatedForm', () => {
       });
     });
     describe('validate the form with no default values', () => {
-      const mockSubmit = jest.fn((email, password, active, select, multiselect) => {
+      const mockSubmit = vitest.fn((email, password, active, select, multiselect) => {
         // do nothing
       });
 
@@ -806,7 +807,7 @@ describe('ValidatedForm', () => {
       });
     });
     describe('validate the form with default values', () => {
-      const mockSubmit = jest.fn((email, password, active, select, multiselect) => {
+      const mockSubmit = vitest.fn((email, password, active, select, multiselect) => {
         // do nothing
       });
 
