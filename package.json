@@ -32,7 +32,6 @@
   "scripts": {
     "build": "npm run cleanup && npm run tsc",
     "cleanup": "rimraf lib/* src/*.d.ts src/**/*.d.ts src/*.{js,jsx} src/**/*.{js,jsx} tests/**/*.d.ts tests/*.d.ts",
-    "commit-lib": "git add -f lib && git commit --allow-empty -m \"Update libs\"",
     "lint": "eslint . --ext .js,.ts,.jsx,.tsx",
     "lint:fix": "npm run lint -- --fix",
     "precommit": "lint-staged",
