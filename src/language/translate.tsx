@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import get from 'lodash/get';
 import sanitizeHtml from 'sanitize-html';
 import TranslatorContext from './translator-context';
@@ -224,11 +224,12 @@ export const translate = (contentKey: string, interpolate?: any, children?: stri
 
   if (translation.html) {
     const contentArray = Array.isArray(translation.content) ? translation.content : [translation.content];
-    return contentArray.map((content, i) =>
+    const processedContent = contentArray.map((content, i) =>
       content.$$typeof === REACT_ELEMENT
         ? { ...content, key: i }
         : React.createElement('span', { key: i, dangerouslySetInnerHTML: { __html: content } })
     );
+    return processedContent.length === 1 ? processedContent[0] : <Fragment>{processedContent}</Fragment>;
   } else {
     return translation.content;
   }
