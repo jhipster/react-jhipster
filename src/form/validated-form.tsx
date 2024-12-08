@@ -52,9 +52,9 @@ export interface ValidatedFormProps {
  * directly as props
  *
  * @param ValidatedFormProps
- * @returns JSX.Element
+ * @returns React.JSX.Element
  */
-export function ValidatedForm({ defaultValues, children, onSubmit, mode, ...rest }: ValidatedFormProps): JSX.Element {
+export function ValidatedForm({ defaultValues, children, onSubmit, mode, ...rest }: ValidatedFormProps): React.JSX.Element {
   const {
     handleSubmit,
     register,
@@ -70,27 +70,26 @@ export function ValidatedForm({ defaultValues, children, onSubmit, mode, ...rest
   return (
     <Form onSubmit={handleSubmit(onSubmit)} {...rest}>
       {React.Children.map(children, (child: ReactElement) => {
+        const props: any = child?.props;
         const type = child?.type as any;
-        const isValidated =
-          type && child?.props?.name && ['ValidatedField', 'ValidatedInput', 'ValidatedBlobField'].includes(type.displayName);
+        const isValidated = type && props?.name && ['ValidatedField', 'ValidatedInput', 'ValidatedBlobField'].includes(type.displayName);
 
         if (isValidated) {
-          const childName = child.props.name;
+          const childName = props.name;
           const elem = {
-            ...child.props,
-            register: child.props.register || register,
-            error: child.props.error || errors[childName],
-            isTouched: typeof child.props.isTouched === 'undefined' ? touchedFields[childName] : child.props.isTouched,
-            isDirty: typeof child.props.isDirty === 'undefined' ? dirtyFields[childName] : child.props.isDirty,
+            ...props,
+            register: props.register || register,
+            error: props.error || errors[childName],
+            isTouched: typeof props.isTouched === 'undefined' ? touchedFields[childName] : props.isTouched,
+            isDirty: typeof props.isDirty === 'undefined' ? dirtyFields[childName] : props.isDirty,
             key: childName,
           };
           if (type.displayName === 'ValidatedBlobField') {
             const defaultValue = defaultValues[childName];
             const defaultContentType = defaultValues[`${childName}ContentType`];
-            elem.setValue = typeof child.props.setValue === 'undefined' ? setValue : child.props.setValue;
-            elem.defaultValue = typeof child.props.defaultValue === 'undefined' ? defaultValue : child.props.defaultValue;
-            elem.defaultContentType =
-              typeof child.props.defaultContentType === 'undefined' ? defaultContentType : child.props.defaultContentType;
+            elem.setValue = typeof props.setValue === 'undefined' ? setValue : props.setValue;
+            elem.defaultValue = typeof props.defaultValue === 'undefined' ? defaultValue : props.defaultValue;
+            elem.defaultContentType = typeof props.defaultContentType === 'undefined' ? defaultContentType : props.defaultContentType;
           }
           return React.createElement(type, { ...elem });
         }
@@ -146,7 +145,7 @@ export interface ValidatedFieldProps extends ValidatedInputProps {
  * This component can be used with ValidatedForm
  *
  * @param ValidatedInputProps
- * @returns JSX.Element
+ * @returns React.JSX.Element
  */
 export function ValidatedInput({
   name,
@@ -161,7 +160,7 @@ export function ValidatedInput({
   onChange,
   onBlur,
   ...attributes
-}: ValidatedInputProps): JSX.Element {
+}: ValidatedInputProps): React.JSX.Element {
   if (!register) {
     return (
       <Input name={name} id={id} className={className} onChange={onChange} onBlur={onBlur} {...attributes}>
@@ -209,7 +208,7 @@ ValidatedInput.displayName = 'ValidatedInput';
  * This component can be used with ValidatedForm
  *
  * @param ValidatedFieldProps
- * @returns JSX.Element
+ * @returns React.JSX.Element
  */
 export function ValidatedField({
   children,
@@ -228,7 +227,7 @@ export function ValidatedField({
   inputTag,
   hidden,
   ...attributes
-}: ValidatedFieldProps): JSX.Element {
+}: ValidatedFieldProps): React.JSX.Element {
   const input = (
     <ValidatedInput name={name} id={id} disabled={disabled} className={inputClass} hidden={hidden} tag={inputTag} {...attributes}>
       {children}
@@ -276,7 +275,7 @@ interface ValidatedBlobFieldProps extends ValidatedFieldProps {
  * This component can be used with ValidatedForm
  *
  * @param ValidatedBlobFieldProps
- * @returns JSX.Element
+ * @returns React.JSX.Element
  */
 export function ValidatedBlobField({
   name,
@@ -312,7 +311,7 @@ export function ValidatedBlobField({
   type,
   check,
   ...attributes
-}: ValidatedBlobFieldProps): JSX.Element {
+}: ValidatedBlobFieldProps): React.JSX.Element {
   const [blob, setBlobData] = useState<string>(defaultValue as string);
   const [blobContentType, setBlobContentType] = useState<string>(defaultContentType);
 
@@ -349,7 +348,7 @@ export function ValidatedBlobField({
 
   if (!register) {
     return renderFormGroup(
-      inputRow(<Input type="file" id={id} name={name} className={className} onChange={onChange} onBlur={onBlur} {...attributes} />)
+      inputRow(<Input type="file" id={id} name={name} className={className} onChange={onChange} onBlur={onBlur} {...attributes} />),
     );
   }
 
@@ -378,7 +377,7 @@ export function ValidatedBlobField({
             (contentType, data) => {
               setBlobValue(data, contentType);
             },
-            isImage
+            isImage,
           );
           onChange && onChange(e);
         }}
@@ -388,7 +387,7 @@ export function ValidatedBlobField({
             (contentType, data) => {
               setBlobValue(data, contentType);
             },
-            isImage
+            isImage,
           );
           onBlur && onBlur(e);
         }}
@@ -436,7 +435,7 @@ export function ValidatedBlobField({
         </div>
       ) : null}
       {inputRow(input)}
-    </>
+    </>,
   );
 }
 

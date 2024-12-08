@@ -74,7 +74,7 @@ describe('Translate', () => {
       const { container } = render(
         <Translate contentKey="foo.baz" interpolate={{ foo: 'FOO', bar: 'BAR' }}>
           def text
-        </Translate>
+        </Translate>,
       );
       const span = container.querySelector('span');
       expect(span.innerHTML).toBe('translation-not-found[foo.baz]');

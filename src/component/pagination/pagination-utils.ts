@@ -25,7 +25,7 @@ export const getPaginationState = (
   location: { search: string },
   itemsPerPage: number,
   sortField = 'id',
-  sortOrder = 'asc'
+  sortOrder = 'asc',
 ): IPaginationBaseState => {
   const pageParam = getUrlParameter('page', location.search);
   let activePage = 1;

@@ -14,16 +14,10 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "importHelpers": true,
+    "skipLibCheck": true,
     "lib": ["es2015", "es2017", "dom"],
     "outDir": "./lib",
     "types": ["webpack-env"]
   },
-  "exclude": [
-    "node_modules",
-    "bundles",
-    "coverage",
-    "build",
-    "**/*.spec.ts",
-    "**/*.spec.tsx"
-  ]
+  "exclude": ["node_modules", "bundles", "coverage", "build", "**/*.spec.ts", "**/*.spec.tsx"]
 }

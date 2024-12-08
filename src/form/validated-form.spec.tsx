@@ -94,7 +94,7 @@ describe('ValidatedInput', () => {
         // do nothing
       });
       const { container } = render(
-        <InputApp name="test" defaultValue="hello" validate={{ required: 'this is required' }} onChange={mockChange} />
+        <InputApp name="test" defaultValue="hello" validate={{ required: 'this is required' }} onChange={mockChange} />,
       );
 
       let input = container.querySelector('input');
@@ -177,7 +177,7 @@ describe('ValidatedField', () => {
       const fg = container.querySelector('div.form-check');
       expect(fg).not.toBeNull();
       expect(fg.innerHTML).toEqual(
-        '<input name="test-1" id="test-1" type="text" class="form-control"><label id="test-1Label" class="form-check-label form-label">Label</label>'
+        '<input name="test-1" id="test-1" type="text" class="form-control"><label id="test-1Label" class="form-check-label">Label</label>',
       );
     });
   });
@@ -220,7 +220,7 @@ describe('ValidatedField', () => {
         // do nothing
       });
       const { container } = render(
-        <InputApp name="test" defaultValue="hello" validate={{ required: 'this is required' }} onChange={mockChange} />
+        <InputApp name="test" defaultValue="hello" validate={{ required: 'this is required' }} onChange={mockChange} />,
       );
 
       let input = container.querySelector('input');
@@ -346,7 +346,7 @@ describe('ValidatedBlobField', () => {
           isTouched={true}
           isImage
           imageClassName="my-image"
-        />
+        />,
       );
       const inputContentType: HTMLInputElement = container.querySelector('input');
       expect(inputContentType.name).toEqual('testContentType');
@@ -373,7 +373,7 @@ describe('ValidatedBlobField', () => {
           isTouched={true}
           openActionLabel="open this"
           clearBtn={() => <button className="my-btn" />}
-        />
+        />,
       );
       const inputContentType: HTMLInputElement = container.querySelector('input');
       expect(inputContentType.name).toEqual('testContentType');
@@ -404,7 +404,7 @@ describe('ValidatedBlobField', () => {
           onChange={mockChange}
           isImage
           imageClassName="my-image"
-        />
+        />,
       );
 
       const inputContentType: HTMLInputElement = container.querySelector('input');
@@ -442,7 +442,7 @@ describe('ValidatedForm', () => {
       const { container } = render(
         <ValidatedForm onSubmit={() => {}} className="myform">
           <div>a div</div>
-        </ValidatedForm>
+        </ValidatedForm>,
       );
       const form = container.querySelector('form.myform');
       expect(form).not.toBeNull();
@@ -459,7 +459,7 @@ describe('ValidatedForm', () => {
               <button>nested button</button>
             </span>
           </div>
-        </ValidatedForm>
+        </ValidatedForm>,
       );
       const form = container.querySelector('form.myform');
       expect(form).not.toBeNull();
@@ -473,7 +473,7 @@ describe('ValidatedForm', () => {
       const { container, findByText } = render(
         <ValidatedForm onSubmit={() => {}} className="myform">
           <ValidatedInput name="test-12" error={{ type: 'required', message: 'Your email is required.' }} isTouched={true} isDirty={true} />
-        </ValidatedForm>
+        </ValidatedForm>,
       );
       const form = container.querySelector('form.myform');
       expect(form).not.toBeNull();
@@ -490,7 +490,7 @@ describe('ValidatedForm', () => {
         const { container } = render(
           <ValidatedForm onSubmit={() => {}} className="myform">
             <ValidatedInput name="test-1" defaultValue="hello" />
-          </ValidatedForm>
+          </ValidatedForm>,
         );
         const input: HTMLInputElement = container.querySelector('input[name="test-1"]');
         expect(input.name).toEqual('test-1');
@@ -503,7 +503,7 @@ describe('ValidatedForm', () => {
         const { container } = render(
           <ValidatedForm onSubmit={() => {}} className="myform">
             <ValidatedField name="test-2" type="password" label="password" defaultValue="1231" />
-          </ValidatedForm>
+          </ValidatedForm>,
         );
         const input2: HTMLInputElement = container.querySelector('input[name="test-2"]');
         expect(input2.name).toEqual('test-2');
@@ -516,7 +516,7 @@ describe('ValidatedForm', () => {
         const { container } = render(
           <ValidatedForm onSubmit={() => {}} className="myform">
             <ValidatedField name="test-3" type="checkbox" value={true} check label="check label" />
-          </ValidatedForm>
+          </ValidatedForm>,
         );
         const input3: HTMLInputElement = container.querySelector('input[name="test-3"]');
         expect(input3.name).toEqual('test-3');
@@ -529,7 +529,7 @@ describe('ValidatedForm', () => {
         const { container } = render(
           <ValidatedForm onSubmit={() => {}} className="myform">
             <ValidatedField name="test-4" type="radio" value="on" label="radio label" />
-          </ValidatedForm>
+          </ValidatedForm>,
         );
         const input4: HTMLInputElement = container.querySelector('input[name="test-4"]');
         expect(input4.name).toEqual('test-4');
@@ -550,7 +550,7 @@ describe('ValidatedForm', () => {
               <option>value 2</option>
               <option>value 3</option>
             </ValidatedField>
-          </ValidatedForm>
+          </ValidatedForm>,
         );
         const input5: HTMLSelectElement = container.querySelector('select[name="test-5"]');
         expect(input5.name).toEqual('test-5');
@@ -578,7 +578,7 @@ describe('ValidatedForm', () => {
           >
             <ValidatedField name="test1" />
             <ValidatedField name="test2" type="password" label="password" />
-          </ValidatedForm>
+          </ValidatedForm>,
         );
 
         const input: HTMLInputElement = container.querySelector('input[name="test1"]');
@@ -606,7 +606,7 @@ describe('ValidatedForm', () => {
           >
             <ValidatedField name="test3" type="checkbox" value={true} check label="check label" />
             <ValidatedField name="test4" type="radio" value="on" label="radio label" />
-          </ValidatedForm>
+          </ValidatedForm>,
         );
         // should retain the value
         const input3: HTMLInputElement = container.querySelector('input[name="test3"]');
@@ -643,7 +643,7 @@ describe('ValidatedForm', () => {
               <option>value 2</option>
               <option>value 3</option>
             </ValidatedField>
-          </ValidatedForm>
+          </ValidatedForm>,
         );
         const input5: HTMLSelectElement = container.querySelector('select[name="test5"]');
         expect(input5.name).toEqual('test5');
@@ -725,7 +725,7 @@ describe('ValidatedForm', () => {
               <option>v3</option>
             </ValidatedField>
             <button type="submit">SUBMIT</button>
-          </ValidatedForm>
+          </ValidatedForm>,
         );
       });
       it('should display required error when value is invalid', async () => {
@@ -881,7 +881,7 @@ describe('ValidatedForm', () => {
               <option>v3</option>
             </ValidatedField>
             <button type="submit">SUBMIT</button>
-          </ValidatedForm>
+          </ValidatedForm>,
         );
       });
 

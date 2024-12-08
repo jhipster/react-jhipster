@@ -33,7 +33,7 @@ export class EndpointsRequestsMetrics extends React.Component<IEndpointsRequests
                     <TextFormat value={methodValue.mean} type="number" format={wholeNumberFormat} />
                   </td>
                 </tr>
-              ))
+              )),
             )}
           </tbody>
         </Table>

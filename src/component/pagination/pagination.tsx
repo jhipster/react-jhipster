@@ -112,7 +112,7 @@ export class JhiPagination extends React.Component<IJhiPaginationProps, IJhiPagi
               <PaginationItem disabled key={i}>
                 <PaginationLink>...</PaginationLink>
               </PaginationItem>
-            ) : null
+            ) : null,
           )}
           <PaginationItem {...(activePage === maxPage && { disabled: true })}>
             <PaginationLink next onClick={this.nextPage} />

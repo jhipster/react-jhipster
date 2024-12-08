@@ -20,7 +20,7 @@ export const openFile = (contentType: string, data: string) => () => {
   win.document.write(
     '<iframe src="' +
       fileURL +
-      '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>'
+      '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>',
   );
 };
 
@@ -28,7 +28,10 @@ const toBase64 = (file: File, cb: (v: string) => void) => {
   const fileReader: FileReader = new FileReader();
   fileReader.readAsDataURL(file);
   fileReader.onload = e => {
-    const base64Data = e.target['result'].toString().substr(e.target['result'].toString().indexOf('base64,') + 'base64,'.length);
+    const { result } = e.target;
+    // eslint-disable-next-line @typescript-eslint/no-base-to-string
+    const resultString = typeof result === 'string' ? result : result.toString();
+    const base64Data = resultString.substring(resultString.indexOf('base64,') + 'base64,'.length);
     cb(base64Data);
   };
 };
@@ -52,7 +55,7 @@ export const byteSize = (base64String: string) => formatAsBytes(size(base64Strin
 export const setFileData = (
   event: React.ChangeEvent<HTMLInputElement> | React.FocusEvent<HTMLInputElement>,
   callback: (type: any, v: string) => void,
-  isImage: boolean
+  isImage: boolean,
 ) => {
   const target = event?.target;
   if (target && target.files && target.files[0]) {
