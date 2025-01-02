@@ -12,7 +12,7 @@ export type ICrudSearchAction<T> = (
   search?: string,
   page?: number,
   size?: number,
-  sort?: string
+  sort?: string,
 ) => IPayload<T> | ((dispatch: any) => IPayload<T>);
 export type ICrudPutAction<T> = (data?: T) => IPayload<T> | IPayloadResult<T>;
 export type ICrudDeleteAction<T> = (id?: string | number) => IPayload<T> | IPayloadResult<T>;

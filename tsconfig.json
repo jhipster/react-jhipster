@@ -18,12 +18,5 @@
     "outDir": "./lib",
     "types": ["webpack-env"]
   },
-  "exclude": [
-    "node_modules",
-    "bundles",
-    "coverage",
-    "build",
-    "**/*.spec.ts",
-    "**/*.spec.tsx"
-  ]
+  "exclude": ["node_modules", "bundles", "coverage", "build", "**/*.spec.ts", "**/*.spec.tsx"]
 }

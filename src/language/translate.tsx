@@ -5,7 +5,7 @@ import TranslatorContext from './translator-context';
 
 export interface ITranslateProps {
   contentKey: string;
-  children?: string | JSX.Element | Array<string | JSX.Element>;
+  children?: string | React.JSX.Element | Array<string | React.JSX.Element>;
   interpolate?: any;
   component?: string;
 }
@@ -56,7 +56,7 @@ const render = (string, values) => {
       const match = expressions[index] && expressions[index].match(/{{\s?(\w+)\s?}}/);
       const value = match != null ? values[match[1]] : null;
       return [...acc, item, normalizeValue(value, index)];
-    }, [])
+    }, []),
   );
 };
 
@@ -104,7 +104,7 @@ const deepFindDirty = (obj, path) => {
   const setAllPaths = new Set(
     allPaths.map(p => {
       return p.join(HASHTAG);
-    })
+    }),
   );
   // Delete duplicates
   setAllPaths.forEach((v1, v2, values) => {
@@ -153,7 +153,8 @@ const doTranslate = (key, interpolate, children) => {
     };
   }
 
-  const preRender = data ? get(data, key) || deepFindDirty(data, key) : null;
+  let preRender = data ? get(data, key) || deepFindDirty(data, key) : null;
+  preRender = typeof preRender === 'boolean' || typeof preRender === 'number' ? preRender.toString() : preRender;
   const renderedValue = render(preRender, interpolate);
 
   const preSanitize = !isNullOrUndefined(renderedValue) ? renderedValue : showMissingOrDefault(key, children);
@@ -169,7 +170,7 @@ const doTranslate = (key, interpolate, children) => {
             allowedAttributes: {
               a: ['href', 'target'],
             },
-          })
+          }),
     );
 
     return {
@@ -212,7 +213,7 @@ class Translate extends React.Component<ITranslateProps> {
       return contentArray.map((content, i) =>
         content.$$typeof === REACT_ELEMENT
           ? { ...content, key: i }
-          : React.createElement(component, { key: i, dangerouslySetInnerHTML: { __html: content } })
+          : React.createElement(component, { key: i, dangerouslySetInnerHTML: { __html: content } }),
       );
     }
     return React.createElement(component, null, processed.content);
@@ -227,7 +228,7 @@ export const translate = (contentKey: string, interpolate?: any, children?: stri
     const processedContent = contentArray.map((content, i) =>
       content.$$typeof === REACT_ELEMENT
         ? { ...content, key: i }
-        : React.createElement('span', { key: i, dangerouslySetInnerHTML: { __html: content } })
+        : React.createElement('span', { key: i, dangerouslySetInnerHTML: { __html: content } }),
     );
     return processedContent.length === 1 ? processedContent[0] : <Fragment>{processedContent}</Fragment>;
   } else {

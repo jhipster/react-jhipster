@@ -4,7 +4,6 @@ Greetings, Java Hipster!
 
 This is the JHipster React utilities library
 
-
 [![NPM version][npm-image]][npm-url]
 [![Build Status][github-actions-image]][github-actions-url]
 
@@ -14,7 +13,6 @@ Please read our [guidelines](https://github.com/jhipster/generator-jhipster/CONT
 
 [github-actions-image]: https://github.com/jhipster/react-jhipster/actions/workflows/ci.yml/badge.svg
 [github-actions-url]: https://github.com/jhipster/react-jhipster/actions/workflows/ci.yml
-
 [jhipster-image]: https://raw.githubusercontent.com/jhipster/jhipster.github.io/main/images/logo/logo-jhipster2x.png
 [jhipster-url]: http://www.jhipster.tech/
 [npm-image]: https://badge.fury.io/js/react-jhipster.svg
