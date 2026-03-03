@@ -22,20 +22,28 @@ import dayjs from 'dayjs';
 import TranslatorContext from '../language/translator-context';
 import 'numeral/locales';
 
-export type ITextFormatTypes = 'date' | 'number';
-
-export interface ITextFormatProps {
-  value: string | number | Date;
-  type: ITextFormatTypes;
+interface CommonTextFormatProps {
   format?: string;
   blankOnInvalid?: boolean;
   locale?: string;
 }
 
+interface ITextFormatDateProps extends CommonTextFormatProps {
+  value: dayjs.ConfigType;
+  type: 'date';
+}
+
+interface ITextFormatNumberProps extends CommonTextFormatProps {
+  value: number | string;
+  type: 'number';
+}
+
+export type ITextFormatProps = ITextFormatDateProps | ITextFormatNumberProps;
+
 /**
  * Formats the given value to specified type like date or number.
  * @param value value to be formatted
- * @param type type of formatting to use ${ITextFormatTypes}
+ * @param type type of formatting to use (`date` or `number`)
  * @param format optional format to use.
  *    For date type dayjs(https://day.js.org/docs/en/display/format) format is used
  *    For number type NumeralJS (http://numeraljs.com/#format) format is used
