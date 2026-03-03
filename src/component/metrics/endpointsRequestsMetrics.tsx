@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextFormat } from '../../formatter';
-import { Table } from 'reactstrap';
+import { Table } from 'react-bootstrap';
 
 export interface IEndpointsRequestsMetricsProps {
   endpointsRequestsMetrics: any;

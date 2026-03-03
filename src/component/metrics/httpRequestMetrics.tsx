@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextFormat } from '../../formatter';
-import { Progress, Table } from 'reactstrap';
+import { ProgressBar, Table } from 'react-bootstrap';
 import { nanToZero } from '../../util/number-utils';
 
 export interface IHttpRequestMetricsProps {
@@ -35,11 +35,14 @@ export class HttpRequestMetrics extends React.Component<IHttpRequestMetricsProps
               <tr key={index}>
                 <td>{key}</td>
                 <td>
-                  <Progress min="0" max={requestMetrics.all.count} value={requestMetrics.percode[key].count} color="success" animated>
-                    <span>
-                      <TextFormat value={requestMetrics.percode[key].count} type="number" format={wholeNumberFormat} />
-                    </span>
-                  </Progress>
+                  <ProgressBar
+                    min={0}
+                    max={requestMetrics.all.count}
+                    now={requestMetrics.percode[key].count}
+                    variant="success"
+                    animated
+                    label={<TextFormat value={requestMetrics.percode[key].count} type="number" format={wholeNumberFormat} />}
+                  />
                 </td>
                 <td className="text-end">
                   <TextFormat value={nanToZero(requestMetrics.percode[key].mean)} type="number" format={twoDigitAfterPointFormat} />

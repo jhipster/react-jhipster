@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextFormat } from '../../formatter';
-import { Table } from 'reactstrap';
+import { Table } from 'react-bootstrap';
 import { nanToZero } from '../../util/number-utils';
 
 export interface ICacheMetricsProps {

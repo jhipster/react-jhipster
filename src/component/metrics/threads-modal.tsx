@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Modal, ModalHeader, ModalBody, ModalFooter, Button, Input, Badge, Row } from 'reactstrap';
+import { Badge, Button, FormControl, Modal, Row, Table } from 'react-bootstrap';
 
 import ThreadItem from './thread-item';
 
@@ -88,36 +88,48 @@ export class ThreadsModal extends React.Component<IThreadsModalProps, IThreadsMo
     }
 
     return (
-      <Modal isOpen={showModal} toggle={handleClose} className="modal-lg">
-        <ModalHeader toggle={handleClose}>Threads dump</ModalHeader>
-        <ModalBody>
-          <Badge color="primary" className="hand" onClick={this.updateBadgeFilter('')}>
+      <Modal show={showModal} onHide={() => handleClose(null)} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Threads dump</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Badge bg="primary" className="hand" onClick={this.updateBadgeFilter('')}>
             All&nbsp;
-            <Badge pill>{counters.threadDumpAll || 0}</Badge>
+            <Badge pill bg="secondary">
+              {counters.threadDumpAll || 0}
+            </Badge>
           </Badge>
           &nbsp;
-          <Badge color="success" className="hand" onClick={this.updateBadgeFilter('RUNNABLE')}>
+          <Badge bg="success" className="hand" onClick={this.updateBadgeFilter('RUNNABLE')}>
             Runnable&nbsp;
-            <Badge pill>{counters.threadDumpRunnable || 0}</Badge>
+            <Badge pill bg="secondary">
+              {counters.threadDumpRunnable || 0}
+            </Badge>
           </Badge>
           &nbsp;
-          <Badge color="info" className="hand" onClick={this.updateBadgeFilter('WAITING')}>
+          <Badge bg="info" className="hand" onClick={this.updateBadgeFilter('WAITING')}>
             Waiting&nbsp;
-            <Badge pill>{counters.threadDumpWaiting || 0}</Badge>
+            <Badge pill bg="secondary">
+              {counters.threadDumpWaiting || 0}
+            </Badge>
           </Badge>
           &nbsp;
-          <Badge color="warning" className="hand" onClick={this.updateBadgeFilter('TIMED_WAITING')}>
+          <Badge bg="warning" className="hand" onClick={this.updateBadgeFilter('TIMED_WAITING')}>
             Timed Waiting&nbsp;
-            <Badge pill>{counters.threadDumpTimedWaiting || 0}</Badge>
+            <Badge pill bg="secondary">
+              {counters.threadDumpTimedWaiting || 0}
+            </Badge>
           </Badge>
           &nbsp;
-          <Badge color="danger" className="hand" onClick={this.updateBadgeFilter('BLOCKED')}>
+          <Badge bg="danger" className="hand" onClick={this.updateBadgeFilter('BLOCKED')}>
             Blocked&nbsp;
-            <Badge pill>{counters.threadDumpBlocked || 0}</Badge>
+            <Badge pill bg="secondary">
+              {counters.threadDumpBlocked || 0}
+            </Badge>
           </Badge>
           &nbsp;
           <div className="mt-2">&nbsp;</div>
-          <Input type="text" className="form-control" placeholder="Filter by Lock Name..." onChange={this.updateSearchFilter} />
+          <FormControl type="text" className="form-control" placeholder="Filter by Lock Name..." onChange={this.updateSearchFilter} />
           <div style={{ padding: '10px' }}>
             {filteredList
               ? filteredList.map((threadDumpInfo, i) => (
@@ -158,12 +170,12 @@ export class ThreadsModal extends React.Component<IThreadsModalProps, IThreadsMo
                 ))
               : null}
           </div>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={handleClose}>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleClose}>
             Close
           </Button>
-        </ModalFooter>
+        </Modal.Footer>
       </Modal>
     );
   }

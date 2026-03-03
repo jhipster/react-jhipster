@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { Pagination } from 'react-bootstrap';
 
 export interface IJhiPaginationProps {
   activePage: number;
@@ -70,9 +70,9 @@ export class JhiPagination extends React.Component<IJhiPaginationProps, IJhiPagi
   };
 
   displayPaginationItem = (i, activePage) => (
-    <PaginationItem {...(activePage === i + 1 && { active: true })} key={i}>
-      <PaginationLink onClick={this.updateActivePage(i + 1)}>{i + 1}</PaginationLink>
-    </PaginationItem>
+    <Pagination.Item active={activePage === i + 1} key={i} onClick={this.updateActivePage(i + 1)}>
+      {i + 1}
+    </Pagination.Item>
   );
 
   cleanActivePage = () => {
@@ -99,27 +99,17 @@ export class JhiPagination extends React.Component<IJhiPaginationProps, IJhiPagi
     return (
       <div>
         <Pagination>
-          <PaginationItem {...(activePage === 1 && { disabled: true })}>
-            <PaginationLink first onClick={this.updateActivePage(1)} />
-          </PaginationItem>
-          <PaginationItem {...(activePage === 1 && { disabled: true })}>
-            <PaginationLink previous onClick={this.previousPage} />
-          </PaginationItem>
+          <Pagination.First disabled={activePage === 1} onClick={this.updateActivePage(1)} />
+          <Pagination.Prev disabled={activePage === 1} onClick={this.previousPage} />
           {this.itemsToDisplay(activePage).map((paginationItem, i) =>
             paginationItem.display === 'display' ? (
               this.displayPaginationItem(i, activePage)
             ) : paginationItem.display === 'disabled' ? (
-              <PaginationItem disabled key={i}>
-                <PaginationLink>...</PaginationLink>
-              </PaginationItem>
+              <Pagination.Ellipsis disabled key={i} />
             ) : null,
           )}
-          <PaginationItem {...(activePage === maxPage && { disabled: true })}>
-            <PaginationLink next onClick={this.nextPage} />
-          </PaginationItem>
-          <PaginationItem {...(activePage === maxPage && { disabled: true })}>
-            <PaginationLink last onClick={this.updateActivePage(maxPage)} />
-          </PaginationItem>
+          <Pagination.Next disabled={activePage === maxPage} onClick={this.nextPage} />
+          <Pagination.Last disabled={activePage === maxPage} onClick={this.updateActivePage(maxPage)} />
         </Pagination>
       </div>
     );
