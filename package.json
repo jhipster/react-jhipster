@@ -71,7 +71,7 @@
     "@vitest/coverage-v8": "^4.0.18",
     "axios": "^1.13.6",
     "dayjs": "^1.11.19",
-    "@eslint/js": "^9.0.0",
+    "@eslint/js": "^10.0.1",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
