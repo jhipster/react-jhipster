@@ -29,9 +29,8 @@ const toBase64 = (file: File, cb: (v: string) => void) => {
   fileReader.readAsDataURL(file);
   fileReader.onload = e => {
     const { result } = e.target;
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
-    const resultString = typeof result === 'string' ? result : result.toString();
-    const base64Data = resultString.substring(resultString.indexOf('base64,') + 'base64,'.length);
+    if (typeof result !== 'string') return;
+    const base64Data = result.substring(result.indexOf('base64,') + 'base64,'.length);
     cb(base64Data);
   };
 };
