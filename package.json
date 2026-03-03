@@ -64,7 +64,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^16.1.0",
-    "@types/react": "^18.3.14",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^18.3.2",
     "@types/sanitize-html": "^2.13.0",
     "@types/webpack-env": "^1.18.5",
@@ -82,7 +82,7 @@
     "lint-staged": "^11.0.0",
     "prettier": "^3.4.2",
     "prettier-plugin-packagejson": "^3.0.0",
-    "react": "^18.3.1",
+    "react": "^19.2.4",
     "react-bootstrap": "^2.10.10",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.54.0",
