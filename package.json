@@ -60,6 +60,7 @@
     "tslib": "^2.8.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.0.0",
     "@testing-library/react": "^16.3.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
@@ -71,13 +72,12 @@
     "@vitest/coverage-v8": "^4.0.18",
     "axios": "^1.13.6",
     "dayjs": "^1.11.19",
-    "@eslint/js": "^9.0.0",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
     "husky": "^9.1.7",
     "jsdom": "^28.1.0",
-    "lint-staged": "^11.2.6",
+    "lint-staged": "^16.3.1",
     "prettier": "^3.8.1",
     "prettier-plugin-packagejson": "^3.0.0",
     "react": "^19.2.4",
