@@ -5,7 +5,15 @@ import merge from 'lodash/merge';
  */
 
 class TranslatorContext {
-  static context = {
+  static context: {
+    previousLocale: string | null;
+    defaultLocale: string | null;
+    locale: string | null;
+    lastChange: number;
+    translations: Record<string, any>;
+    renderInnerTextForMissingKeys: boolean;
+    missingTranslationMsg: string;
+  } = {
     previousLocale: null,
     defaultLocale: null,
     locale: null,

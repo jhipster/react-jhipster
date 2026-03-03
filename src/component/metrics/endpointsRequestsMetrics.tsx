@@ -24,7 +24,7 @@ export class EndpointsRequestsMetrics extends React.Component<IEndpointsRequests
           </thead>
           <tbody>
             {Object.entries(endpointsRequestsMetrics).map(([key, entry]) =>
-              Object.entries(entry).map(([method, methodValue]) => (
+              Object.entries(entry as Record<string, any>).map(([method, methodValue]) => (
                 <tr key={key + '-' + method}>
                   <td>{method}</td>
                   <td>{key}</td>

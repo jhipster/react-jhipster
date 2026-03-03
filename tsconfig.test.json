@@ -1,8 +1,6 @@
 {
   "include": ["./"],
   "extends": "./tsconfig",
-  "compilerOptions": {
-    "types": ["webpack-env"]
-  },
+  "compilerOptions": {},
   "exclude": []
 }

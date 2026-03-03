@@ -13,7 +13,7 @@ const level: LogLevelType = initLevels();
  * @param msg message
  * @param data data
  */
-export const logDebug = (msg, ...data): void => {
+export const logDebug = (msg: string, ...data: unknown[]): void => {
   // eslint-disable-next-line no-console
   if (level === 'debug') console.debug(msg, data);
 };
@@ -23,7 +23,7 @@ export const logDebug = (msg, ...data): void => {
  * @param msg message
  * @param data data
  */
-export const logInfo = (msg, ...data): void => {
+export const logInfo = (msg: string, ...data: unknown[]): void => {
   // eslint-disable-next-line no-console
   if (['debug', 'info'].includes(level)) console.info(msg, data);
 };
@@ -33,7 +33,7 @@ export const logInfo = (msg, ...data): void => {
  * @param msg message
  * @param data data
  */
-export const logWarn = (msg, ...data): void => {
+export const logWarn = (msg: string, ...data: unknown[]): void => {
   if (['debug', 'info', 'warn'].includes(level)) console.warn(msg, data);
 };
 
@@ -42,7 +42,7 @@ export const logWarn = (msg, ...data): void => {
  * @param msg message
  * @param data data
  */
-export const logError = (msg, ...data): void => {
+export const logError = (msg: string, ...data: unknown[]): void => {
   if (['debug', 'info', 'warn', 'error'].includes(level)) console.error(msg, data);
 };
 

@@ -17,7 +17,7 @@ import React from 'react';
 export const openFile = (contentType: string, data: string) => () => {
   const fileURL = `data:${contentType};base64,${data}`;
   const win = window.open();
-  win.document.write(
+  win?.document.write(
     '<iframe src="' +
       fileURL +
       '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>',
@@ -28,10 +28,10 @@ const toBase64 = (file: File, cb: (v: string) => void) => {
   const fileReader: FileReader = new FileReader();
   fileReader.readAsDataURL(file);
   fileReader.onload = e => {
+    if (!e.target) return;
     const { result } = e.target;
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
-    const resultString = typeof result === 'string' ? result : result.toString();
-    const base64Data = resultString.substring(resultString.indexOf('base64,') + 'base64,'.length);
+    if (typeof result !== 'string') return;
+    const base64Data = result.substring(result.indexOf('base64,') + 'base64,'.length);
     cb(base64Data);
   };
 };

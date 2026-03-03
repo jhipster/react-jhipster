@@ -16,7 +16,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import React from 'react';
 import numeral from 'numeral';
 import dayjs from 'dayjs';
 import TranslatorContext from '../language/translator-context';
@@ -49,9 +48,9 @@ export const TextFormat = ({ value, type, format, blankOnInvalid, locale }: ITex
 
   if (!locale) {
     // TODO: find a better way to keep track of *current* locale
-    locale = TranslatorContext.context.locale;
+    locale = TranslatorContext.context.locale ?? undefined;
 
-    if (!numeral.locales[locale]) {
+    if (!locale || !numeral.locales[locale]) {
       // if not include, by default as en
       numeral.locale('en');
     } else {

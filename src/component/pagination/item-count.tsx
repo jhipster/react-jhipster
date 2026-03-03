@@ -27,7 +27,7 @@ export interface IJhiItemCountProps {
 }
 
 export class JhiItemCount extends React.Component<IJhiItemCountProps> {
-  constructor(props) {
+  constructor(props: IJhiItemCountProps) {
     super(props);
   }
 

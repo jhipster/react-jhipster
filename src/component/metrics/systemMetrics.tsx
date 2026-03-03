@@ -9,8 +9,8 @@ export interface ISystemMetricsProps {
 }
 
 export class SystemMetrics extends React.Component<ISystemMetricsProps> {
-  static convertMillisecondsToDuration(ms) {
-    const times = {
+  static convertMillisecondsToDuration(ms: number) {
+    const times: Record<string, number> = {
       year: 31557600000,
       month: 2629746000,
       day: 86400000,

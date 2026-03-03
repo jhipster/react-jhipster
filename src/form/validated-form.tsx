@@ -67,7 +67,7 @@ export function ValidatedForm({ defaultValues, children, onSubmit, mode, ...rest
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} {...rest}>
-      {React.Children.map(children, (child: ReactElement) => {
+      {React.Children.map(children as ReactElement | ReactElement[], (child: ReactElement) => {
         const props: any = child?.props;
         const type = child?.type as any;
         const isValidated = type && props?.name && ['ValidatedField', 'ValidatedInput', 'ValidatedBlobField'].includes(type.displayName);
@@ -83,8 +83,8 @@ export function ValidatedForm({ defaultValues, children, onSubmit, mode, ...rest
             key: childName,
           };
           if (type.displayName === 'ValidatedBlobField') {
-            const defaultValue = defaultValues[childName];
-            const defaultContentType = defaultValues[`${childName}ContentType`];
+            const defaultValue = defaultValues?.[childName];
+            const defaultContentType = defaultValues?.[`${childName}ContentType`];
             elem.setValue = typeof props.setValue === 'undefined' ? setValue : props.setValue;
             elem.defaultValue = typeof props.defaultValue === 'undefined' ? defaultValue : props.defaultValue;
             elem.defaultContentType = typeof props.defaultContentType === 'undefined' ? defaultContentType : props.defaultContentType;
@@ -222,11 +222,11 @@ export function ValidatedInput({
 
   const { name: registeredName, onBlur: onBlurValidate, onChange: onChangeValidate, ref } = register(name, validate);
 
-  const handleChange = e => {
+  const handleChange = (e: React.ChangeEvent<HTMLElement>) => {
     void onChangeValidate(e);
     onChange && (onChange as any)(e);
   };
-  const handleBlur = e => {
+  const handleBlur = (e: React.FocusEvent<HTMLElement>) => {
     void onBlurValidate(e);
     onBlur && (onBlur as any)(e);
   };
@@ -416,28 +416,28 @@ export function ValidatedBlobField({
   check,
   ...attributes
 }: ValidatedBlobFieldProps): React.JSX.Element {
-  const [blob, setBlobData] = useState<string>(defaultValue as string);
-  const [blobContentType, setBlobContentType] = useState<string>(defaultContentType);
+  const [blob, setBlobData] = useState<string | undefined>(defaultValue as string);
+  const [blobContentType, setBlobContentType] = useState<string | undefined>(defaultContentType);
 
   const contentTypeName = `${name}ContentType`;
 
-  const setBlobValue = (data, contentType) => {
+  const setBlobValue = (data: string | undefined, contentType: string | undefined) => {
     setBlobData(data);
     setBlobContentType(contentType);
-    setValue(contentTypeName, contentType, {
+    setValue?.(contentTypeName, contentType, {
       shouldValidate: true,
       shouldDirty: true,
     });
-    setValue(name, data, {
+    setValue?.(name, data, {
       shouldValidate: true,
       shouldDirty: true,
     });
   };
   const clearBlob = () => {
-    setBlobValue(null, null);
+    setBlobValue(undefined, undefined);
   };
 
-  const renderFormGroup = inner => (
+  const renderFormGroup = (inner: React.ReactNode) => (
     <Form.Group className={`mb-3${className ? ` ${className}` : ''}${row ? ' row' : ''}`} hidden={hidden}>
       {label && (
         <Form.Label id={`${name}Label`} htmlFor={id} className={labelClass} hidden={labelHidden || hidden}>
@@ -448,7 +448,7 @@ export function ValidatedBlobField({
     </Form.Group>
   );
 
-  const inputRow = input => (row ? <Col {...col}>{input}</Col> : input);
+  const inputRow = (input: React.ReactNode) => (row ? <Col {...col}>{input}</Col> : input);
 
   if (!register) {
     return renderFormGroup(
@@ -481,7 +481,7 @@ export function ValidatedBlobField({
             (contentType, data) => {
               setBlobValue(data, contentType);
             },
-            isImage,
+            !!isImage,
           );
           onChange && onChange(e);
         }}
@@ -491,7 +491,7 @@ export function ValidatedBlobField({
             (contentType, data) => {
               setBlobValue(data, contentType);
             },
-            isImage,
+            !!isImage,
           );
           onBlur && onBlur(e);
         }}
@@ -548,8 +548,8 @@ ValidatedBlobField.displayName = 'ValidatedBlobField';
 const EMAIL_REGEXP =
   /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i;
 
-export function isEmail(value) {
+export function isEmail(value: unknown) {
   if (isEmpty(value)) return true;
 
-  return EMAIL_REGEXP.test(value);
+  return EMAIL_REGEXP.test(value as string);
 }
