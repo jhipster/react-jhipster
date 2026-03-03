@@ -34,8 +34,7 @@
     "cleanup": "rimraf lib/* src/*.d.ts src/**/*.d.ts src/*.{js,jsx} src/**/*.{js,jsx} tests/**/*.d.ts tests/*.d.ts",
     "lint": "eslint . --ext .js,.ts,.jsx,.tsx",
     "lint:fix": "npm run lint -- --fix",
-    "precommit": "lint-staged",
-    "prepare": "npm run build",
+    "prepare": "npm run build && husky",
     "prettier:check": "prettier --check \"*.ts\" package.json \"{src,test}/**/*.{ts,tsx}\"",
     "prettier:format": "prettier --write \"*.ts\" package.json \"{src,test}/**/*.{ts,tsx}\"",
     "release": "npm test && git push && git push --tags && npm publish",
@@ -51,8 +50,7 @@
   "lint-staged": {
     "*.{ts,tsx}": [
       "prettier --write",
-      "npm run lint:fix",
-      "git add"
+      "npm run lint:fix"
     ]
   },
   "dependencies": {
@@ -76,7 +74,7 @@
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
-    "husky": "^6.0.0",
+    "husky": "^9.1.7",
     "jsdom": "^28.1.0",
     "lint-staged": "^11.2.6",
     "prettier": "^3.8.1",
