@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextFormat } from '../../formatter';
-import { Progress } from 'reactstrap';
+import { ProgressBar } from 'react-bootstrap';
 
 export interface IJvmMemoryProps {
   jvmMetrics: any;
@@ -30,11 +30,18 @@ export class JvmMemory extends React.Component<IJvmMemoryProps> {
               Committed : <TextFormat value={jvmMetrics[key].committed / 1048576} type="number" format={wholeNumberFormat} />M
             </div>
             {jvmMetrics[key].max !== -1 ? (
-              <Progress animated value={jvmMetrics[key].used} min="0" max={jvmMetrics[key].max} color="success">
-                <span>
-                  <TextFormat value={(jvmMetrics[key].used * 100) / jvmMetrics[key].max} type="number" format={wholeNumberFormat} />%
-                </span>
-              </Progress>
+              <ProgressBar
+                animated
+                now={jvmMetrics[key].used}
+                min={0}
+                max={jvmMetrics[key].max}
+                variant="success"
+                label={
+                  <>
+                    <TextFormat value={(jvmMetrics[key].used * 100) / jvmMetrics[key].max} type="number" format={wholeNumberFormat} />%
+                  </>
+                }
+              />
             ) : (
               ''
             )}

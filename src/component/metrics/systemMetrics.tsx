@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextFormat } from '../../formatter';
-import { Progress, Col, Row } from 'reactstrap';
+import { Col, ProgressBar, Row } from 'react-bootstrap';
 
 export interface ISystemMetricsProps {
   systemMetrics: any;
@@ -53,22 +53,32 @@ export class SystemMetrics extends React.Component<ISystemMetricsProps> {
             <TextFormat value={100 * systemMetrics['process.cpu.usage']} type="number" format={wholeNumberFormat} /> %
           </Col>
         </Row>
-        <Progress animated value={100 * systemMetrics['process.cpu.usage']} color="success">
-          <span>
-            <TextFormat value={100 * systemMetrics['process.cpu.usage']} type="number" format={wholeNumberFormat} /> %
-          </span>
-        </Progress>
+        <ProgressBar
+          animated
+          now={100 * systemMetrics['process.cpu.usage']}
+          variant="success"
+          label={
+            <>
+              <TextFormat value={100 * systemMetrics['process.cpu.usage']} type="number" format={wholeNumberFormat} /> %
+            </>
+          }
+        />
         <Row>
           <Col md="9">System CPU usage</Col>
           <Col md="3" className="text-end">
             <TextFormat value={100 * systemMetrics['system.cpu.usage']} type="number" format={wholeNumberFormat} /> %
           </Col>
         </Row>
-        <Progress animated value={100 * systemMetrics['system.cpu.usage']} color="success">
-          <span>
-            <TextFormat value={100 * systemMetrics['system.cpu.usage']} type="number" format={wholeNumberFormat} /> %
-          </span>
-        </Progress>
+        <ProgressBar
+          animated
+          now={100 * systemMetrics['system.cpu.usage']}
+          variant="success"
+          label={
+            <>
+              <TextFormat value={100 * systemMetrics['system.cpu.usage']} type="number" format={wholeNumberFormat} /> %
+            </>
+          }
+        />
         <Row>
           <Col md="9">System CPU count</Col>
           <Col md="3" className="text-end">

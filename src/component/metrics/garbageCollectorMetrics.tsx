@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextFormat } from '../../formatter';
-import { Col, Progress, Row, Table } from 'reactstrap';
+import { Col, ProgressBar, Row, Table } from 'react-bootstrap';
 
 export interface IGarbageCollectorMetricsProps {
   garbageCollectorMetrics: any;
@@ -21,18 +21,21 @@ export class GarbageCollectorMetrics extends React.Component<IGarbageCollectorMe
               / <TextFormat value={garbageCollectorMetrics['jvm.gc.max.data.size'] / 1048576} type={'number'} format={wholeNumberFormat} />
               M)
             </span>
-            <Progress
+            <ProgressBar
               animated
-              color="success"
-              value={(100 * garbageCollectorMetrics['jvm.gc.live.data.size']) / garbageCollectorMetrics['jvm.gc.max.data.size']}
-            >
-              <TextFormat
-                value={(100 * garbageCollectorMetrics['jvm.gc.live.data.size']) / garbageCollectorMetrics['jvm.gc.max.data.size']}
-                type={'number'}
-                format={wholeNumberFormat}
-              />
-              %
-            </Progress>
+              variant="success"
+              now={(100 * garbageCollectorMetrics['jvm.gc.live.data.size']) / garbageCollectorMetrics['jvm.gc.max.data.size']}
+              label={
+                <>
+                  <TextFormat
+                    value={(100 * garbageCollectorMetrics['jvm.gc.live.data.size']) / garbageCollectorMetrics['jvm.gc.max.data.size']}
+                    type={'number'}
+                    format={wholeNumberFormat}
+                  />
+                  %
+                </>
+              }
+            />
           </Col>
           <Col md="4">
             <span>
@@ -42,18 +45,21 @@ export class GarbageCollectorMetrics extends React.Component<IGarbageCollectorMe
               <TextFormat value={garbageCollectorMetrics['jvm.gc.memory.allocated'] / 1048576} type={'number'} format={wholeNumberFormat} />
               M)
             </span>
-            <Progress
+            <ProgressBar
               animated
-              color="success"
-              value={(100 * garbageCollectorMetrics['jvm.gc.memory.promoted']) / garbageCollectorMetrics['jvm.gc.memory.allocated']}
-            >
-              <TextFormat
-                value={(100 * garbageCollectorMetrics['jvm.gc.memory.promoted']) / garbageCollectorMetrics['jvm.gc.memory.allocated']}
-                type={'number'}
-                format={wholeNumberFormat}
-              />
-              %
-            </Progress>
+              variant="success"
+              now={(100 * garbageCollectorMetrics['jvm.gc.memory.promoted']) / garbageCollectorMetrics['jvm.gc.memory.allocated']}
+              label={
+                <>
+                  <TextFormat
+                    value={(100 * garbageCollectorMetrics['jvm.gc.memory.promoted']) / garbageCollectorMetrics['jvm.gc.memory.allocated']}
+                    type={'number'}
+                    format={wholeNumberFormat}
+                  />
+                  %
+                </>
+              }
+            />
           </Col>
           <Col md="4">
             <Row>

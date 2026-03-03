@@ -31,7 +31,7 @@ import {
   UseFormSetValue,
   ValidationMode,
 } from 'react-hook-form';
-import { Button, Col, Form, FormFeedback, FormGroup, Input, InputProps, Label, Row } from 'reactstrap';
+import { Button, Col, Form, FormControl, FormControlProps, Row } from 'react-bootstrap';
 
 import { byteSize, isEmpty, openFile, setFileData } from '../util';
 
@@ -44,10 +44,10 @@ export interface ValidatedFormProps {
 }
 
 /**
- * A wrapper for simple validated forms using Reactstrap Form and React-hook-form.
+ * A wrapper for simple validated forms using React-Bootstrap Form and React-hook-form.
  * The validated fields/inputs must be direct children of the form.
  * This components injects methods and values from react-hook-form's `useForm` hook into the ValidatedField/ValidatedInput components
- * For complex use cases or for nested children, use Reactstrap form elements
+ * For complex use cases or for nested children, use React-Bootstrap form elements
  * or ValidatedField or ValidatedInput and pass methods and values from react-hook-form's `useForm` hook
  * directly as props
  *
@@ -101,7 +101,7 @@ export function ValidatedForm({ defaultValues, children, onSubmit, mode, ...rest
 
 ValidatedForm.displayName = 'ValidatedForm';
 
-export interface ValidatedInputProps extends InputProps {
+export interface ValidatedInputProps extends FormControlProps {
   // name of the component, also used for validation
   name: string;
   // register function from react-hook-form
@@ -118,6 +118,10 @@ export interface ValidatedInputProps extends InputProps {
   value?: any;
   // default value for the Input component, not needed if defaultValues for ValidatedForm is set
   defaultValue?: string | number | string[];
+  // tag attribute for input — maps to the 'as' prop in react-bootstrap
+  tag?: React.ElementType;
+  // whether the field is hidden
+  hidden?: boolean;
 }
 
 export interface ValidatedFieldProps extends ValidatedInputProps {
@@ -140,7 +144,7 @@ export interface ValidatedFieldProps extends ValidatedInputProps {
 }
 
 /**
- * A utility wrapper over Reactstrap Input component thats uses react-hook-form data to
+ * A utility wrapper over React-Bootstrap form components that uses react-hook-form data to
  * show error message and error/validated styles.
  * This component can be used with ValidatedForm
  *
@@ -159,13 +163,58 @@ export function ValidatedInput({
   className,
   onChange,
   onBlur,
+  tag,
+  hidden,
+  type,
   ...attributes
 }: ValidatedInputProps): React.JSX.Element {
+  const isCheckOrRadio = !tag && (type === 'checkbox' || type === 'radio');
+  const isSelect = !tag && type === 'select';
+
   if (!register) {
+    if (isSelect) {
+      return (
+        <Form.Select
+          name={name}
+          id={id}
+          className={className}
+          onChange={onChange as any}
+          onBlur={onBlur as any}
+          hidden={hidden}
+          {...(attributes as any)}
+        >
+          {children}
+        </Form.Select>
+      );
+    }
+    if (isCheckOrRadio) {
+      return (
+        <input
+          type={type}
+          name={name}
+          id={id}
+          className={`form-check-input${className ? ` ${className}` : ''}`}
+          onChange={onChange as any}
+          onBlur={onBlur as any}
+          hidden={hidden}
+          {...(attributes as any)}
+        />
+      );
+    }
     return (
-      <Input name={name} id={id} className={className} onChange={onChange} onBlur={onBlur} {...attributes}>
+      <FormControl
+        name={name}
+        id={id}
+        type={type}
+        className={className}
+        onChange={onChange}
+        onBlur={onBlur}
+        as={tag}
+        hidden={hidden}
+        {...attributes}
+      >
         {children}
-      </Input>
+      </FormControl>
     );
   }
 
@@ -174,28 +223,76 @@ export function ValidatedInput({
   className = isDirty ? `${className} is-dirty` : className;
 
   const { name: registeredName, onBlur: onBlurValidate, onChange: onChangeValidate, ref } = register(name, validate);
+
+  const handleChange = e => {
+    void onChangeValidate(e);
+    onChange && (onChange as any)(e);
+  };
+  const handleBlur = e => {
+    void onBlurValidate(e);
+    onBlur && (onBlur as any)(e);
+  };
+
+  if (isSelect) {
+    return (
+      <>
+        <Form.Select
+          name={registeredName}
+          id={id}
+          isValid={isTouched && !error}
+          isInvalid={!!error}
+          ref={ref}
+          className={className}
+          hidden={hidden}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          {...(attributes as any)}
+        >
+          {children}
+        </Form.Select>
+        {error && <Form.Control.Feedback type="invalid">{error.message}</Form.Control.Feedback>}
+      </>
+    );
+  }
+
+  if (isCheckOrRadio) {
+    return (
+      <>
+        <input
+          type={type}
+          name={registeredName}
+          id={id}
+          ref={ref}
+          className={`form-check-input${className ? ` ${className}` : ''}${isTouched && !error ? ' is-valid' : ''}${error ? ' is-invalid' : ''}`}
+          hidden={hidden}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          {...(attributes as any)}
+        />
+        {error && <Form.Control.Feedback type="invalid">{error.message}</Form.Control.Feedback>}
+      </>
+    );
+  }
+
   return (
     <>
-      <Input
+      <FormControl
         name={registeredName}
         id={id}
-        valid={isTouched && !error}
-        invalid={!!error}
-        innerRef={ref}
+        type={type}
+        isValid={isTouched && !error}
+        isInvalid={!!error}
+        ref={ref}
         className={className}
-        onChange={e => {
-          void onChangeValidate(e);
-          onChange && onChange(e);
-        }}
-        onBlur={e => {
-          void onBlurValidate(e);
-          onBlur && onBlur(e);
-        }}
+        as={tag}
+        hidden={hidden}
+        onChange={handleChange}
+        onBlur={handleBlur}
         {...attributes}
       >
         {children}
-      </Input>
-      {error && <FormFeedback>{error.message}</FormFeedback>}
+      </FormControl>
+      {error && <Form.Control.Feedback type="invalid">{error.message}</Form.Control.Feedback>}
     </>
   );
 }
@@ -203,7 +300,7 @@ export function ValidatedInput({
 ValidatedInput.displayName = 'ValidatedInput';
 
 /**
- * A utility wrapper over Reactstrap FormGroup + Label + ValidatedInput
+ * A utility wrapper over React-Bootstrap Form.Group + Form.Label + ValidatedInput
  * that uses react-hook-form data to show error message and error/validated styles.
  * This component can be used with ValidatedForm
  *
@@ -236,15 +333,24 @@ export function ValidatedField({
 
   const inputRow = row ? <Col {...col}>{input}</Col> : input;
   return (
-    <FormGroup check={check} disabled={disabled} row={row} className={className} hidden={hidden} tag={tag}>
+    <Form.Group
+      as={tag}
+      className={`mb-3${className ? ` ${className}` : ''}${check ? ' form-check' : ''}${row ? ' row' : ''}`}
+      hidden={hidden}
+    >
       {check && inputRow}
       {label && (
-        <Label id={`${name}Label`} check={check} for={id} className={labelClass} hidden={labelHidden || hidden}>
+        <Form.Label
+          id={`${name}Label`}
+          htmlFor={id}
+          className={`${labelClass || ''}${check ? ' form-check-label' : ''}`}
+          hidden={labelHidden || hidden}
+        >
           {label}
-        </Label>
+        </Form.Label>
       )}
       {!check && inputRow}
-    </FormGroup>
+    </Form.Group>
   );
 }
 
@@ -270,7 +376,7 @@ interface ValidatedBlobFieldProps extends ValidatedFieldProps {
 }
 
 /**
- * A utility wrapper over Reactstrap FormGroup + Label + Input for blobs and images
+ * A utility wrapper over React-Bootstrap Form.Group + Form.Label + FormControl for blobs and images
  * that uses react-hook-form data to show error message and error/validated styles.
  * This component can be used with ValidatedForm
  *
@@ -334,21 +440,21 @@ export function ValidatedBlobField({
   };
 
   const renderFormGroup = inner => (
-    <FormGroup disabled={disabled} row={row} className={className} hidden={hidden} tag={tag}>
+    <Form.Group className={`mb-3${className ? ` ${className}` : ''}${row ? ' row' : ''}`} hidden={hidden}>
       {label && (
-        <Label id={`${name}Label`} for={id} className={labelClass} hidden={labelHidden || hidden}>
+        <Form.Label id={`${name}Label`} htmlFor={id} className={labelClass} hidden={labelHidden || hidden}>
           {label}
-        </Label>
+        </Form.Label>
       )}
       {inner}
-    </FormGroup>
+    </Form.Group>
   );
 
   const inputRow = input => (row ? <Col {...col}>{input}</Col> : input);
 
   if (!register) {
     return renderFormGroup(
-      inputRow(<Input type="file" id={id} name={name} className={className} onChange={onChange} onBlur={onBlur} {...attributes} />),
+      inputRow(<FormControl type="file" id={id} name={name} className={className} onChange={onChange} onBlur={onBlur} {...attributes} />),
     );
   }
 
@@ -364,16 +470,16 @@ export function ValidatedBlobField({
   const input = (
     <>
       <input id={`file_${name}_content_type`} name={contentTypeName} type="hidden" />
-      <Input
+      <FormControl
         type="file"
         id={id}
         name={name}
-        valid={isTouched && !error}
-        invalid={!!error}
+        isValid={isTouched && !error}
+        isInvalid={!!error}
         className={className}
         onChange={e => {
           setFileData(
-            e,
+            e as any,
             (contentType, data) => {
               setBlobValue(data, contentType);
             },
@@ -383,7 +489,7 @@ export function ValidatedBlobField({
         }}
         onBlur={e => {
           setFileData(
-            e,
+            e as any,
             (contentType, data) => {
               setBlobValue(data, contentType);
             },
@@ -393,12 +499,12 @@ export function ValidatedBlobField({
         }}
         {...attributes}
       />
-      {error && <FormFeedback>{error.message}</FormFeedback>}
+      {error && <Form.Control.Feedback type="invalid">{error.message}</Form.Control.Feedback>}
     </>
   );
 
   const defaultClearBtn = (
-    <Button color="danger" size="sm" onClick={clearBlob}>
+    <Button variant="danger" size="sm" onClick={clearBlob}>
       <strong>&nbsp;x&nbsp;</strong>
     </Button>
   );
