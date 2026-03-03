@@ -16,8 +16,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
 import { ReactElement, useEffect, useState } from 'react';
 import {
