@@ -65,6 +65,7 @@ export default [
       'default-case': 'error',
       complexity: ['error', 40],
       'no-invalid-this': 'off',
+      'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'react/display-name': 'off',
     },

@@ -41,7 +41,7 @@ export class JvmThreads extends React.Component<IJvmThreadsProps, IJvmThreadsSta
         threadDumpBlocked: 0,
       };
 
-      this.props.jvmThreads.threads.forEach(thread => {
+      this.props.jvmThreads.threads.forEach((thread: any) => {
         if (thread.threadState === 'RUNNABLE') {
           threadStats.threadDumpRunnable += 1;
         } else if (thread.threadState === 'WAITING') {
@@ -66,7 +66,7 @@ export class JvmThreads extends React.Component<IJvmThreadsProps, IJvmThreadsSta
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: IJvmThreadsProps) {
     if (this.props.jvmThreads.threads && this.props.jvmThreads.threads !== prevProps.jvmThreads.threads) {
       this.countThreadByState();
     }

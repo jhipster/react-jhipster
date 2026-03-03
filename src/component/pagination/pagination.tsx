@@ -14,14 +14,14 @@ export interface IJhiPaginationState {
 }
 
 export class JhiPagination extends React.Component<IJhiPaginationProps, IJhiPaginationState> {
-  constructor(props) {
+  constructor(props: IJhiPaginationProps) {
     super(props);
     this.state = {
       currentPage: this.props.activePage,
     };
   }
 
-  updateActivePage = currentPage => () => {
+  updateActivePage = (currentPage: number) => () => {
     this.setState({ currentPage });
     this.props.onSelect(currentPage);
   };
@@ -36,10 +36,10 @@ export class JhiPagination extends React.Component<IJhiPaginationProps, IJhiPagi
     this.props.onSelect(this.state.currentPage + 1);
   };
 
-  itemsToDisplay = activePage => {
-    const items = [];
-    let item: any = {};
-    let previousItem: any = {};
+  itemsToDisplay = (activePage: number) => {
+    const items: { display?: string }[] = [];
+    let item: { display?: string } = {};
+    let previousItem: { display?: string } = {};
     const maxPage = this.getMaxPage();
     const padSup = Math.floor((this.props.maxButtons - 1) / 2);
     const modulo = (this.props.maxButtons - 1) % 2;
@@ -69,7 +69,7 @@ export class JhiPagination extends React.Component<IJhiPaginationProps, IJhiPagi
     return items;
   };
 
-  displayPaginationItem = (i, activePage) => (
+  displayPaginationItem = (i: number, activePage: number) => (
     <Pagination.Item active={activePage === i + 1} key={i} onClick={this.updateActivePage(i + 1)}>
       {i + 1}
     </Pagination.Item>

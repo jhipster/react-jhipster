@@ -1,6 +1,6 @@
 export const nanToZero = (input: number) => (isNaN(input) ? 0 : input);
 
-export function isEmpty(value) {
+export function isEmpty(value: unknown) {
   return (
     typeof value === 'undefined' ||
     value === null ||
@@ -10,7 +10,7 @@ export function isEmpty(value) {
   );
 }
 
-export function isNumber(value) {
+export function isNumber(value: unknown) {
   if (isEmpty(value)) return true;
 
   if ((typeof value === 'boolean' && value === true) || (Array.isArray(value) && value.length !== 0)) {

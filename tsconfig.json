@@ -1,22 +1,18 @@
 {
   "include": ["src"],
   "compilerOptions": {
-    "jsx": "react",
+    "jsx": "react-jsx",
     "module": "commonjs",
-    "target": "es2015",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
+    "target": "ES2020",
+    "strict": true,
     "declaration": true,
     "sourceMap": true,
     "moduleResolution": "node",
     "noUnusedLocals": true,
-    "noImplicitAny": false,
-    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "importHelpers": true,
-    "lib": ["es2015", "es2017", "dom"],
-    "outDir": "./lib",
-    "types": ["webpack-env"]
+    "lib": ["ES2020", "dom"],
+    "outDir": "./lib"
   },
   "exclude": ["node_modules", "bundles", "coverage", "build", "**/*.spec.ts", "**/*.spec.tsx"]
 }

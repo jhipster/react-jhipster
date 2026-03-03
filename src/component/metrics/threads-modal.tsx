@@ -5,7 +5,7 @@ import ThreadItem from './thread-item';
 
 export interface IThreadsModalProps {
   showModal: boolean;
-  handleClose: (e) => void;
+  handleClose: (e: unknown) => void;
   threadDump: any;
 }
 
@@ -22,12 +22,12 @@ export class ThreadsModal extends React.Component<IThreadsModalProps, IThreadsMo
 
   computeFilteredList = () => {
     const { badgeFilter, searchFilter } = this.state;
-    let filteredList = this.props.threadDump.threads;
+    let filteredList: any[] = this.props.threadDump.threads;
     if (badgeFilter !== '') {
-      filteredList = filteredList.filter(t => t.threadState === badgeFilter);
+      filteredList = filteredList.filter((t: any) => t.threadState === badgeFilter);
     }
     if (searchFilter !== '') {
-      filteredList = filteredList.filter(t => t.lockName && t.lockName.toLowerCase().includes(searchFilter.toLowerCase()));
+      filteredList = filteredList.filter((t: any) => t.lockName && t.lockName.toLowerCase().includes(searchFilter.toLowerCase()));
     }
     return filteredList;
   };
@@ -39,7 +39,7 @@ export class ThreadsModal extends React.Component<IThreadsModalProps, IThreadsMo
     let threadDumpTimedWaiting = 0;
     let threadDumpBlocked = 0;
 
-    this.props.threadDump.threads.forEach(t => {
+    this.props.threadDump.threads.forEach((t: any) => {
       switch (t.threadState) {
         case 'RUNNABLE':
           threadDumpRunnable++;
@@ -62,7 +62,7 @@ export class ThreadsModal extends React.Component<IThreadsModalProps, IThreadsMo
     return { threadDumpAll, threadDumpRunnable, threadDumpWaiting, threadDumpTimedWaiting, threadDumpBlocked };
   };
 
-  getBadgeClass = threadState => {
+  getBadgeClass = (threadState: string) => {
     if (threadState === 'RUNNABLE') {
       return 'badge-success';
     } else if (threadState === 'WAITING') {
@@ -74,14 +74,14 @@ export class ThreadsModal extends React.Component<IThreadsModalProps, IThreadsMo
     }
   };
 
-  updateBadgeFilter = badge => () => this.setState({ badgeFilter: badge });
+  updateBadgeFilter = (badge: string) => () => this.setState({ badgeFilter: badge });
 
-  updateSearchFilter = event => this.setState({ searchFilter: event.target.value });
+  updateSearchFilter = (event: React.ChangeEvent<HTMLInputElement>) => this.setState({ searchFilter: event.target.value });
 
   render() {
     const { showModal, handleClose, threadDump } = this.props;
     let counters = {} as any;
-    let filteredList = null;
+    let filteredList: any[] | null = null;
     if (threadDump && threadDump.threads) {
       counters = this.computeCounters();
       filteredList = this.computeFilteredList();
