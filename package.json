@@ -74,7 +74,7 @@
     "axios": "^1.13.6",
     "dayjs": "^1.11.19",
     "eslint": "^8.57.1",
-    "eslint-config-prettier": "^9.1.2",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
     "husky": "^6.0.0",
     "jsdom": "^25.0.1",
