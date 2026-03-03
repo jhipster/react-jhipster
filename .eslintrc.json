@@ -6,7 +6,7 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:@typescript-eslint/recommended-type-checked",
     "prettier",
     "eslint-config-prettier"
   ],
@@ -30,6 +30,7 @@
         "default": ["static-field", "instance-field", "constructor", "static-method", "instance-method"]
       }
     ],
+    "@typescript-eslint/no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true }],
     "@typescript-eslint/no-misused-promises": "off",
     "@typescript-eslint/no-unnecessary-type-assertion": "off",
     "@typescript-eslint/no-unused-vars": "off",
@@ -45,14 +46,6 @@
     "@typescript-eslint/restrict-template-expressions": "off",
     "@typescript-eslint/restrict-plus-operands": "off",
     "@typescript-eslint/no-floating-promises": "off",
-    "@typescript-eslint/ban-types": [
-      "error",
-      {
-        "types": {
-          "Object": "Use {} instead."
-        }
-      }
-    ],
     "@typescript-eslint/interface-name-prefix": "off",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/unbound-method": "off",
