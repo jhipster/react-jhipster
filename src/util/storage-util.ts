@@ -35,7 +35,7 @@ const getItem = (type: StorageType) => (key: string, defaultVal?: any) => {
   if (!val || val === 'undefined') return defaultVal;
   try {
     return JSON.parse(val);
-  } catch (e) {
+  } catch {
     return val;
   }
 };

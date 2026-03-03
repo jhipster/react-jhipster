@@ -107,7 +107,7 @@ const deepFindDirty = (obj, path) => {
     }),
   );
   // Delete duplicates
-  setAllPaths.forEach((v1, v2, values) => {
+  setAllPaths.forEach((_v1, v2) => {
     return allPathsWithoutDuplicate.push(v2.split(HASHTAG));
   });
   // Test all possibles paths while traduction is not found

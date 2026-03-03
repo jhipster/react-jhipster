@@ -58,7 +58,7 @@ describe('ValidatedInput', () => {
 
   describe('with register renders', () => {
     function InputApp({ name, ...rest }) {
-      const onSubmit = data => {
+      const onSubmit = () => {
         // do nothing
       };
       const {
@@ -90,9 +90,7 @@ describe('ValidatedInput', () => {
       expect(input.value).toEqual('hello');
     });
     it('with default value renders an input and shows error when value is absent', async () => {
-      const mockChange = vitest.fn(e => {
-        // do nothing
-      });
+      const mockChange = vitest.fn();
       const { container } = render(
         <InputApp name="test" defaultValue="hello" validate={{ required: 'this is required' }} onChange={mockChange} />,
       );
@@ -191,7 +189,7 @@ describe('ValidatedField', () => {
 
   describe('with register renders', () => {
     function InputApp({ name, ...rest }) {
-      const onSubmit = data => {
+      const onSubmit = () => {
         // do nothing
       };
       const {
@@ -223,9 +221,7 @@ describe('ValidatedField', () => {
       expect(input.value).toEqual('hello');
     });
     it('with default value renders an input and shows error when value is absent', async () => {
-      const mockChange = vitest.fn(e => {
-        // do nothing
-      });
+      const mockChange = vitest.fn();
       const { container } = render(
         <InputApp name="test" defaultValue="hello" validate={{ required: 'this is required' }} onChange={mockChange} />,
       );
@@ -311,7 +307,7 @@ describe('ValidatedBlobField', () => {
 
   describe('with register renders', () => {
     function InputApp({ name, ...rest }) {
-      const onSubmit = data => {
+      const onSubmit = () => {
         // do nothing
       };
       const {
@@ -399,9 +395,7 @@ describe('ValidatedBlobField', () => {
       expect(container.querySelector('button.my-btn')).not.toBeNull();
     });
     it('with default value renders an input and shows error when value is absent', async () => {
-      const mockChange = vitest.fn(e => {
-        // do nothing
-      });
+      const mockChange = vitest.fn();
       const { container, getByRole } = render(
         <InputApp
           name="test"
@@ -667,9 +661,7 @@ describe('ValidatedForm', () => {
       });
     });
     describe('validate the form with no default values', () => {
-      const mockSubmit = vitest.fn((email, password, active, select, multiselect) => {
-        // do nothing
-      });
+      const mockSubmit = vitest.fn();
 
       const onSubmit = ({ email, password, active, select, multiselect }) => {
         mockSubmit(email, password, active, select, multiselect);
@@ -759,9 +751,9 @@ describe('ValidatedForm', () => {
 
         expect(await screen.findByText('Entered value does not match email format')).not.toBeNull();
         expect(mockSubmit).not.toBeCalled();
-        const email = screen.getByLabelText('email') as HTMLInputElement;
+        const email = screen.getByLabelText<HTMLInputElement>('email');
         expect(email.value).toBe('test');
-        const password = screen.getByLabelText('password') as HTMLInputElement;
+        const password = screen.getByLabelText<HTMLInputElement>('password');
         expect(password.value).toBe('password');
       });
       it('should display min length error when password is invalid', async () => {
@@ -781,9 +773,9 @@ describe('ValidatedForm', () => {
 
         expect(await screen.findByText('min length is 5')).not.toBeNull();
         expect(mockSubmit).not.toBeCalled();
-        const email = screen.getByLabelText('email') as HTMLInputElement;
+        const email = screen.getByLabelText<HTMLInputElement>('email');
         expect(email.value).toBe('test@mail.com');
-        const password = screen.getByLabelText('password') as HTMLInputElement;
+        const password = screen.getByLabelText<HTMLInputElement>('password');
         expect(password.value).toBe('pass');
       });
       it('should not display error when value is valid', async () => {
@@ -814,9 +806,7 @@ describe('ValidatedForm', () => {
       });
     });
     describe('validate the form with default values', () => {
-      const mockSubmit = vitest.fn((email, password, active, select, multiselect) => {
-        // do nothing
-      });
+      const mockSubmit = vitest.fn();
 
       const onSubmit = ({ email, password, active, select, multiselect }) => {
         mockSubmit(email, password, active, select, multiselect);
