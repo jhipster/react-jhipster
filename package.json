@@ -31,7 +31,7 @@
   ],
   "scripts": {
     "build": "npm run cleanup && npm run tsc",
-    "cleanup": "rimraf lib/* src/*.d.ts src/**/*.d.ts src/*.{js,jsx} src/**/*.{js,jsx} tests/**/*.d.ts tests/*.d.ts",
+    "cleanup": "rimraf lib src/*.d.ts src/**/*.d.ts src/*.{js,jsx} src/**/*.{js,jsx} tests/**/*.d.ts tests/*.d.ts",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "prepare": "npm run build && husky",
