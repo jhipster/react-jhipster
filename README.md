@@ -1,4 +1,10 @@
-[![Logo][jhipster-image]][jhipster-url]
+<a href="http://www.jhipster.tech/">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://www.jhipster.tech/images/logo/logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://www.jhipster.tech/images/logo/logo-light.svg">
+    <img src="https://www.jhipster.tech/images/logo/logo-jhipster.svg" alt="JHipster">
+  </picture>
+</a>
 
 Greetings, Java Hipster!
 
@@ -13,7 +19,6 @@ Please read our [guidelines](https://github.com/jhipster/generator-jhipster/CONT
 
 [github-actions-image]: https://github.com/jhipster/react-jhipster/actions/workflows/ci.yml/badge.svg
 [github-actions-url]: https://github.com/jhipster/react-jhipster/actions/workflows/ci.yml
-[jhipster-image]: https://raw.githubusercontent.com/jhipster/jhipster.github.io/main/images/logo/logo-jhipster2x.png
 [jhipster-url]: http://www.jhipster.tech/
 [npm-image]: https://badge.fury.io/js/react-jhipster.svg
 [npm-url]: https://npmjs.org/package/react-jhipster
