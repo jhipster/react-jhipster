@@ -7,8 +7,8 @@ updates:
     ignore:
       - dependency-name: '@types/node'
         versions: ['>=17']
-      #- dependency-name: '*'
-      #  update-types: ['version-update:semver-minor', 'version-update:semver-patch']
+      - dependency-name: '*'
+        update-types: ['version-update:semver-minor', 'version-update:semver-patch']
     groups:
       eslint:
         patterns:
