@@ -192,8 +192,8 @@ export function ValidatedInput({
           name={name}
           id={id}
           className={`form-check-input${className ? ` ${className}` : ''}`}
-          onChange={onChange as any}
-          onBlur={onBlur as any}
+          onChange={onChange}
+          onBlur={onBlur}
           hidden={hidden}
           {...(attributes as any)}
         />

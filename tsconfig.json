@@ -12,7 +12,10 @@
     "esModuleInterop": true,
     "importHelpers": true,
     "lib": ["ES2020", "dom"],
-    "outDir": "./lib"
+    "types": ["webpack-env"],
+    "rootDir": "./src",
+    "outDir": "./lib",
+    "ignoreDeprecations": "6.0"
   },
   "exclude": ["node_modules", "bundles", "coverage", "build", "**/*.spec.ts", "**/*.spec.tsx"]
 }
