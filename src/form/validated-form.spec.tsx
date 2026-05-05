@@ -10,6 +10,60 @@ import { ValidatedForm, ValidatedField, ValidatedInput } from './index';
 import { FormControl } from 'react-bootstrap';
 import { isEmail, ValidatedBlobField } from './validated-form';
 
+function ValidatedInputApp({ name, ...rest }) {
+  const onSubmit = () => {
+    // do nothing
+  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <ValidatedInput register={register} name={name} error={errors[name]} role="textbox" {...rest} />
+      <button type="submit">SUBMIT</button>
+    </form>
+  );
+}
+
+function ValidatedFieldApp({ name, ...rest }) {
+  const onSubmit = () => {
+    // do nothing
+  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <ValidatedField register={register} name={name} error={errors[name]} role="textbox" {...rest} />
+      <button type="submit">SUBMIT</button>
+    </form>
+  );
+}
+
+function ValidatedBlobFieldApp({ name, ...rest }) {
+  const onSubmit = () => {
+    // do nothing
+  };
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({ mode: 'onChange' });
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <ValidatedBlobField register={register} setValue={setValue} name={name} error={errors[name]} role="textbox" {...rest} />
+      <button type="submit" role="submit">
+        SUBMIT
+      </button>
+    </form>
+  );
+}
+
 describe('ValidatedInput', () => {
   describe('with basic text input', () => {
     it('without default value renders an empty input', () => {
@@ -57,24 +111,8 @@ describe('ValidatedInput', () => {
   });
 
   describe('with register renders', () => {
-    function InputApp({ name, ...rest }) {
-      const onSubmit = () => {
-        // do nothing
-      };
-      const {
-        register,
-        handleSubmit,
-        formState: { errors },
-      } = useForm();
-      return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <ValidatedInput register={register} name={name} error={errors[name]} role="textbox" {...rest} />
-          <button type="submit">SUBMIT</button>
-        </form>
-      );
-    }
     it('without default value renders an empty input', () => {
-      const { container } = render(<InputApp name="test" defaultValue="" />);
+      const { container } = render(<ValidatedInputApp name="test" defaultValue="" />);
       const input = container.querySelector('input');
       expect(input.name).toEqual('test');
       expect(input.type).toEqual('text');
@@ -82,7 +120,7 @@ describe('ValidatedInput', () => {
       expect(input.value).toEqual('');
     });
     it('with default value renders an input', () => {
-      const { container } = render(<InputApp name="test" defaultValue="hello" isTouched={true} />);
+      const { container } = render(<ValidatedInputApp name="test" defaultValue="hello" isTouched={true} />);
       const input = container.querySelector('input');
       expect(input.name).toEqual('test');
       expect(input.type).toEqual('text');
@@ -92,7 +130,7 @@ describe('ValidatedInput', () => {
     it('with default value renders an input and shows error when value is absent', async () => {
       const mockChange = vitest.fn();
       const { container } = render(
-        <InputApp name="test" defaultValue="hello" validate={{ required: 'this is required' }} onChange={mockChange} />,
+        <ValidatedInputApp name="test" defaultValue="hello" validate={{ required: 'this is required' }} onChange={mockChange} />,
       );
 
       let input = container.querySelector('input');
@@ -188,24 +226,8 @@ describe('ValidatedField', () => {
   });
 
   describe('with register renders', () => {
-    function InputApp({ name, ...rest }) {
-      const onSubmit = () => {
-        // do nothing
-      };
-      const {
-        register,
-        handleSubmit,
-        formState: { errors },
-      } = useForm();
-      return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <ValidatedField register={register} name={name} error={errors[name]} role="textbox" {...rest} />
-          <button type="submit">SUBMIT</button>
-        </form>
-      );
-    }
     it('without default value renders an empty input', () => {
-      const { container } = render(<InputApp name="test" defaultValue="" />);
+      const { container } = render(<ValidatedFieldApp name="test" defaultValue="" />);
       const input = container.querySelector('input');
       expect(input.name).toEqual('test');
       expect(input.type).toEqual('text');
@@ -213,7 +235,7 @@ describe('ValidatedField', () => {
       expect(input.value).toEqual('');
     });
     it('with default value renders an input', () => {
-      const { container } = render(<InputApp name="test" defaultValue="hello" isTouched={true} />);
+      const { container } = render(<ValidatedFieldApp name="test" defaultValue="hello" isTouched={true} />);
       const input = container.querySelector('input');
       expect(input.name).toEqual('test');
       expect(input.type).toEqual('text');
@@ -223,7 +245,7 @@ describe('ValidatedField', () => {
     it('with default value renders an input and shows error when value is absent', async () => {
       const mockChange = vitest.fn();
       const { container } = render(
-        <InputApp name="test" defaultValue="hello" validate={{ required: 'this is required' }} onChange={mockChange} />,
+        <ValidatedFieldApp name="test" defaultValue="hello" validate={{ required: 'this is required' }} onChange={mockChange} />,
       );
 
       let input = container.querySelector('input');
@@ -306,27 +328,8 @@ describe('ValidatedBlobField', () => {
   });
 
   describe('with register renders', () => {
-    function InputApp({ name, ...rest }) {
-      const onSubmit = () => {
-        // do nothing
-      };
-      const {
-        register,
-        handleSubmit,
-        setValue,
-        formState: { errors },
-      } = useForm({ mode: 'onChange' });
-      return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <ValidatedBlobField register={register} setValue={setValue} name={name} error={errors[name]} role="textbox" {...rest} />
-          <button type="submit" role="submit">
-            SUBMIT
-          </button>
-        </form>
-      );
-    }
     it('without default value renders an empty inputs with no data preview', () => {
-      const { container } = render(<InputApp name="test" defaultValue="" />);
+      const { container } = render(<ValidatedBlobFieldApp name="test" defaultValue="" />);
       const inputContentType: HTMLInputElement = container.querySelector('input');
       expect(inputContentType.id).toEqual('file_test_content_type');
       expect(inputContentType.name).toEqual('testContentType');
@@ -341,7 +344,7 @@ describe('ValidatedBlobField', () => {
     });
     it('with default value renders an input with data preview for image', () => {
       const { container } = render(
-        <InputApp
+        <ValidatedBlobFieldApp
           name="test"
           defaultValue="hello"
           id="my-id"
@@ -369,7 +372,7 @@ describe('ValidatedBlobField', () => {
     });
     it('with default value renders an input with data preview for blob', () => {
       const { container } = render(
-        <InputApp
+        <ValidatedBlobFieldApp
           name="test"
           defaultValue="hello"
           defaultContentType="text/pdf"
@@ -397,7 +400,7 @@ describe('ValidatedBlobField', () => {
     it('with default value renders an input and shows error when value is absent', async () => {
       const mockChange = vitest.fn();
       const { container, getByRole } = render(
-        <InputApp
+        <ValidatedBlobFieldApp
           name="test"
           defaultValue="hello"
           defaultContentType="image/jpg"

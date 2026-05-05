@@ -1,7 +1,7 @@
 import js from '@eslint/js';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
-import reactPlugin from 'eslint-plugin-react';
+import reactPlugin from '@eslint-react/eslint-plugin';
 import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default [
@@ -11,7 +11,7 @@ export default [
   js.configs.recommended,
   ...tsPlugin.configs['flat/recommended'],
   ...tsPlugin.configs['flat/recommended-type-checked'],
-  reactPlugin.configs.flat.recommended,
+  reactPlugin.configs['recommended-type-checked'],
   eslintConfigPrettier,
   {
     files: ['**/*.ts', '**/*.tsx'],

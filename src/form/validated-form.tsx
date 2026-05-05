@@ -421,6 +421,12 @@ export function ValidatedBlobField({
 
   const contentTypeName = `${name}ContentType`;
 
+  useEffect(() => {
+    if (!register) return;
+    register(name, validate);
+    register(contentTypeName, validate);
+  }, [register]);
+
   const setBlobValue = (data: string | undefined, contentType: string | undefined) => {
     setBlobData(data);
     setBlobContentType(contentType);
@@ -459,11 +465,6 @@ export function ValidatedBlobField({
   className = className || '';
   className = isTouched ? `${className} is-touched` : className;
   className = isDirty ? `${className} is-dirty` : className;
-
-  useEffect(() => {
-    register(name, validate);
-    register(contentTypeName, validate);
-  }, [register]);
 
   const input = (
     <>
