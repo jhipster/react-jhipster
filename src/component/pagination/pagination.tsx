@@ -27,25 +27,24 @@ export class JhiPagination extends React.Component<IJhiPaginationProps, IJhiPagi
   };
 
   previousPage = () => {
-    this.setState({ currentPage: this.state.currentPage - 1 });
+    this.setState(prevState => ({ currentPage: prevState.currentPage - 1 }));
     this.props.onSelect(this.state.currentPage - 1);
   };
 
   nextPage = () => {
-    this.setState({ currentPage: this.state.currentPage + 1 });
+    this.setState(prevState => ({ currentPage: prevState.currentPage + 1 }));
     this.props.onSelect(this.state.currentPage + 1);
   };
 
   itemsToDisplay = (activePage: number) => {
     const items: { display?: string }[] = [];
-    let item: { display?: string } = {};
     let previousItem: { display?: string } = {};
     const maxPage = this.getMaxPage();
     const padSup = Math.floor((this.props.maxButtons - 1) / 2);
     const modulo = (this.props.maxButtons - 1) % 2;
     const padInf = padSup + modulo;
     for (let j = 0; j < maxPage; j++) {
-      item = {};
+      const item: { display?: string } = {};
       if (
         j === 0 ||
         j === maxPage - 1 ||

@@ -19,10 +19,9 @@ export class SystemMetrics extends React.Component<ISystemMetricsProps> {
       second: 1000,
     };
     let timeString = '';
-    let plural = '';
     for (const key in times) {
       if (Math.floor(ms / times[key]) > 0) {
-        plural = Math.floor(ms / times[key]) > 1 ? 's' : '';
+        const plural = Math.floor(ms / times[key]) > 1 ? 's' : '';
         timeString += Math.floor(ms / times[key]).toString() + ' ' + key.toString() + plural + ' ';
         ms = ms - times[key] * Math.floor(ms / times[key]);
       }

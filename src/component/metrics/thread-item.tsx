@@ -15,9 +15,9 @@ export class ThreadItem extends React.Component<IThreadItemProps, IThreadItemSta
   };
 
   toggleStackTrace = () => {
-    this.setState({
-      collapse: !this.state.collapse,
-    });
+    this.setState(prevState => ({
+      collapse: !prevState.collapse,
+    }));
   };
 
   render() {

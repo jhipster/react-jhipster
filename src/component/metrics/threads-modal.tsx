@@ -33,7 +33,6 @@ export class ThreadsModal extends React.Component<IThreadsModalProps, IThreadsMo
   };
 
   computeCounters = () => {
-    let threadDumpAll = 0;
     let threadDumpRunnable = 0;
     let threadDumpWaiting = 0;
     let threadDumpTimedWaiting = 0;
@@ -58,7 +57,7 @@ export class ThreadsModal extends React.Component<IThreadsModalProps, IThreadsMo
       }
     });
 
-    threadDumpAll = threadDumpRunnable + threadDumpWaiting + threadDumpTimedWaiting + threadDumpBlocked;
+    const threadDumpAll = threadDumpRunnable + threadDumpWaiting + threadDumpTimedWaiting + threadDumpBlocked;
     return { threadDumpAll, threadDumpRunnable, threadDumpWaiting, threadDumpTimedWaiting, threadDumpBlocked };
   };
 
