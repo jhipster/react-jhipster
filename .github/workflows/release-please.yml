@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   release-please:
+    if: github.repository == 'jhipster/react-jhipster'
     runs-on: ubuntu-latest
     permissions:
       contents: write
