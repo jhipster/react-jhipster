@@ -6,7 +6,18 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default [
   {
-    ignores: ['webpack.config.js', 'target/**', 'build/**', 'bundles/**', 'lib/**', 'coverage/**', 'jest.conf.js', 'node/**', 'postcss.config.js', 'eslint.config.mjs'],
+    ignores: [
+      'webpack.config.js',
+      'target/**',
+      'build/**',
+      'bundles/**',
+      'lib/**',
+      'coverage/**',
+      'jest.conf.js',
+      'node/**',
+      'postcss.config.js',
+      'eslint.config.mjs',
+    ],
   },
   js.configs.recommended,
   ...tsPlugin.configs['flat/recommended'],
@@ -40,7 +51,10 @@ export default [
       ],
       '@typescript-eslint/no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
       '@typescript-eslint/no-misused-promises': ['error', { checksVoidReturn: { attributes: false } }],
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_', ignoreRestSiblings: true }],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_', ignoreRestSiblings: true },
+      ],
       '@typescript-eslint/no-unsafe-argument': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unsafe-return': 'off',
