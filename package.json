@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jhipster/react-jhipster.git"
+    "url": "git+https://github.com/jhipster/react-jhipster.git"
   },
   "license": "Apache-2.0",
   "author": "Deepu KS",
