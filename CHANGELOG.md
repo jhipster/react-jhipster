@@ -5,3 +5,4 @@
 ### Bug Fixes
 
 - bump TypeScript 6 ([#151](https://github.com/jhipster/react-jhipster/issues/151)) ([d47ec21](https://github.com/jhipster/react-jhipster/commit/d47ec2188305e79a5698f684866f6629912a1a2c))
+- ESLint 10 + Migration eslint-plugin-react to @eslint-react/eslint-plugin ([#152](https://github.com/jhipster/react-jhipster/issues/152))
