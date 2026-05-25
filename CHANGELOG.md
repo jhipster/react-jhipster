@@ -2,10 +2,9 @@
 
 ## [1.0.3](https://github.com/jhipster/react-jhipster/compare/v1.0.2...v1.0.3) (2026-05-25)
 
-
 ### Bug Fixes
 
-* set environment in publish job ([#162](https://github.com/jhipster/react-jhipster/issues/162)) ([e5d1fbe](https://github.com/jhipster/react-jhipster/commit/e5d1fbe7221675957c1d00c0154962bfc5802bb2))
+- set environment in publish job ([#162](https://github.com/jhipster/react-jhipster/issues/162)) ([e5d1fbe](https://github.com/jhipster/react-jhipster/commit/e5d1fbe7221675957c1d00c0154962bfc5802bb2))
 
 ## [1.0.2](https://github.com/jhipster/react-jhipster/compare/v1.0.1...v1.0.2) (2026-05-25)
 
