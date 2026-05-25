@@ -53,6 +53,7 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
+    environment: publish
     needs: release-please
     if: ${{ needs.release-please.outputs.releases_created == 'true' }}
     permissions:
@@ -65,7 +66,6 @@ jobs:
           node-version: 'lts/*'
           registry-url: 'https://registry.npmjs.org'
           package-manager-cache: false
-      - run: npm install -g npm@latest # Upgrade to latest npm for better OIDC support
       - run: npm ci
       - name: Publish with provenance
         run: npm publish --provenance --access public
