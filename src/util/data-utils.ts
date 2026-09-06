@@ -14,14 +14,50 @@ import React from 'react';
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-export const openFile = (contentType: string, data: string) => () => {
-  const fileURL = `data:${contentType};base64,${data}`;
-  const win = window.open();
-  win?.document.write(
-    '<iframe src="' +
-      fileURL +
-      '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>',
-  );
+const DOWNLOAD_CONTENT_TYPE = 'application/octet-stream';
+
+const MIME_TYPE_PATTERN = /^[a-z0-9][a-z0-9!#$&^_.+-]*\/[a-z0-9][a-z0-9!#$&^_.+-]*$/;
+
+/**
+ * @deprecated JHipster generates this utility in the application, use the generated `app/shared/util/data-utils` instead.
+ *
+ * Resolves the content type used to open a stored blob in a new window.
+ * Images are opened inline, except XML based images like SVG which could execute scripts under the application origin.
+ * Plain text and PDF are opened inline, browsers render PDF in an isolated viewer without access to the application origin.
+ * Any other content is opened as a download.
+ */
+export const toOpenableContentType = (contentType: string | null | undefined): string => {
+  const type = (contentType ?? '').split(';')[0].trim().toLowerCase();
+  if (!MIME_TYPE_PATTERN.test(type) || type.endsWith('+xml')) {
+    return DOWNLOAD_CONTENT_TYPE;
+  }
+  if (type.startsWith('image/') || type === 'text/plain' || type === 'application/pdf') {
+    return type;
+  }
+  return DOWNLOAD_CONTENT_TYPE;
+};
+
+/**
+ * @deprecated JHipster generates this utility in the application, use the generated `app/shared/util/data-utils` instead.
+ *
+ * Returns a click handler that opens a base64 encoded blob in a new window.
+ * The stored content type is never trusted: only images, plain text and PDF are opened inline, anything else is downloaded.
+ */
+export const openFile = (contentType: string | null | undefined, data: string) => () => {
+  const byteCharacters = atob(data);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.codePointAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  const blob = new Blob([byteArray], {
+    type: toOpenableContentType(contentType),
+  });
+  const fileURL = globalThis.URL.createObjectURL(blob);
+  const win = globalThis.open(fileURL);
+  if (win) {
+    win.onload = () => URL.revokeObjectURL(fileURL);
+  }
 };
 
 const toBase64 = (file: File, cb: (v: string) => void) => {
