@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/jhipster/react-jhipster/compare/v1.0.3...v1.1.0) (2026-09-06)
+
+### Features
+
+- rework openFile and deprecate it's generated inside application now ([e0ba280](https://github.com/jhipster/react-jhipster/commit/e0ba280739951602bf07e692b257aa3cf832f147))
+- rework openFile and deprecate it's generated inside application… ([0d921d8](https://github.com/jhipster/react-jhipster/commit/0d921d8ec848609c352c009392da31bff566ad7a))
+
 ## [1.0.3](https://github.com/jhipster/react-jhipster/compare/v1.0.2...v1.0.3) (2026-05-25)
 
 ### Bug Fixes
