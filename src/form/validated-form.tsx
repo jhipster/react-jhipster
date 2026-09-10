@@ -38,6 +38,15 @@ export interface ValidatedFormProps {
   onSubmit: SubmitHandler<FieldValues>;
   defaultValues?: DefaultValues<FieldValues>;
   mode?: keyof ValidationMode;
+  /**
+   * Validate the form as soon as it is rendered, so that a field which is required but still empty
+   * is reported as invalid before the user touches it.
+   *
+   * `mode` only selects the events that re-run validation; react-hook-form never validates on mount,
+   * so without this the first render reports no errors whatever the mode. Angular and Vue forms do
+   * mark an untouched invalid control, and this makes react forms behave the same way.
+   */
+  validateOnMount?: boolean;
   [key: string]: any;
 }
 
@@ -52,18 +61,44 @@ export interface ValidatedFormProps {
  * @param ValidatedFormProps
  * @returns React.JSX.Element
  */
-export function ValidatedForm({ defaultValues, children, onSubmit, mode, ...rest }: ValidatedFormProps): React.JSX.Element {
+export function ValidatedForm({
+  defaultValues,
+  children,
+  onSubmit,
+  mode,
+  validateOnMount,
+  ...rest
+}: ValidatedFormProps): React.JSX.Element {
   const {
     handleSubmit,
     register,
     reset,
     setValue,
+    trigger,
     formState: { errors, touchedFields, dirtyFields },
   } = useForm({ mode: mode || 'onTouched', defaultValues });
 
   useEffect(() => {
     reset(defaultValues);
   }, [reset, defaultValues]);
+
+  // reset() above clears the errors and settles after this effect runs, so validating synchronously
+  // here would be undone; the microtask puts the validation after it. Fields register while the
+  // children render, so all of them are known by the time this runs. Repeating it when defaultValues
+  // change is what validates values that arrive asynchronously, and it cannot loop: trigger() is
+  // idempotent, so once the errors settle react-hook-form stops emitting new state.
+  useEffect(() => {
+    if (!validateOnMount) return;
+    let cancelled = false;
+    void Promise.resolve().then(() => {
+      if (!cancelled) {
+        void trigger();
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [trigger, validateOnMount, defaultValues]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} {...rest}>
