@@ -472,6 +472,80 @@ describe('ValidatedForm', () => {
       expect(screen.getByText('nested button')).not.toBeNull();
     });
   });
+  describe('with validateOnMount', () => {
+    it('leaves an untouched required field unvalidated by default', async () => {
+      const { container } = render(
+        <ValidatedForm onSubmit={() => {}} className="myform">
+          <ValidatedInput name="mount-1" validate={{ required: 'This field is required.' }} />
+        </ValidatedForm>,
+      );
+      const input: HTMLInputElement = container.querySelector('input[name="mount-1"]');
+      await waitFor(() => expect(input.className).not.toContain('is-invalid'));
+      expect(screen.queryByText('This field is required.')).toBeNull();
+    });
+
+    it('reports an untouched required field as invalid', async () => {
+      const { container, findByText } = render(
+        <ValidatedForm onSubmit={() => {}} className="myform" validateOnMount>
+          <ValidatedInput name="mount-2" validate={{ required: 'This field is required.' }} />
+        </ValidatedForm>,
+      );
+      const input: HTMLInputElement = container.querySelector('input[name="mount-2"]');
+      await waitFor(() => expect(input.className).toContain('is-invalid'));
+      expect(await findByText('This field is required.')).not.toBeNull();
+    });
+
+    it('does not report a required field that has a default value', async () => {
+      const { container } = render(
+        <ValidatedForm onSubmit={() => {}} className="myform" validateOnMount defaultValues={{ 'mount-3': 'hello' }}>
+          <ValidatedInput name="mount-3" validate={{ required: 'This field is required.' }} />
+        </ValidatedForm>,
+      );
+      const input: HTMLInputElement = container.querySelector('input[name="mount-3"]');
+      await waitFor(() => expect(input.value).toEqual('hello'));
+      expect(input.className).not.toContain('is-invalid');
+      expect(screen.queryByText('This field is required.')).toBeNull();
+    });
+
+    it('settles when defaultValues is a new object on every render', async () => {
+      // The effect re-runs whenever defaultValues changes identity, which an inline object does on
+      // every render; trigger() has to converge instead of feeding itself.
+      let renders = 0;
+      function Inline() {
+        renders++;
+        return (
+          <ValidatedForm onSubmit={() => {}} className="myform" validateOnMount defaultValues={{ 'mount-5': '' }}>
+            <ValidatedInput name="mount-5" validate={{ required: 'This field is required.' }} />
+          </ValidatedForm>
+        );
+      }
+      const { container } = render(<Inline />);
+      const input: HTMLInputElement = container.querySelector('input[name="mount-5"]');
+      await waitFor(() => expect(input.className).toContain('is-invalid'));
+
+      const settled = renders;
+      await new Promise(resolve => setTimeout(resolve, 100));
+      expect(renders).toBeLessThan(settled + 3);
+    });
+
+    it('validates again when the default values change', async () => {
+      const { container, rerender } = render(
+        <ValidatedForm onSubmit={() => {}} className="myform" validateOnMount defaultValues={{ 'mount-4': 'hello' }}>
+          <ValidatedInput name="mount-4" validate={{ required: 'This field is required.' }} />
+        </ValidatedForm>,
+      );
+      const input: HTMLInputElement = container.querySelector('input[name="mount-4"]');
+      await waitFor(() => expect(input.className).not.toContain('is-invalid'));
+
+      // reset() runs first and clears the errors, so the new values have to be validated afterwards.
+      rerender(
+        <ValidatedForm onSubmit={() => {}} className="myform" validateOnMount defaultValues={{ 'mount-4': '' }}>
+          <ValidatedInput name="mount-4" validate={{ required: 'This field is required.' }} />
+        </ValidatedForm>,
+      );
+      await waitFor(() => expect(container.querySelector('input[name="mount-4"]').className).toContain('is-invalid'));
+    });
+  });
   describe('with validated input & field children', () => {
     it('should override register, error, isTouched & isDirty', async () => {
       const { container, findByText } = render(
